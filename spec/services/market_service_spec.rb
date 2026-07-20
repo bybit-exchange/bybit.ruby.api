@@ -10,7 +10,7 @@ RSpec.describe Bybit::RestApi::MarketService do
   let(:svc) { described_class.new(session) }
 
   # Filled in by the loop below — one row per method the scanner picked up.
-  METHOD_TABLE = [
+  method_table = [
     { name: :get_adl_alert, path: '/v5/market/adlalert', method: :get, signed: false },
     { name: :get_delivery_price, path: '/v5/market/delivery-price', method: :get, signed: false },
     { name: :get_fee_group_info, path: '/v5/market/fee-group-info', method: :get, signed: false },
@@ -35,7 +35,7 @@ RSpec.describe Bybit::RestApi::MarketService do
     { name: :get_tickers, path: '/v5/market/tickers', method: :get, signed: false },
   ].freeze
 
-  METHOD_TABLE.each do |row|
+  method_table.each do |row|
     describe "##{row[:name]}" do
       it "dispatches #{row[:method].upcase} #{row[:path]} (signed=#{row[:signed]})" do
         target = row[:signed] ? :sign_request : :public_request

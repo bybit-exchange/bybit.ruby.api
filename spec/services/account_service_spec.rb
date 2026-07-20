@@ -10,7 +10,7 @@ RSpec.describe Bybit::RestApi::AccountService do
   let(:svc) { described_class.new(session) }
 
   # Filled in by the loop below — one row per method the scanner picked up.
-  METHOD_TABLE = [
+  method_table = [
     { name: :batch_set_collateral, path: '/v5/account/set-collateral-switch-batch', method: :post, signed: true },
     { name: :get_borrow_history, path: '/v5/account/borrow-history', method: :get, signed: true },
     { name: :get_collateral_info, path: '/v5/account/collateral-info', method: :get, signed: true },
@@ -36,7 +36,7 @@ RSpec.describe Bybit::RestApi::AccountService do
     { name: :upgrade_to_uta_pro, path: '/v5/account/upgrade-to-uta', method: :post, signed: true },
   ].freeze
 
-  METHOD_TABLE.each do |row|
+  method_table.each do |row|
     describe "##{row[:name]}" do
       it "dispatches #{row[:method].upcase} #{row[:path]} (signed=#{row[:signed]})" do
         target = row[:signed] ? :sign_request : :public_request

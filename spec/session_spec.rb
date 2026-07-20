@@ -15,15 +15,16 @@ RSpec.describe Bybit::Session do
 
   describe 'signed dispatch' do
     it 'signs GET query-string exactly as it appears on the wire' do
-      stub = stub_request(:get, %r{https://api-testnet\.bybit\.com/v5/account/wallet-balance}).to_return(
+      url = %r{https://api-testnet\.bybit\.com/v5/account/wallet-balance}
+      stub_request(:get, url).to_return(
         status: 200, body: '{"retCode":0,"retMsg":"OK","result":{},"retExtInfo":{},"time":0}',
-        headers: { 'Content-Type' => 'application/json' },
+        headers: { 'Content-Type' => 'application/json' }
       )
       session.sign_request(method: :get, path: '/v5/account/wallet-balance', params: { accountType: 'UNIFIED' })
-      expect(stub).to have_been_requested.with { |req|
+      expect(WebMock).to(have_requested(:get, url).with do |req|
         %w[X-BAPI-API-KEY X-BAPI-TIMESTAMP X-BAPI-RECV-WINDOW X-BAPI-SIGN X-BAPI-SIGN-TYPE]
           .all? { |h| req.headers.key?(h) }
-      }
+      end)
     end
 
     it 'signs POST body-string, does NOT send params on query string' do

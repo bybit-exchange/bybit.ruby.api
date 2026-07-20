@@ -10,14 +10,14 @@ RSpec.describe Bybit::RestApi::SpotMarginService do
   let(:svc) { described_class.new(session) }
 
   # Filled in by the loop below — one row per method the scanner picked up.
-  METHOD_TABLE = [
+  method_table = [
     { name: :get_historical_interest_rate, path: '/v5/spot-margin-trade/interest-rate-history', method: :get, signed: true },
     { name: :get_position_tiers, path: '/v5/spot-margin-trade/position-tiers', method: :get, signed: true },
     { name: :get_tiered_collateral_ratio, path: '/v5/spot-margin-trade/collateral', method: :get, signed: false },
     { name: :get_vip_margin_data, path: '/v5/spot-margin-trade/data', method: :get, signed: false },
   ].freeze
 
-  METHOD_TABLE.each do |row|
+  method_table.each do |row|
     describe "##{row[:name]}" do
       it "dispatches #{row[:method].upcase} #{row[:path]} (signed=#{row[:signed]})" do
         target = row[:signed] ? :sign_request : :public_request

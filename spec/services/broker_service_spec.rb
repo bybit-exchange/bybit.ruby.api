@@ -10,7 +10,7 @@ RSpec.describe Bybit::RestApi::BrokerService do
   let(:svc) { described_class.new(session) }
 
   # Filled in by the loop below — one row per method the scanner picked up.
-  METHOD_TABLE = [
+  method_table = [
     { name: :distribute_award, path: '/v5/broker/award/distribute-award', method: :post, signed: true },
     { name: :get_award_info, path: '/v5/broker/award/info', method: :post, signed: true },
     { name: :get_broker_account_info, path: '/v5/broker/account-info', method: :get, signed: true },
@@ -21,7 +21,7 @@ RSpec.describe Bybit::RestApi::BrokerService do
     { name: :set_api_limit, path: '/v5/broker/apilimit/set', method: :post, signed: true },
   ].freeze
 
-  METHOD_TABLE.each do |row|
+  method_table.each do |row|
     describe "##{row[:name]}" do
       it "dispatches #{row[:method].upcase} #{row[:path]} (signed=#{row[:signed]})" do
         target = row[:signed] ? :sign_request : :public_request

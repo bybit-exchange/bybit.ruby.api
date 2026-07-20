@@ -10,7 +10,7 @@ RSpec.describe Bybit::RestApi::EarnService do
   let(:svc) { described_class.new(session) }
 
   # Filled in by the loop below — one row per method the scanner picked up.
-  METHOD_TABLE = [
+  method_table = [
     { name: :add_liquidity, path: '/v5/earn/liquidity-mining/add-liquidity', method: :post, signed: true },
     { name: :add_margin, path: '/v5/earn/liquidity-mining/add-margin', method: :post, signed: true },
     { name: :claim_liquidity_interest, path: '/v5/earn/liquidity-mining/claim-interest', method: :post, signed: true },
@@ -82,7 +82,7 @@ RSpec.describe Bybit::RestApi::EarnService do
     { name: :set_fixed_term_auto_invest, path: '/v5/earn/fixed-term/position/auto-invest', method: :post, signed: true },
   ].freeze
 
-  METHOD_TABLE.each do |row|
+  method_table.each do |row|
     describe "##{row[:name]}" do
       it "dispatches #{row[:method].upcase} #{row[:path]} (signed=#{row[:signed]})" do
         target = row[:signed] ? :sign_request : :public_request

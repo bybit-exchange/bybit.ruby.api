@@ -10,7 +10,7 @@ RSpec.describe Bybit::RestApi::CryptoLoanService do
   let(:svc) { described_class.new(session) }
 
   # Filled in by the loop below — one row per method the scanner picked up.
-  METHOD_TABLE = [
+  method_table = [
     { name: :adjust_ltv, path: '/v5/crypto-loan-common/adjust-ltv', method: :post, signed: true },
     { name: :borrow_fixed, path: '/v5/crypto-loan-fixed/borrow', method: :post, signed: true },
     { name: :borrow_flexible, path: '/v5/crypto-loan-flexible/borrow', method: :post, signed: true },
@@ -39,7 +39,7 @@ RSpec.describe Bybit::RestApi::CryptoLoanService do
     { name: :repay_flexible_with_collateral, path: '/v5/crypto-loan-flexible/repay-collateral', method: :post, signed: true },
   ].freeze
 
-  METHOD_TABLE.each do |row|
+  method_table.each do |row|
     describe "##{row[:name]}" do
       it "dispatches #{row[:method].upcase} #{row[:path]} (signed=#{row[:signed]})" do
         target = row[:signed] ? :sign_request : :public_request

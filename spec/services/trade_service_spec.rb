@@ -10,7 +10,7 @@ RSpec.describe Bybit::RestApi::TradeService do
   let(:svc) { described_class.new(session) }
 
   # Filled in by the loop below — one row per method the scanner picked up.
-  METHOD_TABLE = [
+  method_table = [
     { name: :amend_order, path: '/v5/order/amend', method: :post, signed: true },
     { name: :batch_amend_orders, path: '/v5/order/amend-batch', method: :post, signed: true },
     { name: :batch_cancel_orders, path: '/v5/order/cancel-batch', method: :post, signed: true },
@@ -26,7 +26,7 @@ RSpec.describe Bybit::RestApi::TradeService do
     { name: :set_dcp_time_window, path: '/v5/order/disconnected-cancel-all', method: :post, signed: true },
   ].freeze
 
-  METHOD_TABLE.each do |row|
+  method_table.each do |row|
     describe "##{row[:name]}" do
       it "dispatches #{row[:method].upcase} #{row[:path]} (signed=#{row[:signed]})" do
         target = row[:signed] ? :sign_request : :public_request

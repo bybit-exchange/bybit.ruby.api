@@ -10,7 +10,7 @@ RSpec.describe Bybit::RestApi::BotService do
   let(:svc) { described_class.new(session) }
 
   # Filled in by the loop below — one row per method the scanner picked up.
-  METHOD_TABLE = [
+  method_table = [
     { name: :close_combo_bot, path: '/v5/fcombobot/close', method: :post, signed: true },
     { name: :close_dca_bot, path: '/v5/dca/close-bot', method: :post, signed: true },
     { name: :close_futures_grid_bot, path: '/v5/fgridbot/close', method: :post, signed: true },
@@ -31,7 +31,7 @@ RSpec.describe Bybit::RestApi::BotService do
     { name: :validate_grid_input, path: '/v5/grid/validate-input', method: :post, signed: true },
   ].freeze
 
-  METHOD_TABLE.each do |row|
+  method_table.each do |row|
     describe "##{row[:name]}" do
       it "dispatches #{row[:method].upcase} #{row[:path]} (signed=#{row[:signed]})" do
         target = row[:signed] ? :sign_request : :public_request

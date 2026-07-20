@@ -10,7 +10,7 @@ RSpec.describe Bybit::RestApi::PositionService do
   let(:svc) { described_class.new(session) }
 
   # Filled in by the loop below — one row per method the scanner picked up.
-  METHOD_TABLE = [
+  method_table = [
     { name: :add_reduce_margin, path: '/v5/position/add-margin', method: :post, signed: true },
     { name: :confirm_new_risk_limit, path: '/v5/position/confirm-pending-mmr', method: :post, signed: true },
     { name: :get_closed_pnl, path: '/v5/position/closed-pnl', method: :get, signed: true },
@@ -24,7 +24,7 @@ RSpec.describe Bybit::RestApi::PositionService do
     { name: :switch_position_mode, path: '/v5/position/switch-mode', method: :post, signed: true },
   ].freeze
 
-  METHOD_TABLE.each do |row|
+  method_table.each do |row|
     describe "##{row[:name]}" do
       it "dispatches #{row[:method].upcase} #{row[:path]} (signed=#{row[:signed]})" do
         target = row[:signed] ? :sign_request : :public_request

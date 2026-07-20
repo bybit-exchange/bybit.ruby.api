@@ -10,12 +10,12 @@ RSpec.describe Bybit::RestApi::AffiliateService do
   let(:svc) { described_class.new(session) }
 
   # Filled in by the loop below — one row per method the scanner picked up.
-  METHOD_TABLE = [
+  method_table = [
     { name: :get_sub_list, path: '/v5/affiliate/affiliate-sub-list', method: :get, signed: true },
     { name: :get_user_list, path: '/v5/affiliate/aff-user-list', method: :get, signed: true },
   ].freeze
 
-  METHOD_TABLE.each do |row|
+  method_table.each do |row|
     describe "##{row[:name]}" do
       it "dispatches #{row[:method].upcase} #{row[:path]} (signed=#{row[:signed]})" do
         target = row[:signed] ? :sign_request : :public_request

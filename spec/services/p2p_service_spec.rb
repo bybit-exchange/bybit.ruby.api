@@ -10,7 +10,7 @@ RSpec.describe Bybit::RestApi::P2pService do
   let(:svc) { described_class.new(session) }
 
   # Filled in by the loop below — one row per method the scanner picked up.
-  METHOD_TABLE = [
+  method_table = [
     { name: :create_ad, path: '/v5/p2p/item/create', method: :post, signed: true },
     { name: :get_account_info, path: '/v5/p2p/user/personal/info', method: :post, signed: true },
     { name: :get_ads, path: '/v5/p2p/item/online', method: :post, signed: true },
@@ -30,7 +30,7 @@ RSpec.describe Bybit::RestApi::P2pService do
     { name: :upload_chat_file, path: '/v5/p2p/oss/upload_file', method: :post, signed: true },
   ].freeze
 
-  METHOD_TABLE.each do |row|
+  method_table.each do |row|
     describe "##{row[:name]}" do
       it "dispatches #{row[:method].upcase} #{row[:path]} (signed=#{row[:signed]})" do
         target = row[:signed] ? :sign_request : :public_request

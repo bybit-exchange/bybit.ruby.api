@@ -10,7 +10,7 @@ RSpec.describe Bybit::RestApi::RfqService do
   let(:svc) { described_class.new(session) }
 
   # Filled in by the loop below — one row per method the scanner picked up.
-  METHOD_TABLE = [
+  method_table = [
     { name: :accept_non_lp_quote, path: '/v5/rfq/accept-other-quote', method: :post, signed: true },
     { name: :cancel_all_quotes, path: '/v5/rfq/cancel-all-quotes', method: :post, signed: true },
     { name: :cancel_all_rfqs, path: '/v5/rfq/cancel-all-rfq', method: :post, signed: true },
@@ -28,7 +28,7 @@ RSpec.describe Bybit::RestApi::RfqService do
     { name: :get_trade_history, path: '/v5/rfq/trade-list', method: :get, signed: true },
   ].freeze
 
-  METHOD_TABLE.each do |row|
+  method_table.each do |row|
     describe "##{row[:name]}" do
       it "dispatches #{row[:method].upcase} #{row[:path]} (signed=#{row[:signed]})" do
         target = row[:signed] ? :sign_request : :public_request

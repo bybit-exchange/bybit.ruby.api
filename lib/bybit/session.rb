@@ -2,6 +2,7 @@
 
 require 'faraday'
 require 'json'
+require 'timeout'
 require 'uri'
 
 module Bybit
@@ -68,12 +69,24 @@ module Bybit
       parse_response(resp)
     rescue Faraday::TimeoutError => e
       raise Bybit::TimeoutError, e.message
-    rescue Faraday::ConnectionFailed, Faraday::SSLError => e
+    rescue Faraday::ConnectionFailed => e
+      raise Bybit::TimeoutError, e.message if connect_timeout?(e)
+
+      raise Bybit::NetworkError, e.message
+    rescue Faraday::SSLError => e
       raise Bybit::NetworkError, e.message
     rescue Faraday::Error => e
       # Catch-all for Faraday::ParsingError / ClientError / ServerError etc.
       # that surface when the caller wires their own error-raising middleware.
       raise Bybit::TransportError, e.message
+    end
+
+    # Faraday 2's net_http adapter wraps Net::OpenTimeout / Timeout::Error /
+    # Errno::ETIMEDOUT in ConnectionFailed (only Net::ReadTimeout becomes
+    # Faraday::TimeoutError). Callers still want these surfaced as TimeoutError.
+    def connect_timeout?(err)
+      cause = err.respond_to?(:wrapped_exception) ? err.wrapped_exception : nil
+      cause.is_a?(Timeout::Error) || cause.is_a?(Errno::ETIMEDOUT)
     end
 
     # Deterministic `&`-joined encoding, keys sorted, values URI-escaped.

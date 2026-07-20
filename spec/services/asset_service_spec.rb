@@ -10,7 +10,7 @@ RSpec.describe Bybit::RestApi::AssetService do
   let(:svc) { described_class.new(session) }
 
   # Filled in by the loop below — one row per method the scanner picked up.
-  METHOD_TABLE = [
+  method_table = [
     { name: :account_coin_balance_query, path: '/v5/asset/transfer/query-account-coin-balance', method: :get, signed: true },
     { name: :asset_info_query, path: '/v5/asset/transfer/query-asset-info', method: :get, signed: true },
     { name: :cancel_withdraw, path: '/v5/asset/withdraw/cancel', method: :post, signed: true },
@@ -55,7 +55,7 @@ RSpec.describe Bybit::RestApi::AssetService do
     { name: :universal_transfer_list_query, path: '/v5/asset/transfer/query-universal-transfer-list', method: :get, signed: true },
   ].freeze
 
-  METHOD_TABLE.each do |row|
+  method_table.each do |row|
     describe "##{row[:name]}" do
       it "dispatches #{row[:method].upcase} #{row[:path]} (signed=#{row[:signed]})" do
         target = row[:signed] ? :sign_request : :public_request

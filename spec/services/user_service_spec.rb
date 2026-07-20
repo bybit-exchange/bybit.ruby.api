@@ -10,7 +10,7 @@ RSpec.describe Bybit::RestApi::UserService do
   let(:svc) { described_class.new(session) }
 
   # Filled in by the loop below — one row per method the scanner picked up.
-  METHOD_TABLE = [
+  method_table = [
     { name: :create_sub_api_key, path: '/v5/user/create-sub-api', method: :post, signed: true },
     { name: :create_sub_member, path: '/v5/user/create-sub-member', method: :post, signed: true },
     { name: :delete_api_key, path: '/v5/user/delete-api', method: :post, signed: true },
@@ -30,7 +30,7 @@ RSpec.describe Bybit::RestApi::UserService do
     { name: :update_sub_api_key, path: '/v5/user/update-sub-api', method: :post, signed: true },
   ].freeze
 
-  METHOD_TABLE.each do |row|
+  method_table.each do |row|
     describe "##{row[:name]}" do
       it "dispatches #{row[:method].upcase} #{row[:path]} (signed=#{row[:signed]})" do
         target = row[:signed] ? :sign_request : :public_request
