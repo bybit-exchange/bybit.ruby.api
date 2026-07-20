@@ -53,7 +53,11 @@ jobs:
       # consumer sees them. Analogous to JS `dist smoke` step.
       - name: Load smoke (require + Client.new)
         run: |
-          bundle exec ruby -Ilib -rbybit -e '
+          # `-rbundler/setup` MUST come before `-rbybit` — Ruby processes -r
+          # options in order, and `bybit` transitively requires `faraday`
+          # (a bundled gem) at load time. On Ruby 3.0, relying on
+          # `bundle exec`'s injected RUBYOPT alone left faraday unactivated.
+          bundle exec ruby -rbundler/setup -Ilib -rbybit -e '
             raise "Bybit::VERSION missing" unless defined?(Bybit::VERSION)
             client = Bybit::Client.new(testnet: true)
             raise "Client init failed" unless client.is_a?(Bybit::Client)
