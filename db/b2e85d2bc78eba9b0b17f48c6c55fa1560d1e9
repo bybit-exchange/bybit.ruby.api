@@ -1,0 +1,77 @@
+lib/bybit/rest_api/affiliate_service.rb
+  4060116d8234d3a7 15,34
+spec/services/crypto_loan_service_spec.rb
+  4060116d8234d3a7 1-61
+lib/bybit/rest_api/p2p_service.rb
+  4060116d8234d3a7 22,40,54,67,79,97,109,127,148,173,185,197,213,236,248
+lib/bybit/rest_api/spot_margin_service.rb
+  4060116d8234d3a7 14,27,40,53
+spec/services/p2p_service_spec.rb
+  4060116d8234d3a7 1-52
+spec/services/bot_service_spec.rb
+  4060116d8234d3a7 1-53
+spec/services/earn_service_spec.rb
+  4060116d8234d3a7 1-104
+spec/services/market_service_spec.rb
+  4060116d8234d3a7 1-57
+spec/services/asset_service_spec.rb
+  4060116d8234d3a7 1-77
+lib/bybit/rest_api/asset_service.rb
+  4060116d8234d3a7 14,26,41-42,47-635
+lib/bybit/rest_api/crypto_loan_service.rb
+  4060116d8234d3a7 13,28,40,53,65,78,102,119,135,150,167,184,200,218,230,243,256,271,284,299,311,326,340,353,367
+spec/services/account_service_spec.rb
+  4060116d8234d3a7 1-58
+lib/bybit/rest_api/market_service.rb
+  4060116d8234d3a7 11,29,43,60,78,91,108,127,140,159,177,196,212,231,245,259,277,295,310,325,350
+lib/bybit/rest_api/broker_service.rb
+  4060116d8234d3a7 15,27,42,52,63-64,73,87-88,101
+spec/services/spot_margin_service_spec.rb
+  4060116d8234d3a7 1-39
+spec/services/user_service_spec.rb
+  4060116d8234d3a7 1-52
+lib/bybit/rest_api/earn_service.rb
+  4060116d8234d3a7 17,33,45,64,80,94,107,122,137,154,173,187,200,217,236,250,262,284,301,321,334,347,364,378,397,416,429,445,458,474,493,505,517,529,544,569,590,608,626,642,656,670,684,698,714,726,738,755,771,784,800,816,834,849,863,876,893,908,928,948,966,980,994,1008,1024,1039
+lib/bybit/rest_api/trade_service.rb
+  4060116d8234d3a7 21,49,63,77,91,109,126,172,186,188,208,232,247,280
+spec/services/affiliate_service_spec.rb
+  4060116d8234d3a7 1-37
+lib/bybit/rest_api/rfq_service.rb
+  4060116d8234d3a7 11,21,31,45,58,75,91,105,120,138,153,163,180,194,213
+lib/bybit/rest_api/bot_service.rb
+  4060116d8234d3a7 12,25,37,62,78,99,115,150,170,197,217,244,264,286,302,332,349-350,373
+lib/bybit/rest_api/account_service.rb
+  4060116d8234d3a7 11,23,39,55,68,80,95,108,120,142,155,165,178,191,204,217,229,242,254,271,285,297,309
+spec/services/trade_service_spec.rb
+  4060116d8234d3a7 1-48
+spec/services/position_service_spec.rb
+  4060116d8234d3a7 1-46
+spec/services/broker_service_spec.rb
+  4060116d8234d3a7 1-43
+spec/services/rfq_service_spec.rb
+  4060116d8234d3a7 1-50
+lib/bybit/rest_api/user_service.rb
+  4060116d8234d3a7 12-15,18,21,23-26,40,53,67,80,93,108,120,134,147,157-158,171-172,183,188,194,207,221,237-239,241,244,247-249
+lib/bybit/rest_api/position_service.rb
+  4060116d8234d3a7 14,28,46,48,64,84,102,117,133,149,177,193
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.2-bit.10+672fbf0",
+  "base_commit_sha": "dbb2e85d2bc78eba9b0b17f48c6c55fa1560d1e9",
+  "prompts": {
+    "4060116d8234d3a7": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d3fe9282-23ed-48a1-911f-7926ef008688",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "doris-xiao-bybit",
+      "messages": [],
+      "total_additions": 1645,
+      "total_deletions": 29,
+      "accepted_lines": 1632,
+      "overriden_lines": 0
+    }
+  }
+}
