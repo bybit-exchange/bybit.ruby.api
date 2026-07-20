@@ -9,6 +9,7 @@ module Bybit
       #
       # @param bot_id [Integer] Identifier of the DCA bot to close
       # @param close_mode [Integer] Settlement mode used to close the bot
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def close_dca_bot(bot_id:, close_mode:, **kwargs)
         body = kwargs.merge(bot_id: bot_id, close_mode: close_mode)
         @session.sign_request(method: :post, path: '/v5/dca/close-bot', body: body)
@@ -21,6 +22,7 @@ module Bybit
       # @param parameters [Hash] DCA bot configuration parameters
       # @option kwargs [Hash] :tools_discovery_parameter Tools discovery parameter object
       # @option kwargs [String] :channel Channel identifier
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def create_dca_bot(parameters:, **kwargs)
         body = kwargs.merge(parameters: parameters)
         @session.sign_request(method: :post, path: '/v5/dca/create-bot', body: body)
@@ -32,6 +34,7 @@ module Bybit
       #
       # @param bot_id [Integer] Combo bot ID to close
       # @option kwargs [Integer] :stop_type Stop type identifier
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def close_combo_bot(bot_id:, **kwargs)
         body = kwargs.merge(bot_id: bot_id)
         @session.sign_request(method: :post, path: '/v5/fcombobot/close', body: body)
@@ -56,6 +59,7 @@ module Bybit
       # @option kwargs [String] :init_bonus Initial bonus amount
       # @option kwargs [String] :trailing_stop_percent Trailing stop percent
       # @option kwargs [String] :channel Channel identifier
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def create_combo_bot(leverage:, init_margin:, adjust_position_mode:, symbol_settings:, **kwargs)
         body = kwargs.merge(
           leverage: leverage,
@@ -71,6 +75,7 @@ module Bybit
       # POST /v5/fcombobot/detail
       #
       # @param bot_id [Integer] Combo bot ID
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_combo_detail(bot_id:, **kwargs)
         body = kwargs.merge(bot_id: bot_id)
         @session.sign_request(method: :post, path: '/v5/fcombobot/detail', body: body)
@@ -91,6 +96,7 @@ module Bybit
       # @option kwargs [Boolean] :need_to_slippage Whether to include slippage in validation
       # @option kwargs [String] :app_name Application name identifier
       # @option kwargs [String] :trailing_stop_percent Trailing stop percent
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_combo_limit(leverage:, init_margin:, adjust_position_mode:, symbol_settings:, **kwargs)
         body = kwargs.merge(
           leverage: leverage,
@@ -106,6 +112,7 @@ module Bybit
       # POST /v5/fgridbot/close
       #
       # @param bot_id [Integer] Bot ID of the futures grid bot to close
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def close_futures_grid_bot(bot_id:, **kwargs)
         body = kwargs.merge(bot_id: bot_id)
         @session.sign_request(method: :post, path: '/v5/fgridbot/close', body: body)
@@ -140,6 +147,7 @@ module Bybit
       # @option kwargs [String] :move_up_price Move-up trigger price
       # @option kwargs [String] :move_down_price Move-down trigger price
       # @option kwargs [String] :channel Client channel identifier
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def create_futures_grid_bot(symbol:, grid_mode:, min_price:, max_price:, cell_number:, leverage:, grid_type:, total_investment:, **kwargs)
         body = kwargs.merge(
           symbol: symbol,
@@ -159,6 +167,7 @@ module Bybit
       # POST /v5/fgridbot/detail
       #
       # @param bot_id [Integer] Bot ID of the futures grid bot
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_futures_grid_detail(bot_id:, **kwargs)
         body = kwargs.merge(bot_id: bot_id)
         @session.sign_request(method: :post, path: '/v5/fgridbot/detail', body: body)
@@ -185,6 +194,7 @@ module Bybit
       # @option kwargs [String] :init_margin Initial margin amount
       # @option kwargs [String] :move_up_price Move-up trigger price
       # @option kwargs [String] :move_down_price Move-down trigger price
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def validate_futures_grid_input(symbol:, cell_number:, min_price:, max_price:, leverage:, grid_type:, grid_mode:, **kwargs)
         body = kwargs.merge(
           symbol: symbol,
@@ -204,6 +214,7 @@ module Bybit
       #
       # @param bot_id [Integer] Bot ID
       # @option kwargs [String] :stop_type Stop type
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def close_futures_martingale_bot(bot_id:, **kwargs)
         body = kwargs.merge(bot_id: bot_id)
         @session.sign_request(method: :post, path: '/v5/fmartingalebot/close', body: body)
@@ -230,6 +241,7 @@ module Bybit
       # @option kwargs [String] :create_type Create type
       # @option kwargs [String] :init_bonus Initial bonus
       # @option kwargs [String] :channel Channel
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def create_futures_martingale_bot(symbol:, martingale_mode:, leverage:, price_float_percent:, add_position_percent:, add_position_num:, init_margin:, round_tp_percent:, **kwargs)
         body = kwargs.merge(
           symbol: symbol,
@@ -249,6 +261,7 @@ module Bybit
       # POST /v5/fmartingalebot/detail
       #
       # @param bot_id [Integer] Bot ID
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_futures_martingale_detail(bot_id:, **kwargs)
         body = kwargs.merge(bot_id: bot_id)
         @session.sign_request(method: :post, path: '/v5/fmartingalebot/detail', body: body)
@@ -270,6 +283,7 @@ module Bybit
       # @option kwargs [String] :entry_price Entry price
       # @option kwargs [Boolean] :need_to_slippage Whether to include slippage
       # @option kwargs [String] :app_name App name
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_futures_martingale_limit(symbol:, martingale_mode:, leverage:, **kwargs)
         body = kwargs.merge(
           symbol: symbol,
@@ -285,6 +299,7 @@ module Bybit
       #
       # @param grid_id [Integer] Grid bot ID
       # @param close_mode [Integer] Close/settlement mode
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def close_grid_bot(grid_id:, close_mode:, **kwargs)
         body = kwargs.merge(grid_id: grid_id, close_mode: close_mode)
         @session.sign_request(method: :post, path: '/v5/grid/close-grid', body: body)
@@ -314,6 +329,7 @@ module Bybit
       # @option kwargs [Boolean] :enable_trailing Whether to enable trailing
       # @option kwargs [String] :limit_up_price Upper limit price
       # @option kwargs [String] :channel Channel identifier
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def create_grid_bot(symbol:, max_price:, min_price:, total_investment:, cell_number:, **kwargs)
         body = kwargs.merge(
           symbol: symbol,
@@ -330,7 +346,8 @@ module Bybit
       # POST /v5/grid/query-grid-detail
       #
       # @param grid_id [Integer] Grid bot ID
-      def query_grid_detail(grid_id:, **kwargs)
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
+      def get_grid_detail(grid_id:, **kwargs)
         body = kwargs.merge(grid_id: grid_id)
         @session.sign_request(method: :post, path: '/v5/grid/query-grid-detail', body: body)
       end
@@ -353,6 +370,7 @@ module Bybit
       # @option kwargs [String] :ts_percent Trailing stop percent
       # @option kwargs [Boolean] :enable_trailing Whether to enable trailing
       # @option kwargs [String] :limit_up_price Upper limit price
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def validate_grid_input(symbol:, cell_number:, min_price:, max_price:, total_investment:, **kwargs)
         body = kwargs.merge(
           symbol: symbol,

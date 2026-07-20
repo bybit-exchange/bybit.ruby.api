@@ -10,6 +10,7 @@ module Bybit
       # @param currency [String] Collateral currency
       # @param amount [String] Amount to adjust
       # @param direction [Integer] Adjustment direction: add or remove collateral
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def adjust_ltv(currency:, amount:, direction:, **kwargs)
         params = kwargs.merge(currency: currency, amount: amount, direction: direction)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -24,6 +25,7 @@ module Bybit
       # @option kwargs [String] :collateral_currency Collateral currency filter
       # @option kwargs [Integer] :limit Number of records per page
       # @option kwargs [Integer] :cursor Pagination cursor
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_adjustment_history(**kwargs)
         params = kwargs.dup
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -35,6 +37,7 @@ module Bybit
       # GET /v5/crypto-loan-common/collateral-data
       #
       # @option kwargs [String] :currency Collateral currency filter
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_collateral_data(**kwargs)
         params = kwargs.dup
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -47,6 +50,7 @@ module Bybit
       #
       # @option kwargs [String] :currency Loanable currency filter
       # @option kwargs [String] :vip_level VIP level filter
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_loanable_data(**kwargs)
         params = kwargs.dup
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -58,6 +62,7 @@ module Bybit
       # GET /v5/crypto-loan-common/max-collateral-amount
       #
       # @param currency [String] Collateral currency
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_max_collateral_amount(currency:, **kwargs)
         params = kwargs.merge(currency: currency)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -70,6 +75,7 @@ module Bybit
       #
       # @param currency [String] Loan currency
       # @param collateral_list [Array] List of collateral currencies and amounts
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_max_loan(currency:, collateral_list:, **kwargs)
         params = kwargs.merge(currency: currency, collateral_list: collateral_list)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -93,6 +99,7 @@ module Bybit
       # @option kwargs [String] :term Loan term
       # @option kwargs [Integer] :limit Limit for data size per page
       # @option kwargs [Integer] :cursor Cursor used for pagination
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_fixed_borrow_contract_info(**kwargs)
         params = kwargs.dup
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -109,6 +116,7 @@ module Bybit
       # @option kwargs [String] :term Loan term
       # @option kwargs [Integer] :limit Limit for data size per page
       # @option kwargs [Integer] :cursor Cursor used for pagination
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_fixed_borrow_order_info(**kwargs)
         params = kwargs.dup
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -124,6 +132,7 @@ module Bybit
       # @option kwargs [String] :order_by Order by field
       # @option kwargs [Integer] :sort Sort direction
       # @option kwargs [Integer] :limit Limit for data size per page
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_fixed_borrow_order_quote(**kwargs)
         params = kwargs.dup
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -138,6 +147,7 @@ module Bybit
       # @option kwargs [String] :order_currency Order currency
       # @option kwargs [Integer] :limit Limit for data size per page
       # @option kwargs [Integer] :cursor Cursor used for pagination
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_fixed_renew_info(**kwargs)
         params = kwargs.dup
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -154,6 +164,7 @@ module Bybit
       # @option kwargs [String] :term Loan term
       # @option kwargs [Integer] :limit Limit for data size per page
       # @option kwargs [Integer] :cursor Cursor used for pagination
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_fixed_supply_contract_info(**kwargs)
         params = kwargs.dup
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -170,6 +181,7 @@ module Bybit
       # @option kwargs [String] :term Loan term
       # @option kwargs [Integer] :limit Limit for data size per page
       # @option kwargs [Integer] :cursor Cursor used for pagination
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_fixed_supply_order_info(**kwargs)
         params = kwargs.dup
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -185,6 +197,7 @@ module Bybit
       # @option kwargs [String] :order_by Order by field
       # @option kwargs [Integer] :sort Sort direction
       # @option kwargs [Integer] :limit Limit for data size per page
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_fixed_supply_order_quote(**kwargs)
         params = kwargs.dup
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -202,6 +215,7 @@ module Bybit
       # @param collateral_list [Array] List of collateral
       # @option kwargs [String] :auto_repay Auto repay flag
       # @option kwargs [String] :repay_type Repay type
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def borrow_fixed(order_currency:, order_amount:, annual_rate:, term:, collateral_list:, **kwargs)
         params = kwargs.merge(order_currency: order_currency, order_amount: order_amount, annual_rate: annual_rate, term: term, collateral_list: collateral_list)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -213,6 +227,7 @@ module Bybit
       # POST /v5/crypto-loan-fixed/borrow-order-cancel
       #
       # @param order_id [String] Order ID
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def cancel_fixed_borrow_order(order_id:, **kwargs)
         params = kwargs.merge(order_id: order_id)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -225,6 +240,7 @@ module Bybit
       #
       # @param loan_id [String] Loan ID
       # @param loan_currency [String] Loan currency
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def repay_fixed_fully(loan_id:, loan_currency:, **kwargs)
         params = kwargs.merge(loan_id: loan_id, loan_currency: loan_currency)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -237,6 +253,7 @@ module Bybit
       #
       # @param loan_id [String] Loan ID
       # @param collateral_list [Array] List of collateral
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def renew_fixed(loan_id:, collateral_list:, **kwargs)
         params = kwargs.merge(loan_id: loan_id, collateral_list: collateral_list)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -251,6 +268,7 @@ module Bybit
       # @param loan_currency [String] Loan currency
       # @param collateral_coin [String] Collateral coin
       # @param amount [String] Repay amount
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def repay_fixed_with_collateral(loan_id:, loan_currency:, collateral_coin:, amount:, **kwargs)
         params = kwargs.merge(loan_id: loan_id, loan_currency: loan_currency, collateral_coin: collateral_coin, amount: amount)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -263,6 +281,7 @@ module Bybit
       #
       # @param order_id [String] Order ID
       # @option kwargs [Integer] :refunded_account Refunded account
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def cancel_fixed_supply_order(order_id:, **kwargs)
         params = kwargs.merge(order_id: order_id)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -277,6 +296,7 @@ module Bybit
       # @option kwargs [String] :loan_currency Loan currency
       # @option kwargs [Integer] :limit Limit for data size per page
       # @option kwargs [Integer] :cursor Cursor for pagination
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_flexible_borrow_history(**kwargs)
         params = kwargs.dup
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -288,6 +308,7 @@ module Bybit
       # GET /v5/crypto-loan-flexible/ongoing-coin
       #
       # @option kwargs [String] :loan_currency Loan currency
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_flexible_ongoing_coin(**kwargs)
         params = kwargs.dup
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -302,6 +323,7 @@ module Bybit
       # @option kwargs [String] :loan_currency Loan currency
       # @option kwargs [Integer] :limit Limit for data size per page
       # @option kwargs [Integer] :cursor Cursor for pagination
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_flexible_repayment_history(**kwargs)
         params = kwargs.dup
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -315,6 +337,7 @@ module Bybit
       # @param loan_currency [String] Loan currency
       # @param loan_amount [String] Loan amount
       # @param collateral_list [Array] Collateral coin list
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def borrow_flexible(loan_currency:, loan_amount:, collateral_list:, **kwargs)
         params = kwargs.merge(loan_currency: loan_currency, loan_amount: loan_amount, collateral_list: collateral_list)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -327,6 +350,7 @@ module Bybit
       #
       # @param loan_currency [String] Loan currency
       # @param amount [String] Repayment amount
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def repay_flexible(loan_currency:, amount:, **kwargs)
         params = kwargs.merge(loan_currency: loan_currency, amount: amount)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -340,6 +364,7 @@ module Bybit
       # @param loan_currency [String] Loan currency
       # @param collateral_coin [String] Collateral coin
       # @param amount [String] Repayment amount
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def repay_flexible_with_collateral(loan_currency:, collateral_coin:, amount:, **kwargs)
         params = kwargs.merge(loan_currency: loan_currency, collateral_coin: collateral_coin, amount: amount)
         params = Bybit::Utils::WireKeys.camelize(params)

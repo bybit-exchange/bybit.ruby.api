@@ -18,6 +18,7 @@ module Bybit
       # @option kwargs [String] :exec_type Execution type
       # @option kwargs [Integer] :limit Limit for data size per page
       # @option kwargs [String] :cursor Cursor for pagination
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       # @see https://bybit-exchange.github.io/docs/v5/order/execution
       def get_execution_history(category:, **kwargs)
         params = kwargs.merge(category: category)
@@ -45,6 +46,7 @@ module Bybit
       # @option kwargs [String] :trigger_by Trigger price type
       # @option kwargs [String] :tp_limit_price Take profit limit price
       # @option kwargs [String] :sl_limit_price Stop loss limit price
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       # @see https://bybit-exchange.github.io/docs/v5/order/amend-order
       def amend_order(category:, symbol:, **kwargs)
         params = kwargs.merge(category: category, symbol: symbol)
@@ -58,6 +60,7 @@ module Bybit
       #
       # @param category [String] Product type
       # @param request [Array] Array of order amend objects
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       # @see https://bybit-exchange.github.io/docs/v5/order/batch-amend
       def batch_amend_orders(category:, request:, **kwargs)
         params = kwargs.merge(category: category, request: request)
@@ -71,6 +74,7 @@ module Bybit
       #
       # @param category [String] Product type
       # @param request [Array] Array of order cancel objects
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       # @see https://bybit-exchange.github.io/docs/v5/order/batch-cancel
       def batch_cancel_orders(category:, request:, **kwargs)
         params = kwargs.merge(category: category, request: request)
@@ -84,6 +88,7 @@ module Bybit
       #
       # @param category [String] Product type
       # @param request [Array] Array of order create objects
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       # @see https://bybit-exchange.github.io/docs/v5/order/batch-place
       def batch_create_orders(category:, request:, **kwargs)
         params = kwargs.merge(category: category, request: request)
@@ -101,6 +106,7 @@ module Bybit
       # @option kwargs [String] :settle_coin Settle coin
       # @option kwargs [String] :order_filter Order filter
       # @option kwargs [String] :stop_order_type Stop order type
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       # @see https://bybit-exchange.github.io/docs/v5/order/cancel-all
       def cancel_all_orders(category:, **kwargs)
         params = kwargs.merge(category: category)
@@ -117,6 +123,7 @@ module Bybit
       # @option kwargs [String] :order_id Order ID
       # @option kwargs [String] :order_link_id User customised order ID
       # @option kwargs [String] :order_filter Order filter
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       # @see https://bybit-exchange.github.io/docs/v5/order/cancel-order
       def cancel_order(category:, symbol:, **kwargs)
         params = kwargs.merge(category: category, symbol: symbol)
@@ -162,6 +169,7 @@ module Bybit
       # @option kwargs [String] :bbo_side_type BBO side type
       # @option kwargs [String] :bbo_level BBO level
       # @option kwargs [Boolean] :rpi_taker_access RPI taker access flag
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       # @see https://bybit-exchange.github.io/docs/v5/order/create-order
       def create_order(category:, symbol:, side:, order_type:, qty:, **kwargs)
         params = kwargs.merge(category: category, symbol: symbol, side: side, order_type: order_type, qty: qty)
@@ -175,8 +183,9 @@ module Bybit
       #
       # @param time_window [Integer] DCP time window in seconds
       # @option kwargs [String] :product Product type for DCP
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       # @see https://bybit-exchange.github.io/docs/v5/order/dcp
-      def dcp_set_timewindow(time_window:, **kwargs)
+      def set_dcp_time_window(time_window:, **kwargs)
         params = kwargs.merge(time_window: time_window)
         params = Bybit::Utils::WireKeys.camelize(params)
         @session.sign_request(method: :post, path: '/v5/order/disconnected-cancel-all', body: params)
@@ -196,6 +205,7 @@ module Bybit
       # @option kwargs [String] :order_filter Order filter
       # @option kwargs [Integer] :limit Limit for data size per page
       # @option kwargs [String] :cursor Cursor for pagination
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       # @see https://bybit-exchange.github.io/docs/v5/order/open-order
       def get_open_orders(category:, **kwargs)
         params = kwargs.merge(category: category)
@@ -219,6 +229,7 @@ module Bybit
       # @option kwargs [Integer] :end_time End time (ms)
       # @option kwargs [Integer] :limit Limit for data size per page
       # @option kwargs [String] :cursor Cursor for pagination
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       # @see https://bybit-exchange.github.io/docs/v5/order/order-list
       def get_order_history(category:, **kwargs)
         params = kwargs.merge(category: category)
@@ -233,6 +244,7 @@ module Bybit
       # @param category [String] Product type
       # @param symbol [String] Symbol name
       # @param side [String] Buy or Sell
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       # @see https://bybit-exchange.github.io/docs/v5/order/spot-borrow-quota
       def get_spot_borrow_quota(category:, symbol:, side:, **kwargs)
         params = kwargs.merge(category: category, symbol: symbol, side: side)
@@ -265,6 +277,7 @@ module Bybit
       # @option kwargs [String] :tp_order_type Take profit order type
       # @option kwargs [String] :sl_order_type Stop loss order type
       # @option kwargs [String] :order_iv Implied volatility (options)
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       # @see https://bybit-exchange.github.io/docs/v5/order/pre-check-order
       def pre_check_order(category:, symbol:, side:, order_type:, qty:, **kwargs)
         params = kwargs.merge(category: category, symbol: symbol, side: side, order_type: order_type, qty: qty)

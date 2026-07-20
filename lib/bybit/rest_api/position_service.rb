@@ -11,6 +11,7 @@ module Bybit
       # @param symbol [String] Symbol name
       # @param margin [String] Add or reduce. To add, then 10; to reduce, then -10
       # @option kwargs [Integer] :position_idx Used to identify positions in different position modes
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       # @see https://bybit-exchange.github.io/docs/v5/position/manual-add-margin
       def add_reduce_margin(category:, symbol:, margin:, **kwargs)
         params = kwargs.merge(category: category, symbol: symbol, margin: margin)
@@ -24,6 +25,7 @@ module Bybit
       #
       # @param category [String] Product type
       # @param symbol [String] Symbol name
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       # @see https://bybit-exchange.github.io/docs/v5/position/confirm-mmr
       def confirm_new_risk_limit(category:, symbol:, **kwargs)
         params = kwargs.merge(category: category, symbol: symbol)
@@ -41,8 +43,9 @@ module Bybit
       # @option kwargs [Integer] :end_time End timestamp in ms
       # @option kwargs [Integer] :limit Limit for data size per page
       # @option kwargs [String] :cursor Cursor for pagination
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       # @see https://bybit-exchange.github.io/docs/v5/position/close-position
-      def get_close_position(category:, **kwargs)
+      def get_closed_positions(category:, **kwargs)
         params = kwargs.merge(category: category)
         params = Bybit::Utils::WireKeys.camelize(params)
         @session.sign_request(method: :get, path: '/v5/position/get-closed-positions', params: params)
@@ -58,6 +61,7 @@ module Bybit
       # @option kwargs [Integer] :end_time End timestamp in ms
       # @option kwargs [Integer] :limit Limit for data size per page
       # @option kwargs [String] :cursor Cursor for pagination
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       # @see https://bybit-exchange.github.io/docs/v5/position/close-pnl
       def get_closed_pnl(category:, **kwargs)
         params = kwargs.merge(category: category)
@@ -77,6 +81,7 @@ module Bybit
       # @option kwargs [String] :block_trade_id Block trade ID
       # @option kwargs [String] :limit Limit for data size per page
       # @option kwargs [String] :cursor Cursor for pagination
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       # @see https://bybit-exchange.github.io/docs/v5/position/move-position-history
       def get_move_position_history(**kwargs)
         params = kwargs.dup
@@ -94,6 +99,7 @@ module Bybit
       # @option kwargs [String] :settle_coin Settle coin
       # @option kwargs [Integer] :limit Limit for data size per page
       # @option kwargs [String] :cursor Cursor for pagination
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       # @see https://bybit-exchange.github.io/docs/v5/position
       def get_positions(category:, **kwargs)
         params = kwargs.merge(category: category)
@@ -108,6 +114,7 @@ module Bybit
       # @param from_uid [String] Original UID (from which the position is moved)
       # @param to_uid [String] Target UID (to which the position is moved)
       # @param list [Array] Positions to move (array of objects)
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       # @see https://bybit-exchange.github.io/docs/v5/position/move-position
       def move_position(from_uid:, to_uid:, list:, **kwargs)
         params = kwargs.merge(from_uid: from_uid, to_uid: to_uid, list: list)
@@ -123,6 +130,7 @@ module Bybit
       # @param symbol [String] Symbol name
       # @param auto_add_margin [Integer] 0: disable, 1: enable
       # @option kwargs [Integer] :position_idx Used to identify positions in different position modes
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       # @see https://bybit-exchange.github.io/docs/v5/position/auto-add-margin
       def set_auto_add_margin(category:, symbol:, auto_add_margin:, **kwargs)
         params = kwargs.merge(category: category, symbol: symbol, auto_add_margin: auto_add_margin)
@@ -138,6 +146,7 @@ module Bybit
       # @param symbol [String] Symbol name
       # @param buy_leverage [String] Buy leverage
       # @param sell_leverage [String] Sell leverage
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       # @see https://bybit-exchange.github.io/docs/v5/position/leverage
       def set_leverage(category:, symbol:, buy_leverage:, sell_leverage:, **kwargs)
         params = kwargs.merge(category: category, symbol: symbol, buy_leverage: buy_leverage, sell_leverage: sell_leverage)
@@ -165,6 +174,7 @@ module Bybit
       # @option kwargs [String] :sl_limit_price The limit order price when stop loss price is triggered
       # @option kwargs [String] :tp_order_type Take profit order type: Market or Limit
       # @option kwargs [String] :sl_order_type Stop loss order type: Market or Limit
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       # @see https://bybit-exchange.github.io/docs/v5/position/trading-stop
       def set_trading_stop(category:, symbol:, tpsl_mode:, position_idx:, **kwargs)
         params = kwargs.merge(category: category, symbol: symbol, tpsl_mode: tpsl_mode, position_idx: position_idx)
@@ -180,6 +190,7 @@ module Bybit
       # @param mode [Integer] Position mode: 0 (Merged Single), 3 (Both Sides)
       # @option kwargs [String] :symbol Symbol name
       # @option kwargs [String] :coin Coin
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       # @see https://bybit-exchange.github.io/docs/v5/position/position-mode
       def switch_position_mode(category:, mode:, **kwargs)
         params = kwargs.merge(category: category, mode: mode)

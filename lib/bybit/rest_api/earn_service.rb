@@ -14,6 +14,7 @@ module Bybit
       # @option kwargs [String] :quote_amount Quote coin amount
       # @option kwargs [String] :base_amount Base coin amount
       # @option kwargs [String] :leverage Leverage
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def add_liquidity(product_id:, order_link_id:, **kwargs)
         params = kwargs.merge(product_id: product_id, order_link_id: order_link_id)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -29,6 +30,7 @@ module Bybit
       # @param position_id [String] Position ID
       # @param amount [String] Margin amount
       # @param quote_account_type [String] Quote coin account type
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def add_margin(product_id:, order_link_id:, position_id:, amount:, quote_account_type:, **kwargs)
         params = kwargs.merge(product_id: product_id, order_link_id: order_link_id, position_id: position_id, amount: amount, quote_account_type: quote_account_type)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -40,6 +42,7 @@ module Bybit
       # POST /v5/earn/liquidity-mining/claim-interest
       #
       # @param product_id [String] Product ID
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def claim_liquidity_interest(product_id:, **kwargs)
         params = kwargs.merge(product_id: product_id)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -58,6 +61,7 @@ module Bybit
       # @option kwargs [Integer] :end_time End timestamp in milliseconds
       # @option kwargs [Integer] :limit Page size limit
       # @option kwargs [String] :cursor Pagination cursor
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_advance_earn_order(category:, **kwargs)
         params = kwargs.merge(category: category)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -73,6 +77,7 @@ module Bybit
       # @option kwargs [String] :coin Coin
       # @option kwargs [Integer] :limit Page size limit
       # @option kwargs [String] :cursor Pagination cursor
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_advance_earn_position(category:, **kwargs)
         params = kwargs.merge(category: category)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -86,6 +91,7 @@ module Bybit
       # @param category [String] Product category
       # @option kwargs [String] :coin Coin
       # @option kwargs [String] :duration Product duration
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_advance_earn_product(category:, **kwargs)
         params = kwargs.merge(category: category)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -98,6 +104,7 @@ module Bybit
       #
       # @param category [String] Product category
       # @option kwargs [Integer] :product_id Product ID
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_advance_earn_product_extra_info(category:, **kwargs)
         params = kwargs.merge(category: category)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -112,6 +119,7 @@ module Bybit
       # @param initial_price [String] Initial price
       # @param lower_price [String] Lower price bound
       # @param upper_price [String] Upper price bound
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_double_win_leverage(product_id:, initial_price:, lower_price:, upper_price:, **kwargs)
         params = kwargs.merge(product_id: product_id, initial_price: initial_price, lower_price: lower_price, upper_price: upper_price)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -126,6 +134,7 @@ module Bybit
       # @param product_id [String] Product ID
       # @param start_time [Integer] Start timestamp in milliseconds
       # @param end_time [Integer] End timestamp in milliseconds
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_apr_history(category:, product_id:, start_time:, end_time:, **kwargs)
         params = kwargs.merge(category: category, product_id: product_id, start_time: start_time, end_time: end_time)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -142,6 +151,7 @@ module Bybit
       # @option kwargs [Integer] :end_time End timestamp in milliseconds
       # @option kwargs [Integer] :limit Page size limit
       # @option kwargs [String] :cursor Pagination cursor
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_hourly_yield_history(category:, **kwargs)
         params = kwargs.merge(category: category)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -160,6 +170,7 @@ module Bybit
       # @option kwargs [Integer] :end_time End timestamp in milliseconds
       # @option kwargs [Integer] :limit Page size limit
       # @option kwargs [String] :cursor Pagination cursor
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_order_history(category:, **kwargs)
         params = kwargs.merge(category: category)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -173,6 +184,7 @@ module Bybit
       # @param category [String] Product category
       # @option kwargs [String] :product_id Product ID
       # @option kwargs [String] :coin Coin
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_position(category:, **kwargs)
         params = kwargs.merge(category: category)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -185,6 +197,7 @@ module Bybit
       #
       # @param category [String] Product category
       # @option kwargs [String] :coin Coin
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_product(category:, **kwargs)
         params = kwargs.merge(category: category)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -201,6 +214,7 @@ module Bybit
       # @option kwargs [Integer] :end_time End timestamp in milliseconds
       # @option kwargs [Integer] :limit Page size limit
       # @option kwargs [String] :cursor Pagination cursor
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_yield_history(category:, **kwargs)
         params = kwargs.merge(category: category)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -219,6 +233,7 @@ module Bybit
       # @option kwargs [Integer] :end_time End timestamp in ms
       # @option kwargs [Integer] :limit Result limit per page
       # @option kwargs [String] :cursor Cursor for pagination
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_fixed_term_order(**kwargs)
         params = kwargs.dup
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -232,6 +247,7 @@ module Bybit
       # @option kwargs [String] :product_id Product ID
       # @option kwargs [String] :category Product category
       # @option kwargs [String] :coin Coin name
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_fixed_term_position(**kwargs)
         params = kwargs.dup
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -243,6 +259,7 @@ module Bybit
       # GET /v5/earn/fixed-term/product
       #
       # @option kwargs [String] :coin Coin name
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_fixed_term_product(**kwargs)
         params = kwargs.dup
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -264,6 +281,7 @@ module Bybit
       # @option kwargs [Integer] :time_start Start time in ms
       # @option kwargs [Integer] :time_end End time in ms
       # @option kwargs [String] :cursor Cursor for pagination
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_hold_to_earn_yield_history(limit:, **kwargs)
         params = kwargs.merge(limit: limit)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -280,6 +298,7 @@ module Bybit
       # @option kwargs [Integer] :end_time End timestamp in milliseconds
       # @option kwargs [Integer] :limit Result page size
       # @option kwargs [String] :cursor Pagination cursor
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_liquidity_mining_liquidation_records(**kwargs)
         params = kwargs.dup
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -299,6 +318,7 @@ module Bybit
       # @option kwargs [Integer] :end_time End time in ms
       # @option kwargs [Integer] :limit Limit for data size per page
       # @option kwargs [String] :cursor Cursor for pagination
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_liquidity_mining_orders(**kwargs)
         params = kwargs.dup
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -311,6 +331,7 @@ module Bybit
       #
       # @option kwargs [String] :product_id Product ID
       # @option kwargs [String] :base_coin Base coin
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_liquidity_mining_positions(**kwargs)
         params = kwargs.dup
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -323,6 +344,7 @@ module Bybit
       #
       # @option kwargs [String] :base_coin Base coin
       # @option kwargs [String] :quote_coin Quote coin
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_liquidity_mining_products(**kwargs)
         params = kwargs.dup
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -339,6 +361,7 @@ module Bybit
       # @option kwargs [Integer] :end_time End time in ms
       # @option kwargs [Integer] :limit Limit for data size per page
       # @option kwargs [String] :cursor Cursor for pagination
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_liquidity_mining_yield_records(**kwargs)
         params = kwargs.dup
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -352,6 +375,7 @@ module Bybit
       # @param product_id [Integer] Product ID
       # @option kwargs [Integer] :start_time Start time in ms
       # @option kwargs [Integer] :end_time End time in ms
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_rwa_nav_chart(product_id:, **kwargs)
         params = kwargs.merge(product_id: product_id)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -370,6 +394,7 @@ module Bybit
       # @option kwargs [Integer] :end_time End time in ms
       # @option kwargs [Integer] :limit Limit for data size per page
       # @option kwargs [String] :cursor Cursor for pagination
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_rwa_order_list(**kwargs)
         params = kwargs.dup
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -388,6 +413,7 @@ module Bybit
       # GET /v5/earn/rwa/product
       #
       # @option kwargs [String] :coin Coin name
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_rwa_product_list(**kwargs)
         params = kwargs.dup
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -400,6 +426,7 @@ module Bybit
       #
       # @param category [String] Product category
       # @param position_ids [String] Position IDs
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_smart_leverage_redeem_est_amount_list(category:, position_ids:, **kwargs)
         params = kwargs.merge(category: category, position_ids: position_ids)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -415,6 +442,7 @@ module Bybit
       # @option kwargs [Integer] :end_time End timestamp in ms
       # @option kwargs [String] :cursor Cursor for pagination
       # @option kwargs [Integer] :limit Result limit per page
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_token_daily_yield(coin:, **kwargs)
         params = kwargs.merge(coin: coin)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -427,6 +455,7 @@ module Bybit
       #
       # @param coin [String] Coin name
       # @param range [Integer] Range window for APR history
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_token_historical_apr(coin:, range:, **kwargs)
         params = kwargs.merge(coin: coin, range: range)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -442,6 +471,7 @@ module Bybit
       # @option kwargs [Integer] :end_time End timestamp in ms
       # @option kwargs [String] :cursor Cursor for pagination
       # @option kwargs [Integer] :limit Result limit per page
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_token_hourly_yield(coin:, **kwargs)
         params = kwargs.merge(coin: coin)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -460,6 +490,7 @@ module Bybit
       # @option kwargs [Integer] :end_time End timestamp in ms
       # @option kwargs [String] :cursor Cursor for pagination
       # @option kwargs [Integer] :limit Result limit per page
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_token_order_list(coin:, **kwargs)
         params = kwargs.merge(coin: coin)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -471,6 +502,7 @@ module Bybit
       # GET /v5/earn/token/position
       #
       # @param coin [String] Coin name
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_token_position(coin:, **kwargs)
         params = kwargs.merge(coin: coin)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -482,6 +514,7 @@ module Bybit
       # GET /v5/earn/token/product
       #
       # @param coin [String] Coin name
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_token_product(coin:, **kwargs)
         params = kwargs.merge(coin: coin)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -493,6 +526,7 @@ module Bybit
       # GET /v5/earn/coupons
       #
       # @param category [String] Product category
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def list_coupons(category:, **kwargs)
         params = kwargs.merge(category: category)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -507,6 +541,7 @@ module Bybit
       # @param product_id [Integer] Product ID
       # @param position_id [Integer] Position ID
       # @param auto_reinvest [Integer] Auto-reinvest flag
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def modify_earn_position(category:, product_id:, position_id:, auto_reinvest:, **kwargs)
         params = kwargs.merge(category: category, product_id: product_id, position_id: position_id, auto_reinvest: auto_reinvest)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -531,6 +566,7 @@ module Bybit
       # @option kwargs [Hash] :double_win_stake_extra Double win stake extra info
       # @option kwargs [Hash] :double_win_redeem_extra Double win redeem extra info
       # @option kwargs [Hash] :discount_buy_extra Discount buy extra info
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def place_advance_earn_order(category:, product_id:, order_type:, amount:, account_type:, coin:, order_link_id:, **kwargs)
         params = kwargs.merge(category: category, product_id: product_id, order_type: order_type, amount: amount, account_type: account_type, coin: coin, order_link_id: order_link_id)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -551,6 +587,7 @@ module Bybit
       # @option kwargs [String] :redeem_position_id Redeem position ID
       # @option kwargs [String] :to_account_type Destination account type
       # @option kwargs [Hash] :interest_card Interest card info
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def place_order(category:, order_type:, account_type:, amount:, coin:, product_id:, order_link_id:, **kwargs)
         params = kwargs.merge(category: category, order_type: order_type, account_type: account_type, amount: amount, coin: coin, product_id: product_id, order_link_id: order_link_id)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -568,6 +605,7 @@ module Bybit
       # @param account_type [String] Account type
       # @param order_link_id [String] Client-supplied order link ID
       # @option kwargs [Boolean] :auto_invest Whether to enable auto-invest
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def place_fixed_term_order(product_id:, category:, coin:, amount:, account_type:, order_link_id:, **kwargs)
         params = kwargs.merge(product_id: product_id, category: category, coin: coin, amount: amount, account_type: account_type, order_link_id: order_link_id)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -585,6 +623,7 @@ module Bybit
       # @option kwargs [String] :stake_amount Stake amount, required when orderType is Stake
       # @option kwargs [String] :redeem_shares Redeem shares, required when orderType is Redeem
       # @option kwargs [String] :account_type Account type
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def place_rwa_order(product_id:, order_type:, coin:, order_link_id:, **kwargs)
         params = kwargs.merge(product_id: product_id, order_type: order_type, coin: coin, order_link_id: order_link_id)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -600,6 +639,7 @@ module Bybit
       # @param order_type [String] Order type (mint or redeem)
       # @param amount [String] Order amount
       # @param account_type [String] Account type
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def place_token_order(coin:, order_link_id:, order_type:, amount:, account_type:, **kwargs)
         params = kwargs.merge(coin: coin, order_link_id: order_link_id, order_type: order_type, amount: amount, account_type: account_type)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -613,6 +653,7 @@ module Bybit
       # @param plan_id [String] Investment plan ID
       # @option kwargs [Integer] :start_time Start timestamp (ms)
       # @option kwargs [Integer] :end_time End timestamp (ms)
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def pwm_asset_trend(plan_id:, **kwargs)
         params = kwargs.merge(plan_id: plan_id)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -626,6 +667,7 @@ module Bybit
       # @param plan_id [String] Investment plan ID
       # @param order_link_id [String] Client-generated unique order link ID
       # @option kwargs [String] :to_account_type Destination account type
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def pwm_claim(plan_id:, order_link_id:, **kwargs)
         params = kwargs.merge(plan_id: plan_id, order_link_id: order_link_id)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -639,6 +681,7 @@ module Bybit
       # @param products [Array] List of products to include in the plan
       # @param order_link_id [String] Client-generated unique order link ID
       # @option kwargs [String] :account_type Source account type
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def pwm_create_custom_plan(products:, order_link_id:, **kwargs)
         params = kwargs.merge(products: products, order_link_id: order_link_id)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -652,6 +695,7 @@ module Bybit
       # @param fund_id [String] Fund ID
       # @option kwargs [Integer] :start_time Start timestamp (ms)
       # @option kwargs [Integer] :end_time End timestamp (ms)
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def pwm_fund_nav(fund_id:, **kwargs)
         params = kwargs.merge(fund_id: fund_id)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -667,6 +711,7 @@ module Bybit
       # @param to_user_id [Integer] Destination sub-account UID
       # @param amount [String] Transfer amount
       # @param coin [String] Coin symbol
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def pwm_fund_transfer(transfer_id:, from_user_id:, to_user_id:, amount:, coin:, **kwargs)
         params = kwargs.merge(transfer_id: transfer_id, from_user_id: from_user_id, to_user_id: to_user_id, amount: amount, coin: coin)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -678,6 +723,7 @@ module Bybit
       # GET /v5/earn/pwm/investment-plan/new-plan
       #
       # @param plan_id [String] Investment plan identifier
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def pwm_get_new_plan_detail(plan_id:, **kwargs)
         params = kwargs.merge(plan_id: plan_id)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -689,6 +735,7 @@ module Bybit
       # GET /v5/earn/pwm/investment-plan/detail
       #
       # @param plan_id [String] Investment plan identifier
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def pwm_get_plan_detail(plan_id:, **kwargs)
         params = kwargs.merge(plan_id: plan_id)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -705,6 +752,7 @@ module Bybit
       # @param management_fee_rate [String] Management fee rate
       # @param req_link_id [String] Client-supplied idempotency key
       # @option kwargs [String] :fund_introduction Fund introduction text
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def pwm_inst_create_fund(fund_name:, coin:, profit_share_rate:, management_fee_rate:, req_link_id:, **kwargs)
         params = kwargs.merge(fund_name: fund_name, coin: coin, profit_share_rate: profit_share_rate, management_fee_rate: management_fee_rate, req_link_id: req_link_id)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -720,6 +768,7 @@ module Bybit
       # @param plan_type [String] Investment plan type
       # @param investment_distribution [Array] Fund allocation distribution
       # @param req_link_id [String] Client-supplied idempotency key
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def pwm_inst_create_investment_plan(account_uid:, plan_name:, plan_type:, investment_distribution:, req_link_id:, **kwargs)
         params = kwargs.merge(account_uid: account_uid, plan_name: plan_name, plan_type: plan_type, investment_distribution: investment_distribution, req_link_id: req_link_id)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -732,6 +781,7 @@ module Bybit
       #
       # @param fund_id [String] Fund identifier
       # @param req_link_id [String] Client-supplied idempotency key
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def pwm_inst_create_sub_account(fund_id:, req_link_id:, **kwargs)
         params = kwargs.merge(fund_id: fund_id, req_link_id: req_link_id)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -747,6 +797,7 @@ module Bybit
       # @option kwargs [String] :subscription_uid Subscription account UID
       # @option kwargs [Integer] :limit Result page size
       # @option kwargs [String] :cursor Pagination cursor
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def pwm_inst_get_investment_plans(**kwargs)
         params = kwargs.dup
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -762,6 +813,7 @@ module Bybit
       # @option kwargs [String] :status Fund status filter
       # @option kwargs [Integer] :limit Result page size
       # @option kwargs [String] :cursor Pagination cursor
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def pwm_inst_list_funds(**kwargs)
         params = kwargs.dup
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -779,6 +831,7 @@ module Bybit
       # @option kwargs [Integer] :end_time End timestamp in milliseconds
       # @option kwargs [Integer] :limit Result page size
       # @option kwargs [String] :cursor Pagination cursor
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def pwm_inst_list_orders(**kwargs)
         params = kwargs.dup
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -793,6 +846,7 @@ module Bybit
       # @param req_link_id [String] Client-supplied idempotency key
       # @option kwargs [String] :update_status New plan status
       # @option kwargs [Array] :update_funds Updated fund allocation
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def pwm_inst_manage_investment_plan(plan_id:, req_link_id:, **kwargs)
         params = kwargs.merge(plan_id: plan_id, req_link_id: req_link_id)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -806,6 +860,7 @@ module Bybit
       # @param order_id [String] Order identifier
       # @param action [String] Approve or reject action
       # @param req_link_id [String] Client-supplied idempotency key
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def pwm_inst_manage_order(order_id:, action:, req_link_id:, **kwargs)
         params = kwargs.merge(order_id: order_id, action: action, req_link_id: req_link_id)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -818,6 +873,7 @@ module Bybit
       #
       # @param fund_id [String] Fund identifier
       # @param req_link_id [String] Client-supplied idempotency key
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def pwm_inst_settle_profit(fund_id:, req_link_id:, **kwargs)
         params = kwargs.merge(fund_id: fund_id, req_link_id: req_link_id)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -834,6 +890,7 @@ module Bybit
       # @param amount [String] Investment amount
       # @param order_link_id [String] Client-generated unique order link ID
       # @option kwargs [String] :account_type Source account type
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def pwm_invest_more(plan_id:, category:, product_id:, amount:, order_link_id:, **kwargs)
         params = kwargs.merge(plan_id: plan_id, category: category, product_id: product_id, amount: amount, order_link_id: order_link_id)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -848,6 +905,7 @@ module Bybit
       # @option kwargs [String] :status Plan status filter
       # @option kwargs [Integer] :limit Result page size
       # @option kwargs [String] :cursor Pagination cursor
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def pwm_list_investment_plans(**kwargs)
         params = kwargs.dup
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -867,6 +925,7 @@ module Bybit
       # @option kwargs [Integer] :limit Result limit per page
       # @option kwargs [String] :cursor Pagination cursor
       # @option kwargs [String] :order_link_id Client order link ID
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def pwm_list_order(**kwargs)
         params = kwargs.dup
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -886,6 +945,7 @@ module Bybit
       #
       # @option kwargs [String] :transfer_id Client-supplied transfer identifier
       # @option kwargs [Integer] :from_user_id Source sub-account UID
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def pwm_query_fund_transfer_result(**kwargs)
         params = kwargs.dup
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -903,6 +963,7 @@ module Bybit
       # @option kwargs [String] :shares Number of shares to redeem
       # @option kwargs [String] :amount Amount to redeem
       # @option kwargs [Integer] :position_id Position ID
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def pwm_redeem(plan_id:, category:, product_id:, order_link_id:, **kwargs)
         params = kwargs.merge(plan_id: plan_id, category: category, product_id: product_id, order_link_id: order_link_id)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -916,6 +977,7 @@ module Bybit
       # @param plan_id [String] Investment plan ID
       # @param order_link_id [String] Client-generated unique order link ID
       # @option kwargs [String] :account_type Source account type
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def pwm_subscribe(plan_id:, order_link_id:, **kwargs)
         params = kwargs.merge(plan_id: plan_id, order_link_id: order_link_id)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -929,6 +991,7 @@ module Bybit
       # @param product_id [String] Product ID
       # @param category [String] Product category
       # @param position_id [String] Position ID
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def redeem_fixed_term(product_id:, category:, position_id:, **kwargs)
         params = kwargs.merge(product_id: product_id, category: category, position_id: position_id)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -942,6 +1005,7 @@ module Bybit
       # @param product_id [String] Product ID
       # @param order_link_id [String] Client order id
       # @param position_id [String] Position ID
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def reinvest_liquidity(product_id:, order_link_id:, position_id:, **kwargs)
         params = kwargs.merge(product_id: product_id, order_link_id: order_link_id, position_id: position_id)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -957,6 +1021,7 @@ module Bybit
       # @param position_id [String] Position ID
       # @option kwargs [Integer] :remove_rate Remove rate percent
       # @option kwargs [String] :remove_type Remove type
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def remove_liquidity(product_id:, order_link_id:, position_id:, **kwargs)
         params = kwargs.merge(product_id: product_id, order_link_id: order_link_id, position_id: position_id)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -971,6 +1036,7 @@ module Bybit
       # @param category [String] Product category
       # @param position_id [String] Position ID
       # @param status [String] Auto-invest status
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def set_fixed_term_auto_invest(product_id:, category:, position_id:, status:, **kwargs)
         params = kwargs.merge(product_id: product_id, category: category, position_id: position_id, status: status)
         params = Bybit::Utils::WireKeys.camelize(params)

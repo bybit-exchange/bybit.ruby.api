@@ -8,6 +8,7 @@ module Bybit
       # GET /v5/market/adlalert
       #
       # @option kwargs [String] :symbol Symbol name
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       # @see https://bybit-exchange.github.io/docs/v5/market/adl-alert
       def get_adl_alert(**kwargs)
         params = kwargs.dup
@@ -25,6 +26,7 @@ module Bybit
       # @option kwargs [String] :settle_coin Settle coin
       # @option kwargs [Integer] :limit Limit for data size per page
       # @option kwargs [String] :cursor Cursor for pagination
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       # @see https://bybit-exchange.github.io/docs/v5/market/delivery-price
       def get_delivery_price(category:, **kwargs)
         params = kwargs.merge(category: category)
@@ -38,6 +40,7 @@ module Bybit
       #
       # @param product_type [String] Product type
       # @option kwargs [String] :group_id Fee group id
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       # @see https://bybit-exchange.github.io/docs/v5/market/fee-group-info
       def get_fee_group_info(product_type:, **kwargs)
         params = kwargs.merge(product_type: product_type)
@@ -54,6 +57,7 @@ module Bybit
       # @option kwargs [Integer] :start_time Start timestamp (ms)
       # @option kwargs [Integer] :end_time End timestamp (ms)
       # @option kwargs [Integer] :limit Limit for data size per page
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       # @see https://bybit-exchange.github.io/docs/v5/market/history-fund-rate
       def get_funding_rate_history(category:, symbol:, **kwargs)
         params = kwargs.merge(category: category, symbol: symbol)
@@ -71,6 +75,7 @@ module Bybit
       # @option kwargs [Integer] :period Period
       # @option kwargs [Integer] :start_time Start timestamp (ms)
       # @option kwargs [Integer] :end_time End timestamp (ms)
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       # @see https://bybit-exchange.github.io/docs/v5/market/iv
       def get_historical_volatility(category:, **kwargs)
         params = kwargs.merge(category: category)
@@ -83,6 +88,7 @@ module Bybit
       # GET /v5/market/index-price-components
       #
       # @param index_name [String] Index name
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_index_price_components(index_name:, **kwargs)
         params = kwargs.merge(index_name: index_name)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -99,6 +105,7 @@ module Bybit
       # @option kwargs [Integer] :start Start timestamp (ms)
       # @option kwargs [Integer] :end_ End timestamp (ms)
       # @option kwargs [Integer] :limit Limit for data size per page
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       # @see https://bybit-exchange.github.io/docs/v5/market/index-kline
       def get_index_price_kline(symbol:, interval:, **kwargs)
         params = kwargs.merge(symbol: symbol, interval: interval)
@@ -117,6 +124,7 @@ module Bybit
       # @option kwargs [String] :base_coin Base coin
       # @option kwargs [Integer] :limit Limit for data size per page
       # @option kwargs [String] :cursor Cursor for pagination
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       # @see https://bybit-exchange.github.io/docs/v5/market/instrument
       def get_instruments_info(category:, **kwargs)
         params = kwargs.merge(category: category)
@@ -129,6 +137,7 @@ module Bybit
       # GET /v5/market/insurance
       #
       # @option kwargs [String] :coin Coin name
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       # @see https://bybit-exchange.github.io/docs/v5/market/insurance
       def get_insurance_pool(**kwargs)
         params = kwargs.dup
@@ -147,6 +156,7 @@ module Bybit
       # @option kwargs [String] :end_time End timestamp (ms)
       # @option kwargs [Integer] :limit Limit for data size per page
       # @option kwargs [String] :cursor Cursor for pagination
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       # @see https://bybit-exchange.github.io/docs/v5/market/long-short-ratio
       def get_long_short_ratio(category:, symbol:, period:, **kwargs)
         params = kwargs.merge(category: category, symbol: symbol, period: period)
@@ -164,6 +174,7 @@ module Bybit
       # @option kwargs [Integer] :start Start timestamp (ms)
       # @option kwargs [Integer] :end_ End timestamp (ms)
       # @option kwargs [Integer] :limit Limit for data size per page
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       # @see https://bybit-exchange.github.io/docs/v5/market/mark-kline
       def get_mark_price_kline(symbol:, interval:, **kwargs)
         params = kwargs.merge(symbol: symbol, interval: interval)
@@ -182,6 +193,7 @@ module Bybit
       # @option kwargs [Integer] :start Start timestamp (ms)
       # @option kwargs [Integer] :end_ End timestamp (ms)
       # @option kwargs [Integer] :limit Limit for data size per page
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       # @see https://bybit-exchange.github.io/docs/v5/market/kline
       def get_kline(symbol:, interval:, **kwargs)
         params = kwargs.merge(symbol: symbol, interval: interval)
@@ -197,6 +209,7 @@ module Bybit
       # @param category [String] Product type
       # @param base_coin [String] Base coin
       # @option kwargs [String] :settle_coin Settle coin
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       # @see https://bybit-exchange.github.io/docs/v5/market/new-delivery-price
       def get_new_delivery_price(category:, base_coin:, **kwargs)
         params = kwargs.merge(category: category, base_coin: base_coin)
@@ -215,6 +228,7 @@ module Bybit
       # @option kwargs [Integer] :end_time End timestamp (ms)
       # @option kwargs [Integer] :limit Limit for data size per page
       # @option kwargs [String] :cursor Cursor for pagination
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       # @see https://bybit-exchange.github.io/docs/v5/market/open-interest
       def get_open_interest(category:, symbol:, interval_time:, **kwargs)
         params = kwargs.merge(category: category, symbol: symbol, interval_time: interval_time)
@@ -228,6 +242,7 @@ module Bybit
       #
       # @param symbol [String] Symbol name
       # @option kwargs [String] :category Product type
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_order_price_limit(symbol:, **kwargs)
         params = kwargs.merge(symbol: symbol)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -241,6 +256,7 @@ module Bybit
       # @param category [String] Product type: spot, linear, inverse, option
       # @param symbol [String] Symbol name
       # @option kwargs [Integer] :limit Limit size for each bid/ask
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       # @see https://bybit-exchange.github.io/docs/v5/market/orderbook
       def get_orderbook(category:, symbol:, **kwargs)
         params = kwargs.merge(category: category, symbol: symbol)
@@ -258,6 +274,7 @@ module Bybit
       # @option kwargs [Integer] :start The start timestamp (ms)
       # @option kwargs [Integer] :end_ The end timestamp (ms)
       # @option kwargs [Integer] :limit Limit for data size per page. [1, 1000]. Default: 200
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       # @see https://bybit-exchange.github.io/docs/v5/market/premium-index-kline
       def get_premium_index_price_kline(symbol:, interval:, **kwargs)
         params = kwargs.merge(symbol: symbol, interval: interval)
@@ -275,6 +292,7 @@ module Bybit
       # @option kwargs [String] :base_coin Base coin, for option only
       # @option kwargs [String] :option_type Option type: Call or Put, for option only
       # @option kwargs [Integer] :limit Limit for data size per page
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       # @see https://bybit-exchange.github.io/docs/v5/market/recent-trade
       def get_recent_public_trades(category:, **kwargs)
         params = kwargs.merge(category: category)
@@ -289,6 +307,7 @@ module Bybit
       # @param category [String] Product type: linear, inverse
       # @option kwargs [String] :symbol Symbol name
       # @option kwargs [String] :cursor Cursor for pagination
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       # @see https://bybit-exchange.github.io/docs/v5/market/risk-limit
       def get_risk_limit(category:, **kwargs)
         params = kwargs.merge(category: category)
@@ -303,6 +322,7 @@ module Bybit
       # @param symbol [String] Symbol name
       # @param limit [Integer] Limit size for each bid/ask
       # @option kwargs [String] :category Product type: spot
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       # @see https://bybit-exchange.github.io/docs/v5/market/rpi-orderbook
       def get_rpi_orderbook(symbol:, limit:, **kwargs)
         params = kwargs.merge(symbol: symbol, limit: limit)
@@ -327,6 +347,7 @@ module Bybit
       # @option kwargs [String] :symbol Symbol name
       # @option kwargs [String] :base_coin Base coin, for option only
       # @option kwargs [String] :exp_date Expiry date, for option only
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       # @see https://bybit-exchange.github.io/docs/v5/market/tickers
       def get_tickers(category:, **kwargs)
         params = kwargs.merge(category: category)

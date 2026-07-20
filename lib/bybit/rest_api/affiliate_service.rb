@@ -12,6 +12,7 @@ module Bybit
       # @option kwargs [String] :start_date Start date filter
       # @option kwargs [String] :end_date End date filter
       # @option kwargs [Integer] :sub_aff_id Sub-affiliate ID
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       # @see https://bybit-exchange.github.io/docs/v5/affiliate/affiliate-sub-list
       def get_sub_list(**kwargs)
         params = kwargs.dup
@@ -30,6 +31,7 @@ module Bybit
       # @option kwargs [Boolean] :need365 Whether to include 365-day statistics
       # @option kwargs [String] :start_date Start date filter
       # @option kwargs [String] :end_date End date filter
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_user_list(**kwargs)
         params = kwargs.dup
         params = Bybit::Utils::WireKeys.camelize(params)

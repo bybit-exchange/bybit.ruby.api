@@ -19,6 +19,7 @@ module Bybit
       # @param side [String] Side: 0 buy, 1 sell
       # @option kwargs [String] :page Page number
       # @option kwargs [String] :size Page size
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_ads(token_id:, currency_id:, side:, **kwargs)
         params = kwargs.merge(token_id: token_id, currency_id: currency_id, side: side)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -36,6 +37,7 @@ module Bybit
       # @option kwargs [String] :end_time End time in milliseconds
       # @option kwargs [String] :token_id Token ID
       # @option kwargs [Integer] :side Side: 0 buy, 1 sell
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_all_orders(page:, size:, **kwargs)
         params = kwargs.merge(page: page, size: size)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -49,6 +51,7 @@ module Bybit
       # @param order_id [String] Order ID
       # @param size [String] Page size
       # @option kwargs [String] :current_page Current page number
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_chat_messages(order_id:, size:, **kwargs)
         params = kwargs.merge(order_id: order_id, size: size)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -61,6 +64,7 @@ module Bybit
       #
       # @option kwargs [String] :original_uid Original user ID of the counterparty.
       # @option kwargs [String] :order_id P2P order ID.
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_counterparty_user_info(**kwargs)
         params = kwargs.dup
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -72,6 +76,7 @@ module Bybit
       # POST /v5/p2p/item/info
       #
       # @param item_id [String] Advertisement ID
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_my_ad_details(item_id:, **kwargs)
         params = kwargs.merge(item_id: item_id)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -89,6 +94,7 @@ module Bybit
       # @option kwargs [String] :page Page number
       # @option kwargs [String] :size Page size
       # @option kwargs [String] :currency_id Currency ID
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_my_ads(**kwargs)
         params = kwargs.dup
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -100,6 +106,7 @@ module Bybit
       # POST /v5/p2p/order/info
       #
       # @param order_id [String] Order ID
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_order_detail(order_id:, **kwargs)
         params = kwargs.merge(order_id: order_id)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -117,6 +124,7 @@ module Bybit
       # @option kwargs [String] :end_time End time in milliseconds
       # @option kwargs [String] :token_id Token ID
       # @option kwargs [Integer] :side Side: 0 buy, 1 sell
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_pending_orders(page:, size:, **kwargs)
         params = kwargs.merge(page: page, size: size)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -137,6 +145,7 @@ module Bybit
       # @param order_id [String] Order ID
       # @param payment_type [String] Payment method type
       # @param payment_id [String] Payment method ID
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def mark_order_as_paid(order_id:, payment_type:, payment_id:, **kwargs)
         params = kwargs.merge(order_id: order_id, payment_type: payment_type, payment_id: payment_id)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -161,6 +170,7 @@ module Bybit
       # @param quantity [String] Ad quantity
       # @param payment_period [String] Payment period in minutes
       # @param item_type [String] Item type
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def create_ad(token_id:, currency_id:, side:, price_type:, premium:, price:, min_amount:, max_amount:, remark:, trading_preference_set:, payment_ids:, quantity:, payment_period:, item_type:, **kwargs)
         params = kwargs.merge(token_id: token_id, currency_id: currency_id, side: side, price_type: price_type, premium: premium, price: price, min_amount: min_amount, max_amount: max_amount, remark: remark, trading_preference_set: trading_preference_set, payment_ids: payment_ids, quantity: quantity, payment_period: payment_period, item_type: item_type)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -172,6 +182,7 @@ module Bybit
       # POST /v5/p2p/order/finish
       #
       # @param order_id [String] Order ID
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def release_assets(order_id:, **kwargs)
         params = kwargs.merge(order_id: order_id)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -183,6 +194,7 @@ module Bybit
       # POST /v5/p2p/item/cancel
       #
       # @param item_id [String] Advertisement ID
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def remove_ad(item_id:, **kwargs)
         params = kwargs.merge(item_id: item_id)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -198,6 +210,7 @@ module Bybit
       # @param order_id [String] Order ID
       # @param msg_uuid [String] Message UUID
       # @option kwargs [String] :file_name File name when sending a file
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def send_chat_message(message:, content_type:, order_id:, msg_uuid:, **kwargs)
         params = kwargs.merge(message: message, content_type: content_type, order_id: order_id, msg_uuid: msg_uuid)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -220,6 +233,7 @@ module Bybit
       # @param action_type [String] Action type: MODIFY or ACTIVE
       # @param quantity [String] Ad quantity
       # @param payment_period [String] Payment period in minutes
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def update_ad(id:, price_type:, premium:, price:, min_amount:, max_amount:, remark:, trading_preference_set:, payment_ids:, action_type:, quantity:, payment_period:, **kwargs)
         params = kwargs.merge(id: id, price_type: price_type, premium: premium, price: price, min_amount: min_amount, max_amount: max_amount, remark: remark, trading_preference_set: trading_preference_set, payment_ids: payment_ids, action_type: action_type, quantity: quantity, payment_period: payment_period)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -231,6 +245,7 @@ module Bybit
       # POST /v5/p2p/oss/upload_file
       #
       # @param upload_file [String] File to upload
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def upload_chat_file(upload_file:, **kwargs)
         params = kwargs.merge(upload_file: upload_file)
         params = Bybit::Utils::WireKeys.camelize(params)

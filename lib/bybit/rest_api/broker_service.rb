@@ -12,6 +12,7 @@ module Bybit
       # @param spec_code [String] Spec code
       # @param amount [String] Distribution amount
       # @param broker_id [String] Broker ID
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def distribute_award(account_id:, award_id:, spec_code:, amount:, broker_id:, **kwargs)
         params = kwargs.merge(account_id: account_id, award_id: award_id, spec_code: spec_code, amount: amount, broker_id: broker_id)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -23,6 +24,7 @@ module Bybit
       # POST /v5/broker/award/info
       #
       # @param id [String] Voucher ID
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_award_info(id:, **kwargs)
         params = kwargs.merge(id: id)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -37,6 +39,7 @@ module Bybit
       # @param award_id [String] Award ID
       # @param spec_code [String] Spec code
       # @option kwargs [Boolean] :with_used_amount Include used amount flag
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_distribution_record(account_id:, award_id:, spec_code:, **kwargs)
         params = kwargs.merge(account_id: account_id, award_id: award_id, spec_code: spec_code)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -46,7 +49,7 @@ module Bybit
       # Get Broker Account Info
       #
       # GET /v5/broker/account-info
-      def query_account_info
+      def get_broker_account_info
         @session.sign_request(method: :get, path: '/v5/broker/account-info')
       end
 
@@ -57,7 +60,8 @@ module Bybit
       # @option kwargs [String] :uids UIDs to query
       # @option kwargs [Integer] :limit Result limit
       # @option kwargs [String] :cursor Pagination cursor
-      def query_all_uid_details(**kwargs)
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
+      def list_broker_sub_uids(**kwargs)
         params = kwargs.dup
         params = Bybit::Utils::WireKeys.camelize(params)
         @session.sign_request(method: :get, path: '/v5/broker/apilimit/query-all', params: params)
@@ -66,7 +70,7 @@ module Bybit
       # Query Broker Rate Limit Cap
       #
       # GET /v5/broker/apilimit/query-cap
-      def query_cap
+      def get_broker_rate_limit_cap
         @session.sign_request(method: :get, path: '/v5/broker/apilimit/query-cap')
       end
 
@@ -80,7 +84,8 @@ module Bybit
       # @option kwargs [String] :uid Sub UID
       # @option kwargs [Integer] :limit Result limit
       # @option kwargs [String] :cursor Pagination cursor
-      def query_earning(**kwargs)
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
+      def list_broker_earnings(**kwargs)
         params = kwargs.dup
         params[:begin] = params.delete(:begin_) if params.key?(:begin_)
         params[:end] = params.delete(:end_) if params.key?(:end_)
@@ -93,6 +98,7 @@ module Bybit
       # POST /v5/broker/apilimit/set
       #
       # @option kwargs [Array] :list List of rate limit config entries
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def set_api_limit(**kwargs)
         params = kwargs.dup
         params = Bybit::Utils::WireKeys.camelize(params)

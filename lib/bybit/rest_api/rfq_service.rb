@@ -8,6 +8,7 @@ module Bybit
       # POST /v5/rfq/accept-other-quote
       #
       # @param rfq_id [String] RFQ ID
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def accept_non_lp_quote(rfq_id:, **kwargs)
         params = kwargs.merge(rfq_id: rfq_id)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -17,6 +18,7 @@ module Bybit
       # Cancel all active quotes.
       #
       # POST /v5/rfq/cancel-all-quotes
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def cancel_all_quotes(**kwargs)
         params = kwargs.dup
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -26,6 +28,7 @@ module Bybit
       # Cancel all active RFQs.
       #
       # POST /v5/rfq/cancel-all-rfq
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def cancel_all_rfqs(**kwargs)
         params = kwargs.dup
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -39,6 +42,7 @@ module Bybit
       # @option kwargs [String] :quote_id Quote ID
       # @option kwargs [String] :rfq_id RFQ ID
       # @option kwargs [String] :quote_link_id User-defined quote link ID
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def cancel_quote(**kwargs)
         params = kwargs.dup
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -51,6 +55,7 @@ module Bybit
       #
       # @option kwargs [String] :rfq_id RFQ ID
       # @option kwargs [String] :rfq_link_id User-defined RFQ link ID
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def cancel_rfq(**kwargs)
         params = kwargs.dup
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -67,6 +72,7 @@ module Bybit
       # @option kwargs [Integer] :expire_in Expiration time in seconds
       # @option kwargs [Array] :quote_buy_list Buy side quote entries
       # @option kwargs [Array] :quote_sell_list Sell side quote entries
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def create_quote(rfq_id:, **kwargs)
         params = kwargs.merge(rfq_id: rfq_id)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -82,6 +88,7 @@ module Bybit
       # @option kwargs [String] :rfq_link_id User-defined RFQ link ID
       # @option kwargs [Boolean] :anonymous Whether to submit the RFQ anonymously
       # @option kwargs [String] :strategy_type Strategy type
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def create_rfq(counterparties:, list:, **kwargs)
         params = kwargs.merge(counterparties: counterparties, list: list)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -95,6 +102,7 @@ module Bybit
       # @param rfq_id [String] RFQ ID
       # @param quote_id [String] Quote ID
       # @param quote_side [String] Quote side (Buy or Sell)
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def execute_quote(rfq_id:, quote_id:, quote_side:, **kwargs)
         params = kwargs.merge(rfq_id: rfq_id, quote_id: quote_id, quote_side: quote_side)
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -109,6 +117,7 @@ module Bybit
       # @option kwargs [Integer] :end_time End timestamp in milliseconds
       # @option kwargs [Integer] :limit Maximum number of records to return
       # @option kwargs [String] :cursor Pagination cursor
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_public_trades(**kwargs)
         params = kwargs.dup
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -126,6 +135,7 @@ module Bybit
       # @option kwargs [String] :status Quote status filter
       # @option kwargs [Integer] :limit Maximum number of records to return
       # @option kwargs [String] :cursor Pagination cursor
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_quotes(**kwargs)
         params = kwargs.dup
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -140,6 +150,7 @@ module Bybit
       # @option kwargs [String] :quote_id Quote ID
       # @option kwargs [String] :quote_link_id User-defined quote link ID
       # @option kwargs [String] :trader_type Trader type (Taker or Maker)
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_quotes_realtime(**kwargs)
         params = kwargs.dup
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -149,6 +160,7 @@ module Bybit
       # Query RFQ configuration information.
       #
       # GET /v5/rfq/config
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_config(**kwargs)
         params = kwargs.dup
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -165,6 +177,7 @@ module Bybit
       # @option kwargs [String] :status RFQ status filter
       # @option kwargs [Integer] :limit Maximum number of records to return
       # @option kwargs [String] :cursor Pagination cursor
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_rfqs(**kwargs)
         params = kwargs.dup
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -178,6 +191,7 @@ module Bybit
       # @option kwargs [String] :rfq_id RFQ ID
       # @option kwargs [String] :rfq_link_id User-defined RFQ link ID
       # @option kwargs [String] :trader_type Trader type (Taker or Maker)
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_rfqs_realtime(**kwargs)
         params = kwargs.dup
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -196,6 +210,7 @@ module Bybit
       # @option kwargs [String] :status Trade status filter
       # @option kwargs [Integer] :limit Maximum number of records to return
       # @option kwargs [String] :cursor Pagination cursor
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_trade_history(**kwargs)
         params = kwargs.dup
         params = Bybit::Utils::WireKeys.camelize(params)

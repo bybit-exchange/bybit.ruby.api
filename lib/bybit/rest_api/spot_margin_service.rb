@@ -11,6 +11,7 @@ module Bybit
       # @option kwargs [String] :vip_level VIP level
       # @option kwargs [Integer] :start_time Start time in milliseconds
       # @option kwargs [Integer] :end_time End time in milliseconds
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       # @see https://bybit-exchange.github.io/docs/v5/spot-margin-uta/historical-interest
       def get_historical_interest_rate(currency:, **kwargs)
         params = kwargs.merge(currency: currency)
@@ -23,6 +24,7 @@ module Bybit
       # GET /v5/spot-margin-trade/position-tiers
       #
       # @option kwargs [String] :currency Currency
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       # @see https://bybit-exchange.github.io/docs/v5/spot-margin-uta/position-tiers
       def get_position_tiers(**kwargs)
         params = kwargs.dup
@@ -35,6 +37,7 @@ module Bybit
       # GET /v5/spot-margin-trade/collateral
       #
       # @option kwargs [String] :currency Currency
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def get_tiered_collateral_ratio(**kwargs)
         params = kwargs.dup
         params = Bybit::Utils::WireKeys.camelize(params)
@@ -47,6 +50,7 @@ module Bybit
       #
       # @option kwargs [String] :vip_level VIP level
       # @option kwargs [String] :currency Currency
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       # @see https://bybit-exchange.github.io/docs/v5/spot-margin-uta/vip-margin
       def get_vip_margin_data(**kwargs)
         params = kwargs.dup
