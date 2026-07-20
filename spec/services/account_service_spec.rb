@@ -17,6 +17,7 @@ RSpec.describe Bybit::RestApi::AccountService do
     { name: :get_dcp_info, path: '/v5/account/query-dcp-info', method: :get, signed: true },
     { name: :get_fee_rate, path: '/v5/account/fee-rate', method: :get, signed: true },
     { name: :get_info, path: '/v5/account/info', method: :get, signed: true },
+    { name: :get_wallet_balance, path: '/v5/account/wallet-balance', method: :get, signed: true },
     { name: :get_instruments, path: '/v5/account/instruments-info', method: :get, signed: true },
     { name: :get_mmp_state, path: '/v5/account/mmp-state', method: :get, signed: true },
     { name: :get_smp_group, path: '/v5/account/smp-group', method: :get, signed: true },

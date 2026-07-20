@@ -28,6 +28,20 @@ module Bybit
         @session.sign_request(method: :get, path: '/v5/account/info', params: params)
       end
 
+      # Get Wallet Balance
+      #
+      # GET /v5/account/wallet-balance
+      #
+      # @param account_type [String] Account type: UNIFIED / CONTRACT / SPOT / FUND / OPTION.
+      # @option kwargs [String] :coin Coin filter — comma-separated, e.g. "USDT,BTC".
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
+      # @see https://bybit-exchange.github.io/docs/v5/account/wallet-balance
+      def get_wallet_balance(account_type:, **kwargs)
+        params = kwargs.merge(account_type: account_type)
+        params = Bybit::Utils::WireKeys.camelize(params)
+        @session.sign_request(method: :get, path: '/v5/account/wallet-balance', params: params)
+      end
+
       # Get Account Instruments
       #
       # GET /v5/account/instruments-info
