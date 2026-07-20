@@ -11,7 +11,7 @@ RSpec.describe Bybit::RestApi::MarketService do
 
   # Filled in by the loop below — one row per method the scanner picked up.
   method_table = [
-    { name: :get_adl_alert, path: '/v5/market/adlalert', method: :get, signed: false },
+    { name: :get_adl_alert, path: '/v5/market/adlAlert', method: :get, signed: false },
     { name: :get_delivery_price, path: '/v5/market/delivery-price', method: :get, signed: false },
     { name: :get_fee_group_info, path: '/v5/market/fee-group-info', method: :get, signed: false },
     { name: :get_funding_rate_history, path: '/v5/market/funding/history', method: :get, signed: false },
