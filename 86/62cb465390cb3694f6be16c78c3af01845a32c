@@ -1,0 +1,35 @@
+bybit-connector-ruby.gemspec
+  1adcbffea6bb5b5a 9-11,19-21,28-29
+lib/bybit/session.rb
+  1adcbffea6bb5b5a 28,83-86,93-94,105,131,143,152
+lib/bybit/client.rb
+  1adcbffea6bb5b5a 24,28,36-38,69
+lib/bybit/utils/wire_keys.rb
+  1adcbffea6bb5b5a 21,32,38-42,48,51,57,60
+lib/bybit/configuration.rb
+  1adcbffea6bb5b5a 31-34,36,40-52,55-57,64,68,71
+lib/bybit/error.rb
+  1adcbffea6bb5b5a 48,56-57,64
+.rubocop.yml
+  1adcbffea6bb5b5a 12-16,23-25,27-28
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.2-bit.10+672fbf0",
+  "base_commit_sha": "8662cb465390cb3694f6be16c78c3af01845a32c",
+  "prompts": {
+    "1adcbffea6bb5b5a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "cb3ee151-5ece-496c-8605-1029e90d38cc",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "doris-xiao-bybit",
+      "messages": [],
+      "total_additions": 76,
+      "total_deletions": 52,
+      "accepted_lines": 75,
+      "overriden_lines": 0
+    }
+  }
+}
