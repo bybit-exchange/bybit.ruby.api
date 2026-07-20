@@ -1,0 +1,23 @@
+spec/spec_helper.rb
+  1adcbffea6bb5b5a 7-29
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.2-bit.10+672fbf0",
+  "base_commit_sha": "46b3f6393f28fa5f66d2413b334547eb703e389c",
+  "prompts": {
+    "1adcbffea6bb5b5a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "cb3ee151-5ece-496c-8605-1029e90d38cc",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "doris-xiao-bybit",
+      "messages": [],
+      "total_additions": 23,
+      "total_deletions": 3,
+      "accepted_lines": 23,
+      "overriden_lines": 0
+    }
+  }
+}
