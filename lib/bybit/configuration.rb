@@ -28,35 +28,47 @@ module Bybit
     # Serialization-safe hash used by as_json / to_json / marshal_dump.
     def to_h_safe
       {
-        api_key:     redact(@api_key),
-        api_secret:  redact(@api_secret),
-        testnet:     @testnet,
-        base_url:    resolved_base_url,
+        api_key: redact(@api_key),
+        api_secret: redact(@api_secret),
+        testnet: @testnet,
+        base_url: resolved_base_url,
         recv_window: @recv_window,
-        timeout:     @timeout,
+        timeout: @timeout
       }
     end
 
-    def to_json(*args); require 'json'; to_h_safe.to_json(*args); end
-    def as_json(*_); to_h_safe.transform_keys(&:to_s); end
-    def marshal_dump; to_h_safe; end
+    def to_json(*args)
+      require 'json'
+      to_h_safe.to_json(*args)
+    end
+
+    def as_json(*_)
+      to_h_safe.transform_keys(&:to_s)
+    end
+
+    def marshal_dump
+      to_h_safe
+    end
+
     # Un-marshalling a redacted Configuration is intentionally lossy — callers
     # should never round-trip credentials through Marshal.
-    def marshal_load(h); h.each { |k, v| instance_variable_set("@#{k}", v) }; end
+    def marshal_load(hash)
+      hash.each { |k, v| instance_variable_set("@#{k}", v) }
+    end
 
     # Redact credentials from #inspect and #to_s so a stray puts/logger call
     # doesn't leak the secret into log aggregation.
     def inspect
       "#<Bybit::Configuration api_key=#{redact(@api_key)} api_secret=#{redact(@api_secret)} testnet=#{@testnet} base_url=#{resolved_base_url}>"
     end
-    alias_method :to_s, :inspect
+    alias to_s inspect
 
     private
 
-    def redact(v)
+    def redact(value)
       # Use .to_s.empty? so an Integer / other non-String credential (rare but
       # possible via misconfig) doesn't crash with NoMethodError.
-      v.nil? || v.to_s.empty? ? '(unset)' : '[REDACTED]'
+      value.nil? || value.to_s.empty? ? '(unset)' : '[REDACTED]'
     end
   end
 end

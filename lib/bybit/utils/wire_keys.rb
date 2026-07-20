@@ -18,7 +18,7 @@ module Bybit
       # `params[:end] = params.delete(:end_)` shims.
       RESERVED_ALIASES = {
         end_: :end, begin_: :begin, class_: :class, next_: :next,
-        return_: :return, do_: :do, if_: :if, else_: :else,
+        return_: :return, do_: :do, if_: :if, else_: :else
       }.freeze
 
       module_function
@@ -29,30 +29,35 @@ module Bybit
       # rewritten to their bare form.
       def camelize(hash)
         return hash if hash.nil?
+
         hash.each_with_object({}) do |(k, v), out|
           out[to_camel(unalias(k))] = camelize_value(v)
         end
       end
 
-      def camelize_value(v)
-        case v
-        when Hash  then camelize(v)
-        when Array then v.map { |el| el.is_a?(Hash) ? camelize(el) : el }
-        else v
+      def camelize_value(value)
+        case value
+        when Hash  then camelize(value)
+        when Array then value.map { |el| el.is_a?(Hash) ? camelize(el) : el }
+        else value
         end
       end
 
       def unalias(key)
         return key unless key.is_a?(Symbol) || key.is_a?(String)
+
         aliased = RESERVED_ALIASES[key.to_s.to_sym]
         return key unless aliased
+
         key.is_a?(Symbol) ? aliased : aliased.to_s
       end
 
       def to_camel(key)
         return key unless key.is_a?(Symbol) || key.is_a?(String)
+
         parts = key.to_s.split('_')
         return key if parts.size < 2
+
         camel = parts[0] + parts[1..].reject(&:empty?).map(&:capitalize).join
         key.is_a?(Symbol) ? camel.to_sym : camel
       end

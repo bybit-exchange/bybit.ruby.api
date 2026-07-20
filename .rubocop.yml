@@ -9,14 +9,23 @@ AllCops:
     - 'bin/**/*'
 Style/Documentation:
   Enabled: false
+# Codegen (lib/bybit/rest_api/*_service.rb) emits long YARD @option lines and
+# wide method signatures verbatim from the OpenAPI spec — reformatting would
+# just be reverted by the next codegen run.
+Layout/LineLength:
+  Max: 400
 Metrics/MethodLength:
   Max: 40
 Metrics/ClassLength:
   Max: 2500
 Metrics/AbcSize:
   Max: 40
-Metrics/ParameterLists:
+Metrics/CyclomaticComplexity:
   Max: 12
+Metrics/PerceivedComplexity:
+  Max: 12
+Metrics/ParameterLists:
+  Max: 15
 Metrics/BlockLength:
   Enabled: false
 Naming/AccessorMethodName:

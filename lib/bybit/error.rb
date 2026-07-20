@@ -45,6 +45,7 @@ module Bybit
   # so consumers can log CDN / maintenance-page HTML for post-mortem.
   class ParseError < TransportError
     attr_reader :body, :http_status
+
     def initialize(message, body: nil, http_status: nil)
       @body = body
       @http_status = http_status
@@ -52,14 +53,15 @@ module Bybit
     end
   end
 
-  AUTH_RET_CODES       = [10002, 10003, 10004, 10005, 10007, 10009, 10010, 10029].freeze
-  RATE_LIMIT_RET_CODES = [10006, 10018].freeze
+  AUTH_RET_CODES       = [10_002, 10_003, 10_004, 10_005, 10_007, 10_009, 10_010, 10_029].freeze
+  RATE_LIMIT_RET_CODES = [10_006, 10_018].freeze
 
   # Route a V5 response with retCode != 0 to the most specific error subclass.
   def self.api_error_from(response, http_status: nil)
     code = response['retCode']
     return AuthError.new(response, http_status: http_status)      if AUTH_RET_CODES.include?(code)
     return RateLimitError.new(response, http_status: http_status) if RATE_LIMIT_RET_CODES.include?(code)
+
     ApiError.new(response, http_status: http_status)
   end
 end

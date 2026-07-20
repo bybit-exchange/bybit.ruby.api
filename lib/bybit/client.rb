@@ -21,9 +21,11 @@ module Bybit
   # Global configuration block — Bybit.configure { |c| c.api_key = ... }
   class << self
     attr_writer :configuration
+
     def configuration
       @configuration ||= Configuration.new
     end
+
     def configure
       yield configuration
     end
@@ -31,20 +33,9 @@ module Bybit
 
   class Client
     # gen-sdk-ruby:client-readers:start
-    attr_reader :account
-    attr_reader :affiliate
-    attr_reader :asset
-    attr_reader :bot
-    attr_reader :broker
-    attr_reader :crypto_loan
-    attr_reader :earn
-    attr_reader :market
-    attr_reader :p2p
-    attr_reader :position
-    attr_reader :rfq
-    attr_reader :spot_margin
-    attr_reader :trade
-    attr_reader :user
+    attr_reader :account, :affiliate, :asset, :bot, :broker, :crypto_loan, :earn,
+                :market, :p2p, :position, :rfq, :spot_margin, :trade, :user
+
     # gen-sdk-ruby:client-readers:end
 
     def initialize(config = nil, **overrides)
@@ -75,6 +66,6 @@ module Bybit
     def inspect
       "#<Bybit::Client testnet=#{@config.testnet} base_url=#{@config.resolved_base_url}>"
     end
-    alias_method :to_s, :inspect
+    alias to_s inspect
   end
 end

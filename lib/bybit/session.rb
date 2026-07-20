@@ -25,7 +25,7 @@ module Bybit
 
     # Public unsigned endpoint — no X-BAPI-* headers attached.
     #   session.public_request(path: '/v5/market/kline', params: {...})
-    def public_request(method: :get, path:, params: nil, body: nil)
+    def public_request(path:, method: :get, params: nil, body: nil)
       dispatch(method: method, path: path, signed: false, params: params, body: body)
     end
 
@@ -80,18 +80,18 @@ module Bybit
     # Arrays become repeated keys (`symbol=BTCUSDT&symbol=ETHUSDT`) — this
     # matches Bybit V5's flat-list expectation.
     def encode_query(params)
-      params.sort_by { |k, _| k.to_s }.flat_map { |k, v|
-        Array(v).map { |single| "#{URI.encode_www_form_component(k.to_s)}=#{URI.encode_www_form_component(single.to_s)}" }
-      }.join('&')
+      params.sort_by { |k, _| k.to_s }.flat_map do |k, v|
+        key_enc = URI.encode_www_form_component(k.to_s)
+        Array(v).map { |single| "#{key_enc}=#{URI.encode_www_form_component(single.to_s)}" }
+      end.join('&')
     end
 
     def build_headers(signed:, method:, query_str:, body_str:)
       h = {}
       h['Content-Type'] = 'application/json' unless body_str.empty?
       return h unless signed
-      if @config.api_key.nil? || @config.api_secret.nil?
-        raise Bybit::ConfigurationError, 'signed endpoint requires api_key + api_secret'
-      end
+      raise Bybit::ConfigurationError, 'signed endpoint requires api_key + api_secret' if @config.api_key.nil? || @config.api_secret.nil?
+
       ts = (Time.now.to_f * 1000).to_i.to_s
       # payload for GET/DELETE is query string; for POST/PUT/PATCH it's the
       # JSON body. Both branches use the SAME predicate as dispatch above.
@@ -102,7 +102,7 @@ module Bybit
       h['X-BAPI-SIGN']        = Authentication.sign_v5(
         @config.api_secret, ts, @config.api_key, @config.recv_window.to_s, payload
       )
-      h['X-BAPI-SIGN-TYPE']   = '2'
+      h['X-BAPI-SIGN-TYPE'] = '2'
       h
     end
 
@@ -128,6 +128,7 @@ module Bybit
         end
       end
       return body if body['retCode'].zero?
+
       raise Bybit.api_error_from(body, http_status: status)
     end
 
@@ -139,6 +140,7 @@ module Bybit
 
     def truncate_for_error(raw)
       return '(nil body)' if raw.nil?
+
       s = raw.is_a?(String) ? raw : raw.inspect
       s.length > 2048 ? "#{s[0, 2048]}…(truncated)" : s
     end
@@ -147,6 +149,7 @@ module Bybit
     # Recursion happens on the wire-key side via WireKeys.camelize.
     def compact(hash)
       return nil if hash.nil?
+
       hash.reject { |_, v| v.nil? }
     end
 
