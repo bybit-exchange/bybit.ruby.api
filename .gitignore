@@ -1,0 +1,15 @@
+/.bundle/
+/vendor/bundle/
+/vendor/
+/coverage/
+/pkg/
+/doc/
+/tmp/
+/log/
+Gemfile.lock
+*.gem
+.DS_Store
+.env
+.env.local
+.idea/
+.vscode/

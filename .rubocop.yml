@@ -1,0 +1,23 @@
+AllCops:
+  TargetRubyVersion: 3.0
+  NewCops: disable
+  SuggestExtensions: false
+  Exclude:
+    - 'vendor/**/*'
+    - 'spec/**/*'
+    - 'examples/**/*'
+    - 'bin/**/*'
+Style/Documentation:
+  Enabled: false
+Metrics/MethodLength:
+  Max: 40
+Metrics/ClassLength:
+  Max: 2500
+Metrics/AbcSize:
+  Max: 40
+Metrics/ParameterLists:
+  Max: 12
+Metrics/BlockLength:
+  Enabled: false
+Naming/AccessorMethodName:
+  Enabled: false
