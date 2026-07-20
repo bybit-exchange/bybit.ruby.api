@@ -95,7 +95,7 @@ module Bybit
       # @option kwargs [Integer] :limit Limit for data size per page
       # @option kwargs [String] :cursor Cursor for pagination
       # @see https://bybit-exchange.github.io/docs/v5/position
-      def get_info_get(category:, **kwargs)
+      def get_positions(category:, **kwargs)
         params = kwargs.merge(category: category)
         params = Bybit::Utils::WireKeys.camelize(params)
         @session.sign_request(method: :get, path: '/v5/position/list', params: params)

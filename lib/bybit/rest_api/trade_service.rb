@@ -19,7 +19,7 @@ module Bybit
       # @option kwargs [Integer] :limit Limit for data size per page
       # @option kwargs [String] :cursor Cursor for pagination
       # @see https://bybit-exchange.github.io/docs/v5/order/execution
-      def get_history(category:, **kwargs)
+      def get_execution_history(category:, **kwargs)
         params = kwargs.merge(category: category)
         params = Bybit::Utils::WireKeys.camelize(params)
         @session.sign_request(method: :get, path: '/v5/execution/list', params: params)
@@ -220,7 +220,7 @@ module Bybit
       # @option kwargs [Integer] :limit Limit for data size per page
       # @option kwargs [String] :cursor Cursor for pagination
       # @see https://bybit-exchange.github.io/docs/v5/order/order-list
-      def get_order_history_get(category:, **kwargs)
+      def get_order_history(category:, **kwargs)
         params = kwargs.merge(category: category)
         params = Bybit::Utils::WireKeys.camelize(params)
         @session.sign_request(method: :get, path: '/v5/order/history', params: params)

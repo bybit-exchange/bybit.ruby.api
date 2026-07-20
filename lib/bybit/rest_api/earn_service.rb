@@ -173,7 +173,7 @@ module Bybit
       # @param category [String] Product category
       # @option kwargs [String] :product_id Product ID
       # @option kwargs [String] :coin Coin
-      def get_position_get(category:, **kwargs)
+      def get_position(category:, **kwargs)
         params = kwargs.merge(category: category)
         params = Bybit::Utils::WireKeys.camelize(params)
         @session.sign_request(method: :get, path: '/v5/earn/position', params: params)

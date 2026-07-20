@@ -1,7 +1,24 @@
 # frozen_string_literal: true
 
 module Bybit
+  # Root class for every failure the SDK raises. `rescue Bybit::Error`
+  # catches everything — auth, rate-limit, timeout, network, parse, misconfig.
   class Error < StandardError; end
+
+  # Configuration mistake caught before the network call (missing api_key,
+  # invalid combination of options). Distinct from AuthError which is a
+  # server-side rejection.
+  class ConfigurationError < Error; end
+
+  # Transport-level errors that don't fit Timeout / Network / a Bybit body.
+  # Faraday::ParsingError / ClientError / ServerError land here.
+  class TransportError < Error; end
+
+  # 5xx HTTP without a decodable Bybit body — infra outage / gateway error.
+  class ServerError < TransportError; end
+
+  # Non-auth 4xx HTTP without a decodable Bybit body — usually WAF / CDN.
+  class ClientError < TransportError; end
 
   # Raised when the server returns HTTP 200 + retCode != 0 (the V5 norm),
   # or when a transport-level error is enriched with a Bybit body payload.
@@ -20,10 +37,13 @@ module Bybit
 
   class AuthError      < ApiError; end
   class RateLimitError < ApiError; end
-  class TimeoutError   < Error;    end
-  class NetworkError   < Error;    end
+  class TimeoutError   < TransportError; end
+  class NetworkError   < TransportError; end
 
-  class ParseError < Error
+  # Body did not parse or didn't match Bybit V5 ApiResponse shape. `body`
+  # holds the raw payload (truncated in the message but full in the attr)
+  # so consumers can log CDN / maintenance-page HTML for post-mortem.
+  class ParseError < TransportError
     attr_reader :body, :http_status
     def initialize(message, body: nil, http_status: nil)
       @body = body

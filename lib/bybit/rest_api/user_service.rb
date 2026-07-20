@@ -66,7 +66,7 @@ module Bybit
       # POST /v5/user/del-submember
       #
       # @param subuid [Integer] Sub UID to delete
-      def delete_sub_member_v5(subuid:, **kwargs)
+      def delete_sub_member(subuid:, **kwargs)
         params = kwargs.merge(subuid: subuid)
         params = Bybit::Utils::WireKeys.camelize(params)
         @session.sign_request(method: :post, path: '/v5/user/del-submember', body: params)
@@ -92,7 +92,7 @@ module Bybit
       # @param uid [String] Affiliate user UID
       # @option kwargs [String] :coin Coin filter
       # @option kwargs [String] :business Business type filter
-      def get_affiliate_custom_open_info_v5(uid:, **kwargs)
+      def get_affiliate_custom_open_info(uid:, **kwargs)
         params = kwargs.merge(uid: uid)
         params = Bybit::Utils::WireKeys.camelize(params)
         @session.sign_request(method: :get, path: '/v5/user/aff-customer-info', params: params)
@@ -117,7 +117,7 @@ module Bybit
       # @option kwargs [Integer] :limit Page limit
       # @option kwargs [String] :cursor Pagination cursor
       # @see https://bybit-exchange.github.io/docs/v5/user/list-sub-apikeys
-      def list_sub_api_keys_v5(subuid:, **kwargs)
+      def list_sub_api_keys(subuid:, **kwargs)
         params = kwargs.merge(subuid: subuid)
         params = Bybit::Utils::WireKeys.camelize(params)
         @session.sign_request(method: :get, path: '/v5/user/sub-apikeys', params: params)
@@ -138,7 +138,7 @@ module Bybit
       #
       # @option kwargs [Integer] :next_cursor Pagination cursor
       # @option kwargs [Integer] :page_size Page size
-      def query_escrow_sub_members_v5(**kwargs)
+      def query_escrow_sub_members(**kwargs)
         params = kwargs.dup
         params = Bybit::Utils::WireKeys.camelize(params)
         @session.sign_request(method: :get, path: '/v5/user/escrow_sub_members', params: params)
@@ -166,13 +166,14 @@ module Bybit
         @session.sign_request(method: :get, path: '/v5/user/query-sub-members')
       end
 
-      # Query Sub-accounts List.
+      # List Sub-accounts (paginated variant — /v5/user/submembers).
+      # Distinct from #query_sub_members (/v5/user/query-sub-members).
       #
       # GET /v5/user/submembers
       #
       # @option kwargs [Integer] :page_size Page size
       # @option kwargs [Integer] :next_cursor Pagination cursor
-      def query_sub_members_v5(**kwargs)
+      def list_sub_members(**kwargs)
         params = kwargs.dup
         params = Bybit::Utils::WireKeys.camelize(params)
         @session.sign_request(method: :get, path: '/v5/user/submembers', params: params)

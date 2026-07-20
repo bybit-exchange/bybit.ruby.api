@@ -251,7 +251,7 @@ module Bybit
       # @param loan_currency [String] Loan currency
       # @param collateral_coin [String] Collateral coin
       # @param amount [String] Repay amount
-      def post_crypto_loan_fixed_repay_collateral(loan_id:, loan_currency:, collateral_coin:, amount:, **kwargs)
+      def repay_fixed_with_collateral(loan_id:, loan_currency:, collateral_coin:, amount:, **kwargs)
         params = kwargs.merge(loan_id: loan_id, loan_currency: loan_currency, collateral_coin: collateral_coin, amount: amount)
         params = Bybit::Utils::WireKeys.camelize(params)
         @session.sign_request(method: :post, path: '/v5/crypto-loan-fixed/repay-collateral', body: params)
@@ -340,7 +340,7 @@ module Bybit
       # @param loan_currency [String] Loan currency
       # @param collateral_coin [String] Collateral coin
       # @param amount [String] Repayment amount
-      def post_crypto_loan_flexible_repay_collateral(loan_currency:, collateral_coin:, amount:, **kwargs)
+      def repay_flexible_with_collateral(loan_currency:, collateral_coin:, amount:, **kwargs)
         params = kwargs.merge(loan_currency: loan_currency, collateral_coin: collateral_coin, amount: amount)
         params = Bybit::Utils::WireKeys.camelize(params)
         @session.sign_request(method: :post, path: '/v5/crypto-loan-flexible/repay-collateral', body: params)

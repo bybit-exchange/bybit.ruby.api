@@ -8,11 +8,15 @@ module Bybit
   # Session owns the Faraday connection + auth-header assembly. Every service
   # class receives a Session instance and dispatches through public_request /
   # sign_request. Modeled after binance-connector-ruby's Session pattern.
+  #
+  # Signing invariant: the payload signed and the query string sent on the
+  # wire MUST be byte-identical. We enforce this by building ONE query_str
+  # (via encode_query after key-sort) and using it verbatim for both
+  # the signature payload AND the request URL — never letting Faraday's
+  # NestedParamsEncoder re-serialize the params. This avoids the classic
+  # array-value / nested-hash reorder bug.
   class Session
-    SENSITIVE_HEADERS = %w[
-      x-bapi-api-key x-bapi-sign x-bapi-timestamp x-bapi-recv-window
-      x-bapi-sign-type authorization cookie set-cookie
-    ].freeze
+    PAYLOAD_QUERY_METHODS = %i[get delete].freeze
 
     def initialize(config)
       @config = config
@@ -33,15 +37,31 @@ module Bybit
     private
 
     def dispatch(method:, path:, signed:, params:, body:)
+      # Only GET / DELETE carry params on the query string. Silently dropping
+      # params on POST / PUT / PATCH used to leave codegen typos undiagnosed
+      # for weeks — now they raise loudly.
+      if params && !PAYLOAD_QUERY_METHODS.include?(method) && !body.nil?
+        raise Bybit::ConfigurationError,
+              "params: is only valid on GET/DELETE — #{method.to_s.upcase} must pass data via body:"
+      end
       clean_params = compact(params)
       clean_body   = compact(body)
-      query_str = clean_params ? URI.encode_www_form(clean_params) : ''
+      query_str = clean_params ? encode_query(clean_params) : ''
       body_str  = clean_body ? JSON.generate(clean_body) : ''
       headers = build_headers(signed: signed, method: method, query_str: query_str, body_str: body_str)
 
+      # Build URL manually with our own query_str so the wire bytes match
+      # what we signed. `req.params =` would re-serialize through
+      # Faraday::NestedParamsEncoder which key-orders and array-brackets
+      # differently, breaking the signature.
+      full_url = if !query_str.empty? && PAYLOAD_QUERY_METHODS.include?(method)
+                   "#{path}?#{query_str}"
+                 else
+                   path
+                 end
+
       resp = @conn.send(method) do |req|
-        req.url path
-        req.params = clean_params if clean_params && [:get, :delete].include?(method)
+        req.url full_url
         req.headers.update(headers)
         req.body = body_str if clean_body
       end
@@ -50,6 +70,19 @@ module Bybit
       raise Bybit::TimeoutError, e.message
     rescue Faraday::ConnectionFailed, Faraday::SSLError => e
       raise Bybit::NetworkError, e.message
+    rescue Faraday::Error => e
+      # Catch-all for Faraday::ParsingError / ClientError / ServerError etc.
+      # that surface when the caller wires their own error-raising middleware.
+      raise Bybit::TransportError, e.message
+    end
+
+    # Deterministic `&`-joined encoding, keys sorted, values URI-escaped.
+    # Arrays become repeated keys (`symbol=BTCUSDT&symbol=ETHUSDT`) — this
+    # matches Bybit V5's flat-list expectation.
+    def encode_query(params)
+      params.sort_by { |k, _| k.to_s }.flat_map { |k, v|
+        Array(v).map { |single| "#{URI.encode_www_form_component(k.to_s)}=#{URI.encode_www_form_component(single.to_s)}" }
+      }.join('&')
     end
 
     def build_headers(signed:, method:, query_str:, body_str:)
@@ -57,10 +90,12 @@ module Bybit
       h['Content-Type'] = 'application/json' unless body_str.empty?
       return h unless signed
       if @config.api_key.nil? || @config.api_secret.nil?
-        raise ArgumentError, 'signed endpoint requires api_key + api_secret'
+        raise Bybit::ConfigurationError, 'signed endpoint requires api_key + api_secret'
       end
       ts = (Time.now.to_f * 1000).to_i.to_s
-      payload = method == :get ? query_str : body_str
+      # payload for GET/DELETE is query string; for POST/PUT/PATCH it's the
+      # JSON body. Both branches use the SAME predicate as dispatch above.
+      payload = PAYLOAD_QUERY_METHODS.include?(method) ? query_str : body_str
       h['X-BAPI-API-KEY']     = @config.api_key
       h['X-BAPI-TIMESTAMP']   = ts
       h['X-BAPI-RECV-WINDOW'] = @config.recv_window.to_s
@@ -72,16 +107,28 @@ module Bybit
     end
 
     def parse_response(response)
-      body = response.body
-      body = safe_parse_json(body) if body.is_a?(String)
-      unless body.is_a?(Hash) && body['retCode'].is_a?(Integer)
-        raise Bybit::ParseError.new(
-          "Response is not a valid Bybit V5 ApiResponse (status=#{response.status})",
-          body: body, http_status: response.status
-        )
+      status = response.status
+      raw    = response.body
+      body   = raw.is_a?(String) ? safe_parse_json(raw) : raw
+
+      # HTTP status wins over retCode when the body isn't a valid ApiResponse.
+      # 5xx / non-auth 4xx get their own class so retries and pager logic can
+      # tell them apart from client / auth errors.
+      if !body.is_a?(Hash) || !body['retCode'].is_a?(Integer)
+        preview = truncate_for_error(raw)
+        if status >= 500
+          raise Bybit::ServerError, "Bybit server error (status=#{status}): #{preview}"
+        elsif status >= 400
+          raise Bybit::ClientError, "Bybit client error (status=#{status}): #{preview}"
+        else
+          raise Bybit::ParseError.new(
+            "Response is not a valid Bybit V5 ApiResponse (status=#{status}): #{preview}",
+            body: raw, http_status: status
+          )
+        end
       end
-      return body if body['retCode'] == 0
-      raise Bybit.api_error_from(body, http_status: response.status)
+      return body if body['retCode'].zero?
+      raise Bybit.api_error_from(body, http_status: status)
     end
 
     def safe_parse_json(str)
@@ -90,6 +137,14 @@ module Bybit
       nil
     end
 
+    def truncate_for_error(raw)
+      return '(nil body)' if raw.nil?
+      s = raw.is_a?(String) ? raw : raw.inspect
+      s.length > 2048 ? "#{s[0, 2048]}…(truncated)" : s
+    end
+
+    # Shallow compact only — inner Hash / Array-of-Hash values pass through.
+    # Recursion happens on the wire-key side via WireKeys.camelize.
     def compact(hash)
       return nil if hash.nil?
       hash.reject { |_, v| v.nil? }

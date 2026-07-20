@@ -161,7 +161,7 @@ module Bybit
       # @param quantity [String] Ad quantity
       # @param payment_period [String] Payment period in minutes
       # @param item_type [String] Item type
-      def post_ad(token_id:, currency_id:, side:, price_type:, premium:, price:, min_amount:, max_amount:, remark:, trading_preference_set:, payment_ids:, quantity:, payment_period:, item_type:, **kwargs)
+      def create_ad(token_id:, currency_id:, side:, price_type:, premium:, price:, min_amount:, max_amount:, remark:, trading_preference_set:, payment_ids:, quantity:, payment_period:, item_type:, **kwargs)
         params = kwargs.merge(token_id: token_id, currency_id: currency_id, side: side, price_type: price_type, premium: premium, price: price, min_amount: min_amount, max_amount: max_amount, remark: remark, trading_preference_set: trading_preference_set, payment_ids: payment_ids, quantity: quantity, payment_period: payment_period, item_type: item_type)
         params = Bybit::Utils::WireKeys.camelize(params)
         @session.sign_request(method: :post, path: '/v5/p2p/item/create', body: params)
