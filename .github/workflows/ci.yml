@@ -32,7 +32,9 @@ jobs:
       - name: Gemfile.lock resolves rubygems.org only (block private-registry drift)
         run: |
           if [ -f Gemfile.lock ]; then
-            bad=$(grep -E 'remote:' Gemfile.lock | grep -vE 'https?://rubygems\.org/?' || true)
+            # Only inspect HTTP(S) remotes; skip the PATH section's `remote: .`
+            # that bundler writes for the local gemspec source.
+            bad=$(grep -E '^\s*remote:\s*https?://' Gemfile.lock | grep -vE 'https?://rubygems\.org/?' || true)
             if [ -n "$bad" ]; then
               echo "::error::Gemfile.lock references a non-rubygems.org source. Re-generate with Gemfile pointing at 'https://rubygems.org' only."
               echo "$bad" | head -5
