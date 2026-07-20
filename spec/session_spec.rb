@@ -22,8 +22,10 @@ RSpec.describe Bybit::Session do
       )
       session.sign_request(method: :get, path: '/v5/account/wallet-balance', params: { accountType: 'UNIFIED' })
       expect(WebMock).to(have_requested(:get, url).with do |req|
+        # WebMock title-cases header keys (`X-Bapi-Api-Key`), so match case-insensitively.
+        seen = req.headers.keys.map(&:downcase)
         %w[X-BAPI-API-KEY X-BAPI-TIMESTAMP X-BAPI-RECV-WINDOW X-BAPI-SIGN X-BAPI-SIGN-TYPE]
-          .all? { |h| req.headers.key?(h) }
+          .all? { |h| seen.include?(h.downcase) }
       end)
     end
 
