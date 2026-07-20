@@ -91,6 +91,20 @@ RSpec.describe Bybit::Session do
       stub_request(:get, %r{https://api-testnet\.bybit\.com/v5/market/time}).to_timeout
       expect { session.public_request(path: '/v5/market/time') }.to raise_error(Bybit::TimeoutError)
     end
+
+    # P2P endpoints return the pre-V5 envelope {ret_code, ret_msg, ext_info,
+    # time_now}. Without aliasing, a valid P2P error response is misclassified
+    # as ParseError — swallows the retCode and prevents AuthError / RateLimit
+    # mapping. Regression guard for that.
+    it 'aliases legacy ret_code/ret_msg envelope (P2P) into V5 shape' do
+      stub_request(:post, 'https://api-testnet.bybit.com/v5/p2p/user/personal/info').to_return(
+        status: 200,
+        body: '{"ret_code":10003,"ret_msg":"API key is invalid.","result":{},"ext_code":"","ext_info":null,"time_now":"1700000000.123456"}',
+        headers: { 'Content-Type' => 'application/json' }
+      )
+      expect { session.sign_request(method: :post, path: '/v5/p2p/user/personal/info', body: {}) }
+        .to raise_error(Bybit::AuthError, /10003/)
+    end
   end
 
   describe 'POST + params guard' do

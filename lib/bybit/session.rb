@@ -123,6 +123,7 @@ module Bybit
       status = response.status
       raw    = response.body
       body   = raw.is_a?(String) ? safe_parse_json(raw) : raw
+      body   = normalize_legacy_body(body) if body.is_a?(Hash)
 
       # HTTP status wins over retCode when the body isn't a valid ApiResponse.
       # 5xx / non-auth 4xx get their own class so retries and pager logic can
@@ -143,6 +144,31 @@ module Bybit
       return body if body['retCode'].zero?
 
       raise Bybit.api_error_from(body, http_status: status)
+    end
+
+    # P2P endpoints (and a few legacy V3-derived paths) return the pre-V5
+    # envelope: { ret_code, ret_msg, ext_code, ext_info, time_now, result }.
+    # Alias the legacy keys into the V5 shape so the rest of the parser and
+    # error mapper works uniformly. If the response is already V5, no-op.
+    LEGACY_KEY_MAP = {
+      'ret_code' => 'retCode',
+      'ret_msg' => 'retMsg',
+      'ext_info' => 'retExtInfo',
+      'time_now' => 'time'
+    }.freeze
+
+    def normalize_legacy_body(body)
+      return body if body.key?('retCode')
+      return body unless body.key?('ret_code')
+
+      LEGACY_KEY_MAP.each do |legacy, v5|
+        body[v5] = body.delete(legacy) if body.key?(legacy)
+      end
+      # `time_now` is a Bybit-legacy float-string; V5 exposes `time` as an
+      # integer millisecond epoch. Best-effort coerce so downstream code that
+      # compares against V5 `time` doesn't hit a type mismatch.
+      body['time'] = (body['time'].to_f * 1000).to_i if body['time'].is_a?(String)
+      body
     end
 
     def safe_parse_json(str)

@@ -13,7 +13,7 @@ module Bybit
       def get_adl_alert(**kwargs)
         params = kwargs.dup
         params = Bybit::Utils::WireKeys.camelize(params)
-        @session.public_request(path: '/v5/market/adlalert', params: params)
+        @session.public_request(path: '/v5/market/adlAlert', params: params)
       end
 
       # Get the delivery price for delivery contracts.

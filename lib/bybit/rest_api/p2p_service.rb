@@ -41,7 +41,7 @@ module Bybit
       def get_all_orders(page:, size:, **kwargs)
         params = kwargs.merge(page: page, size: size)
         params = Bybit::Utils::WireKeys.camelize(params)
-        @session.sign_request(method: :post, path: '/v5/p2p/order/simplifylist', body: params)
+        @session.sign_request(method: :post, path: '/v5/p2p/order/simplifyList', body: params)
       end
 
       # Get the paginated chat message list for a P2P order.
@@ -128,7 +128,7 @@ module Bybit
       def get_pending_orders(page:, size:, **kwargs)
         params = kwargs.merge(page: page, size: size)
         params = Bybit::Utils::WireKeys.camelize(params)
-        @session.sign_request(method: :post, path: '/v5/p2p/order/pending/simplifylist', body: params)
+        @session.sign_request(method: :post, path: '/v5/p2p/order/pending/simplifyList', body: params)
       end
 
       # Get the current user's P2P payment method list.
