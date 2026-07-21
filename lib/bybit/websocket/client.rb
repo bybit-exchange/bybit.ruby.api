@@ -174,7 +174,7 @@ module Bybit
       end
 
       def requires_auth?
-        channel == PRIVATE_CHANNEL || channel == TRADE_CHANNEL
+        [PRIVATE_CHANNEL, TRADE_CHANNEL].include?(channel)
       end
 
       def require_auth!
