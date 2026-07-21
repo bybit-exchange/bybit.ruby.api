@@ -1,0 +1,23 @@
+lib/bybit/websocket/client.rb
+  3b663e8011b8c386 177
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.2-bit.10+672fbf0",
+  "base_commit_sha": "a4ec8c0eafca9e76cb669242c5103550b6974909",
+  "prompts": {
+    "3b663e8011b8c386": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "8783d140-a683-40df-b449-9107037f9d91",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "doris-xiao-bybit",
+      "messages": [],
+      "total_additions": 1,
+      "total_deletions": 1,
+      "accepted_lines": 1,
+      "overriden_lines": 0
+    }
+  }
+}
