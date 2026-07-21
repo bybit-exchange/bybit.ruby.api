@@ -97,11 +97,14 @@ Each API group is a property on `Bybit::Client`:
 - `client.affiliate` — sub-affiliate lists
 - `client.broker` — broker earnings, distributions
 - `client.crypto_loan` — flexible / fixed crypto loans
+- `client.institutional_loan` — /v5/ins-loan/* (OTC institutional loans)
 - `client.rfq` — request-for-quote (block trades)
 - `client.spot_margin` — UTA spot margin
 - `client.earn` — earn, liquidity mining, RWA, PWM, hold-to-earn
 - `client.p2p` — P2P advertise / order / chat
 - `client.bot` — DCA / grid / futures-combo / futures-grid / martingale
+- `client.pre_upgrade` — /v5/pre-upgrade/* historical queries for Classic → UTA upgrades
+- `client.misc` — /v5/announcements/index, /v5/system/status
 
 ## Error Handling
 
@@ -153,11 +156,64 @@ response['time']       # => 1234567890000
 
 ## Testnet
 
-Toggle `testnet: true` for [https://testnet.bybit.com](https://testnet.bybit.com):
+Flip `testnet: true` for [https://testnet.bybit.com](https://testnet.bybit.com):
 
 ```ruby
-client = Bybit::Client.new(api_key: ENV['BYBIT_TESTNET_KEY'], api_secret: ENV['BYBIT_TESTNET_SECRET'], testnet: true)
+client = Bybit::Client.new(
+  api_key:    ENV['BYBIT_TESTNET_KEY'],
+  api_secret: ENV['BYBIT_TESTNET_SECRET'],
+  testnet:    true,
+)
 ```
+
+REST base URLs (exported constants):
+
+- `Bybit::BASE_URL_MAINNET` — `https://api.bybit.com`
+- `Bybit::BASE_URL_TESTNET` — `https://api-testnet.bybit.com`
+
+WebSocket hosts follow the same split:
+
+- Mainnet — `wss://stream.bybit.com/v5/{public/<category>|private|trade}`
+- Testnet — `wss://stream-testnet.bybit.com/v5/{public/<category>|private|trade}`
+
+## WebSockets
+
+WebSocket support ships behind an opt-in require so REST-only consumers don't
+load the underlying `websocket-client-simple` dependency at boot:
+
+```ruby
+require 'bybit/websocket'
+
+# Public stream — no auth needed.
+public_ws = Bybit::WebSocket::Client.new(
+  channel: :linear,           # :spot / :linear / :inverse / :option
+  testnet: false,
+  on_message: ->(msg) { puts msg.inspect },
+).connect
+
+public_ws.subscribe('tickers.BTCUSDT', 'orderbook.1.BTCUSDT')
+
+# Private stream — HMAC-SHA256 auth over "GET/realtime" + expiry.
+private_ws = Bybit::WebSocket::Client.new(
+  channel:    :private,
+  api_key:    ENV['BYBIT_KEY'],
+  api_secret: ENV['BYBIT_SECRET'],
+  on_message: ->(msg) { handle_private_event(msg) },
+).connect
+
+private_ws.subscribe('position', 'order', 'wallet')
+
+# Later:
+private_ws.unsubscribe('wallet')
+private_ws.disconnect
+```
+
+Supported channels: `:spot`, `:linear`, `:inverse`, `:option`, `:private`,
+`:trade`. `testnet: true` swaps in the `stream-testnet.bybit.com` host.
+Pings ship every 20 seconds — Bybit closes idle sockets after ~20s of
+silence. There is no automatic reconnect on network drop: callers listening
+on `on_close` can invoke `#connect` again to reopen the socket and replay
+the buffered `#subscriptions`.
 
 ## Development
 

@@ -296,3 +296,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `UserService#sign_agreement(...)`
 - `UserService#update_api_key(...)`
 - `UserService#update_sub_api_key(...)`
+- `InstitutionalLoanService#get_product_info(...)`
+- `InstitutionalLoanService#get_margin_coin_info(...)`
+- `InstitutionalLoanService#get_loan_orders(...)`
+- `InstitutionalLoanService#get_repayment_orders(...)`
+- `InstitutionalLoanService#get_ltv(...)`
+- `InstitutionalLoanService#bind_or_unbind_uid(...)`
+- `InstitutionalLoanService#repay_loan(...)`
+- `MiscService#get_announcements(...)`
+- `MiscService#get_system_status(...)`
+- `PreUpgradeService#get_order_history(...)`
+- `PreUpgradeService#get_trade_history(...)`
+- `PreUpgradeService#get_closed_pnl(...)`
+- `PreUpgradeService#get_transaction_log(...)`
+- `PreUpgradeService#get_option_delivery_record(...)`
+- `PreUpgradeService#get_usdc_session_settlement(...)`
+- `Bybit::WebSocket::Client` — public (spot/linear/inverse/option), private,
+  and trade streams; HMAC-SHA256 auth, ping/pong, deferred subscribe (topics
+  buffered until socket opens; private streams wait for auth OK), idempotent
+  `#connect` (second call replays buffered subscriptions), testnet host
+  support. Load via `require 'bybit/websocket'` (opt-in dep on
+  `websocket-client-simple`).
+- VCR-driven end-to-end specs asserting the exact wire bytes and X-BAPI-SIGN
+  header for signed GET (query) and signed POST (body) routing.
+- SimpleCov floor coverage gate for `lib/bybit/rest_api/*_service.rb` — new
+  services without matching specs now drop CI.
+- README: WebSocket usage section.
+
+### Fixed
+- `Session#parse_response` now maps HTTP 401/403 → `Bybit::AuthError` and 429
+  → `Bybit::RateLimitError` even when the response body is non-JSON
+  (CDN/WAF path), matching the contract in README.md#Error-Handling.
+- `BrokerService#list_broker_earnings` — caller-facing kwargs renamed from
+  `:begin_` / `:end_` to `:start_date` / `:end_date`; internal rewrite now
+  goes through `WireKeys::RESERVED_ALIASES` instead of hand-rolled shim.

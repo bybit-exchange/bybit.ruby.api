@@ -8,9 +8,12 @@ require 'bybit/rest_api/bot_service'
 require 'bybit/rest_api/broker_service'
 require 'bybit/rest_api/crypto_loan_service'
 require 'bybit/rest_api/earn_service'
+require 'bybit/rest_api/institutional_loan_service'
 require 'bybit/rest_api/market_service'
+require 'bybit/rest_api/misc_service'
 require 'bybit/rest_api/p2p_service'
 require 'bybit/rest_api/position_service'
+require 'bybit/rest_api/pre_upgrade_service'
 require 'bybit/rest_api/rfq_service'
 require 'bybit/rest_api/spot_margin_service'
 require 'bybit/rest_api/trade_service'
@@ -34,7 +37,8 @@ module Bybit
   class Client
     # gen-sdk-ruby:client-readers:start
     attr_reader :account, :affiliate, :asset, :bot, :broker, :crypto_loan, :earn,
-                :market, :p2p, :position, :rfq, :spot_margin, :trade, :user
+                :institutional_loan, :market, :misc, :p2p, :position, :pre_upgrade,
+                :rfq, :spot_margin, :trade, :user
 
     # gen-sdk-ruby:client-readers:end
 
@@ -52,9 +56,12 @@ module Bybit
       @broker = RestApi::BrokerService.new(session)
       @crypto_loan = RestApi::CryptoLoanService.new(session)
       @earn = RestApi::EarnService.new(session)
+      @institutional_loan = RestApi::InstitutionalLoanService.new(session)
       @market = RestApi::MarketService.new(session)
+      @misc = RestApi::MiscService.new(session)
       @p2p = RestApi::P2pService.new(session)
       @position = RestApi::PositionService.new(session)
+      @pre_upgrade = RestApi::PreUpgradeService.new(session)
       @rfq = RestApi::RfqService.new(session)
       @spot_margin = RestApi::SpotMarginService.new(session)
       @trade = RestApi::TradeService.new(session)

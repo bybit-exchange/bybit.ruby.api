@@ -22,9 +22,15 @@ Gem::Specification.new do |s|
     'rubygems_mfa_required' => 'true'
   }
   s.add_dependency 'faraday', '~> 2.0'
+  # WebSocket support is opt-in via `require 'bybit/websocket'`. The REST
+  # core (`require 'bybit'`) does not touch this gem, so REST-only users
+  # aren't slowed down by it, but declaring it as a runtime dep gives one
+  # `bundle install` for the common case where callers want both.
+  s.add_dependency 'websocket-client-simple', '~> 0.6'
   s.add_development_dependency 'rspec',     '~> 3.12'
   s.add_development_dependency 'rubocop',   '~> 1.60'
   s.add_development_dependency 'simplecov', '~> 0.22'
+  s.add_development_dependency 'vcr',       '~> 6.2'
   s.add_development_dependency 'webmock',   '~> 3.0'
   s.add_development_dependency 'yard',      '~> 0.9'
 end
