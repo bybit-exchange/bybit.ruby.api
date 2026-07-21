@@ -78,17 +78,22 @@ module Bybit
       #
       # GET /v5/broker/earnings-info
       #
+      # Bybit's spec names the date-range params `begin` / `end`, which are
+      # Ruby keywords — callers use `:start_date` / `:end_date` and we rename
+      # them here before camelize. `:begin_` / `:end_` are also accepted (via
+      # WireKeys::RESERVED_ALIASES) for callers who prefer the underscore form.
+      #
       # @option kwargs [String] :biz_type Business type
-      # @option kwargs [String] :begin_ Begin date
-      # @option kwargs [String] :end_ End date
+      # @option kwargs [String] :start_date Begin date (wire: `begin`)
+      # @option kwargs [String] :end_date End date (wire: `end`)
       # @option kwargs [String] :uid Sub UID
       # @option kwargs [Integer] :limit Result limit
       # @option kwargs [String] :cursor Pagination cursor
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       def list_broker_earnings(**kwargs)
         params = kwargs.dup
-        params[:begin] = params.delete(:begin_) if params.key?(:begin_)
-        params[:end] = params.delete(:end_) if params.key?(:end_)
+        params[:begin_] = params.delete(:start_date) if params.key?(:start_date)
+        params[:end_]   = params.delete(:end_date)   if params.key?(:end_date)
         params = Bybit::Utils::WireKeys.camelize(params)
         @session.sign_request(method: :get, path: '/v5/broker/earnings-info', params: params)
       end

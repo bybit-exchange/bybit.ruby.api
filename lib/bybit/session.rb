@@ -126,11 +126,21 @@ module Bybit
       body   = normalize_legacy_body(body) if body.is_a?(Hash)
 
       # HTTP status wins over retCode when the body isn't a valid ApiResponse.
-      # 5xx / non-auth 4xx get their own class so retries and pager logic can
-      # tell them apart from client / auth errors.
+      # 401/403/429 get their promised AuthError / RateLimitError classes even
+      # when a CDN/WAF returns HTML (no retCode); the README documents this
+      # contract. 5xx / other non-auth 4xx keep their generic Server/Client
+      # buckets so retry and pager logic can tell them apart.
       if !body.is_a?(Hash) || !body['retCode'].is_a?(Integer)
         preview = truncate_for_error(raw)
-        if status >= 500
+        if [401, 403].include?(status)
+          raise Bybit::AuthError.new(
+            "Bybit auth error (status=#{status}): #{preview}", http_status: status
+          )
+        elsif status == 429
+          raise Bybit::RateLimitError.new(
+            "Bybit rate limit (status=#{status}): #{preview}", http_status: status
+          )
+        elsif status >= 500
           raise Bybit::ServerError, "Bybit server error (status=#{status}): #{preview}"
         elsif status >= 400
           raise Bybit::ClientError, "Bybit client error (status=#{status}): #{preview}"

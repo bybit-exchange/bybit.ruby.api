@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## 0.1.0 — 2026-07-20
+## [0.1.0] - 2026-07-20
 
 ### Added
 - `AccountService#batch_set_collateral(...)`
@@ -34,9 +34,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `AccountService#upgrade_to_uta_pro(...)`
 - `AffiliateService#get_sub_list(...)`
 - `AffiliateService#get_user_list(...)`
+- `AssetService#account_coin_balance_query(...)`
+- `AssetService#asset_info_query(...)`
+- `AssetService#cancel_withdraw(...)`
+- `AssetService#coin_convert_limit_query(...)`
+- `AssetService#coin_list_query(...)`
+- `AssetService#convert_execute(...)`
+- `AssetService#convert_history_query(...)`
+- `AssetService#get_asset_overview(...)`
 - `AssetService#get_coin_balance(...)`
 - `AssetService#get_coin_greeks(...)`
+- `AssetService#get_coin_info(...)`
+- `AssetService#get_convert_result(...)`
+- `AssetService#get_delivery_record(...)`
+- `AssetService#get_deposit_address(...)`
+- `AssetService#get_portfolio_margin(...)`
+- `AssetService#get_settlement_record(...)`
+- `AssetService#get_sub_member_deposit_address(...)`
+- `AssetService#get_total_members_assets(...)`
+- `AssetService#get_vasp_list(...)`
+- `AssetService#get_withdrawable_amount_by_coin(...)`
+- `AssetService#inter_transfer(...)`
+- `AssetService#inter_transfer_list_query(...)`
+- `AssetService#list_convert_orders(...)`
+- `AssetService#list_convert_orders_by_page(...)`
+- `AssetService#list_deposit_records(...)`
 - `AssetService#list_funding_history(...)`
+- `AssetService#list_internal_deposit_records(...)`
+- `AssetService#list_small_balance_coins(...)`
+- `AssetService#list_small_balance_history(...)`
+- `AssetService#list_sub_member_deposit_records(...)`
+- `AssetService#list_withdraw_addresses(...)`
+- `AssetService#list_withdraw_records(...)`
+- `AssetService#quote_apply(...)`
+- `AssetService#send_withdraw(...)`
+- `AssetService#set_default_deposit_to_account(...)`
+- `AssetService#small_asset_convert(...)`
+- `AssetService#small_asset_quote(...)`
+- `AssetService#sub_member_list_query(...)`
+- `AssetService#transfer_coin_list_query(...)`
+- `AssetService#transfer_sub_member_save(...)`
+- `AssetService#universal_transfer(...)`
+- `AssetService#universal_transfer_list_query(...)`
 - `BrokerService#distribute_award(...)`
 - `BrokerService#get_award_info(...)`
 - `BrokerService#get_distribution_record(...)`

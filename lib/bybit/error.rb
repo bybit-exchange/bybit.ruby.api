@@ -22,16 +22,24 @@ module Bybit
 
   # Raised when the server returns HTTP 200 + retCode != 0 (the V5 norm),
   # or when a transport-level error is enriched with a Bybit body payload.
+  # Accepts either a V5 response Hash (extracts retCode/retMsg/result/time)
+  # or a plain String message (used for HTTP-status mapping when the CDN/WAF
+  # returns a non-JSON body — e.g. 401/403/429 → AuthError/RateLimitError
+  # without a decodable retCode).
   class ApiError < Error
     attr_reader :ret_code, :ret_msg, :result, :time, :http_status
 
     def initialize(response, http_status: nil)
-      @ret_code    = response['retCode']
-      @ret_msg     = response['retMsg']
-      @result      = response['result']
-      @time        = response['time']
       @http_status = http_status
-      super("[#{@ret_code}] #{@ret_msg}")
+      if response.is_a?(Hash)
+        @ret_code = response['retCode']
+        @ret_msg  = response['retMsg']
+        @result   = response['result']
+        @time     = response['time']
+        super("[#{@ret_code}] #{@ret_msg}")
+      else
+        super(response.to_s)
+      end
     end
   end
 

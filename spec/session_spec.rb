@@ -87,6 +87,34 @@ RSpec.describe Bybit::Session do
       expect { session.public_request(path: '/v5/market/time') }.to raise_error(Bybit::ClientError)
     end
 
+    # README promises 401/403 → AuthError, 429 → RateLimitError. These are
+    # transport-layer statuses returned by CDN/WAF with no Bybit body — the
+    # generic ClientError bucket would silently miss the rescue clauses
+    # documented in README.md#Error-Handling.
+    it 'raises AuthError on HTTP 401 with non-JSON body' do
+      stub_request(:get, %r{https://api-testnet\.bybit\.com/v5/market/time}).to_return(
+        status: 401, body: 'Unauthorized',
+      )
+      expect { session.public_request(path: '/v5/market/time') }
+        .to raise_error(Bybit::AuthError) { |e| expect(e.http_status).to eq(401) }
+    end
+
+    it 'raises AuthError on HTTP 403 with non-JSON body' do
+      stub_request(:get, %r{https://api-testnet\.bybit\.com/v5/market/time}).to_return(
+        status: 403, body: 'Forbidden',
+      )
+      expect { session.public_request(path: '/v5/market/time') }
+        .to raise_error(Bybit::AuthError) { |e| expect(e.http_status).to eq(403) }
+    end
+
+    it 'raises RateLimitError on HTTP 429 with non-JSON body' do
+      stub_request(:get, %r{https://api-testnet\.bybit\.com/v5/market/time}).to_return(
+        status: 429, body: 'Too Many Requests',
+      )
+      expect { session.public_request(path: '/v5/market/time') }
+        .to raise_error(Bybit::RateLimitError) { |e| expect(e.http_status).to eq(429) }
+    end
+
     it 'maps Faraday::TimeoutError to Bybit::TimeoutError' do
       stub_request(:get, %r{https://api-testnet\.bybit\.com/v5/market/time}).to_timeout
       expect { session.public_request(path: '/v5/market/time') }.to raise_error(Bybit::TimeoutError)
