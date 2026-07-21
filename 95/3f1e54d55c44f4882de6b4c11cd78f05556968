@@ -1,0 +1,31 @@
+lib/bybit/error.rb
+  3b663e8011b8c386 25-28,34-42
+lib/bybit/rest_api/broker_service.rb
+  3b663e8011b8c386 81-85,87-88,95-96
+CHANGELOG.md
+  3b663e8011b8c386 8,37-44,47-61,63-78
+lib/bybit/session.rb
+  3b663e8011b8c386 129-132,135-143
+spec/session_spec.rb
+  3b663e8011b8c386 90-117
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.2-bit.10+672fbf0",
+  "base_commit_sha": "953f1e54d55c44f4882de6b4c11cd78f05556968",
+  "prompts": {
+    "3b663e8011b8c386": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "8783d140-a683-40df-b449-9107037f9d91",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "doris-xiao-bybit",
+      "messages": [],
+      "total_additions": 109,
+      "total_deletions": 19,
+      "accepted_lines": 104,
+      "overriden_lines": 0
+    }
+  }
+}
