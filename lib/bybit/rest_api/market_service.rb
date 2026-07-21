@@ -109,7 +109,6 @@ module Bybit
       # @see https://bybit-exchange.github.io/docs/v5/market/index-kline
       def get_index_price_kline(symbol:, interval:, **kwargs)
         params = kwargs.merge(symbol: symbol, interval: interval)
-        params[:end] = params.delete(:end_) if params.key?(:end_)
         params = Bybit::Utils::WireKeys.camelize(params)
         @session.public_request(path: '/v5/market/index-price-kline', params: params)
       end
@@ -178,7 +177,6 @@ module Bybit
       # @see https://bybit-exchange.github.io/docs/v5/market/mark-kline
       def get_mark_price_kline(symbol:, interval:, **kwargs)
         params = kwargs.merge(symbol: symbol, interval: interval)
-        params[:end] = params.delete(:end_) if params.key?(:end_)
         params = Bybit::Utils::WireKeys.camelize(params)
         @session.public_request(path: '/v5/market/mark-price-kline', params: params)
       end
@@ -197,7 +195,6 @@ module Bybit
       # @see https://bybit-exchange.github.io/docs/v5/market/kline
       def get_kline(symbol:, interval:, **kwargs)
         params = kwargs.merge(symbol: symbol, interval: interval)
-        params[:end] = params.delete(:end_) if params.key?(:end_)
         params = Bybit::Utils::WireKeys.camelize(params)
         @session.public_request(path: '/v5/market/kline', params: params)
       end
@@ -278,7 +275,6 @@ module Bybit
       # @see https://bybit-exchange.github.io/docs/v5/market/premium-index-kline
       def get_premium_index_price_kline(symbol:, interval:, **kwargs)
         params = kwargs.merge(symbol: symbol, interval: interval)
-        params[:end] = params.delete(:end_) if params.key?(:end_)
         params = Bybit::Utils::WireKeys.camelize(params)
         @session.public_request(path: '/v5/market/premium-index-price-kline', params: params)
       end
