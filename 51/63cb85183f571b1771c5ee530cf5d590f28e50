@@ -1,0 +1,23 @@
+Rakefile
+  b6be4b9e3f28047f 11-38
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.2-bit.10+672fbf0",
+  "base_commit_sha": "5163cb85183f571b1771c5ee530cf5d590f28e50",
+  "prompts": {
+    "b6be4b9e3f28047f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "e5367e91-37eb-4ce2-99ec-81a07811189b",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "doris-xiao-bybit",
+      "messages": [],
+      "total_additions": 28,
+      "total_deletions": 0,
+      "accepted_lines": 28,
+      "overriden_lines": 0
+    }
+  }
+}
