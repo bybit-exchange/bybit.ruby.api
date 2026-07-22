@@ -1,0 +1,22 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api-testnet.bybit.com/v5/order/create
+    body:
+      encoding: UTF-8
+      string: '{"price":"30000","timeInForce":"GTC","category":"linear","symbol":"BTCUSDT","side":"Buy","orderType":"Limit","qty":"0.01"}'
+    headers: {}
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+    body:
+      encoding: UTF-8
+      string: '{"retCode":0,"retMsg":"OK","result":{"orderId":"1234567890","orderLinkId":""},"retExtInfo":{},"time":1700000000000}'
+    http_version:
+  recorded_at: Wed, 20 Jul 2026 00:00:00 GMT
+recorded_with: VCR 6.2.0

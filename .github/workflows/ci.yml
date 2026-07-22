@@ -1,0 +1,159 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Ruby ${{ matrix.ruby }} — install + rubocop + rspec + smoke
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # Matches gemspec `required_ruby_version >= 3.0`. 3.0 (EOL 2024-03-31)
+        # is kept here so we catch regressions for consumers still on it;
+        # 3.2 is the current LTS-ish; 3.4 is latest stable.
+        ruby: ['3.0', '3.2', '3.4']
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Ruby ${{ matrix.ruby }}
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true   # runs `bundle install` and caches gems
+
+      - name: Gemfile.lock resolves rubygems.org only (block private-registry drift)
+        run: |
+          if [ -f Gemfile.lock ]; then
+            # Only inspect HTTP(S) remotes; skip the PATH section's `remote: .`
+            # that bundler writes for the local gemspec source.
+            bad=$(grep -E '^\s*remote:\s*https?://' Gemfile.lock | grep -vE 'https?://rubygems\.org/?' || true)
+            if [ -n "$bad" ]; then
+              echo "::error::Gemfile.lock references a non-rubygems.org source. Re-generate with Gemfile pointing at 'https://rubygems.org' only."
+              echo "$bad" | head -5
+              exit 1
+            fi
+          fi
+
+      - name: RuboCop
+        run: bundle exec rubocop --parallel
+
+      - name: RSpec (with SimpleCov gates)
+        run: bundle exec rspec
+
+      # Smoke: require the top-level module and construct a Client. Catches
+      # broken require chain / missing constant / class-name typo BEFORE any
+      # consumer sees them. Analogous to JS `dist smoke` step.
+      - name: Load smoke (require + Client.new)
+        run: |
+          # `-rbundler/setup` MUST come before `-rbybit` — Ruby processes -r
+          # options in order, and `bybit` transitively requires `faraday`
+          # (a bundled gem) at load time. On Ruby 3.0, relying on
+          # `bundle exec`'s injected RUBYOPT alone left faraday unactivated.
+          bundle exec ruby -rbundler/setup -Ilib -rbybit -e '
+            raise "Bybit::VERSION missing" unless defined?(Bybit::VERSION)
+            client = Bybit::Client.new(testnet: true)
+            raise "Client init failed" unless client.is_a?(Bybit::Client)
+            puts "smoke OK: bybit-connector-ruby #{Bybit::VERSION} on Ruby #{RUBY_VERSION}"
+          '
+
+  audit:
+    name: bundler-audit (CVE scan on runtime deps)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+          bundler-cache: true
+
+      - name: Install bundler-audit
+        run: gem install bundler-audit --no-document
+
+      # `--update` refreshes the ruby-advisory-db before scanning. Fails on
+      # any advisory with severity >= high (ignore lower-severity noise with
+      # --ignore-severity-below high once bundler-audit ships that flag; for
+      # now we take the default 'fail on any').
+      - name: Audit Gemfile.lock
+        run: bundle audit check --update
+
+  secret-scan:
+    name: gitleaks (CLI)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # Run the gitleaks binary directly. The `gitleaks/gitleaks-action@v2`
+      # wrapper requires a paid license for organizations and pins a deprecated
+      # node20 runtime — the underlying MIT-licensed CLI has neither restriction.
+      - name: Install gitleaks
+        env:
+          GITLEAKS_VERSION: '8.21.2'
+        run: |
+          set -eu
+          curl -sSL "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz" \
+            | tar -xz -C /usr/local/bin gitleaks
+          gitleaks version
+
+      - name: Scan for secrets
+        run: gitleaks detect --source . --redact --verbose --exit-code 1 --no-banner
+
+  pack-check:
+    name: gem build --dry-run (LICENSE / README / lib present, no spec leak)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+          bundler-cache: true
+
+      - name: Build .gem
+        run: gem build bybit-connector-ruby.gemspec
+
+      - name: Verify tarball contents
+        run: |
+          set -eu
+          GEM=$(ls bybit-connector-ruby-*.gem | head -1)
+          echo "Inspecting $GEM"
+          # `gem contents` after install lists files, but we haven't installed
+          # yet; extract the data tarball inside the .gem and list files.
+          mkdir -p /tmp/gem-extract && cd /tmp/gem-extract
+          tar -xf "$GITHUB_WORKSPACE/$GEM"
+          # data.tar.gz holds the packed files, metadata.gz holds the spec.
+          tar -tzf data.tar.gz | sort > /tmp/gem-files.txt
+          echo "--- packed files ---"
+          cat /tmp/gem-files.txt
+
+          # Required entries
+          for need in LICENSE README.md CHANGELOG.md lib/bybit.rb lib/bybit/version.rb lib/bybit/session.rb lib/bybit/rest_api/base_service.rb; do
+            if ! grep -qx "$need" /tmp/gem-files.txt; then
+              echo "::error::Missing from gem tarball: $need"
+              exit 1
+            fi
+          done
+
+          # Files that must NEVER ship in the gem
+          for bad in spec Gemfile Gemfile.lock Rakefile .rubocop.yml .rspec .yardopts; do
+            if grep -q "^${bad}\(/\|$\)" /tmp/gem-files.txt; then
+              echo "::error::Gem tarball contains unexpected entry: $bad"
+              exit 1
+            fi
+          done
+          echo "pack check OK"

@@ -1,0 +1,22 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api-testnet.bybit.com/v5/account/wallet-balance?accountType=UNIFIED
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers: {}
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+    body:
+      encoding: UTF-8
+      string: '{"retCode":0,"retMsg":"OK","result":{"list":[{"accountType":"UNIFIED","totalEquity":"1000.00","coin":[]}]},"retExtInfo":{},"time":1700000000000}'
+    http_version:
+  recorded_at: Wed, 20 Jul 2026 00:00:00 GMT
+recorded_with: VCR 6.2.0
