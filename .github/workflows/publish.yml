@@ -8,9 +8,11 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    # id-token: write enables rubygems.org OIDC trusted publishing if the gem
-    # is configured for it (Aug-2024 feature). Falls back to RUBYGEMS_API_KEY
-    # when a trusted-publisher config isn't set up — see the "Publish" step.
+    # id-token: write is required for rubygems.org OIDC Trusted Publishing.
+    # The rubygems/release-gem action exchanges GitHub's OIDC token for a
+    # short-lived rubygems.org API key — no long-lived RUBYGEMS_API_KEY
+    # secret is needed. Trusted publisher config on rubygems.org must match
+    # (repo, workflow filename, environment).
     permissions:
       contents: read
       id-token: write
@@ -49,29 +51,10 @@ jobs:
           bundle exec rubocop --parallel
           bundle exec rspec
 
-      - name: Build .gem
-        run: gem build bybit-connector-ruby.gemspec
-
-      # Trusted publishing (OIDC) — no long-lived token required. If the gem
-      # is NOT yet configured for trusted publishing on rubygems.org, set
-      # RUBYGEMS_API_KEY as a repo secret and this step will fall back to it.
-      - name: Publish to rubygems
-        env:
-          RUBYGEMS_API_KEY: ${{ secrets.RUBYGEMS_API_KEY }}
-        run: |
-          set -eu
-          GEM=$(ls bybit-connector-ruby-*.gem | head -1)
-          if command -v rubygems-await >/dev/null 2>&1; then :; fi
-          if [ -n "${RUBYGEMS_API_KEY:-}" ]; then
-            echo "Using RUBYGEMS_API_KEY auth"
-            mkdir -p ~/.gem
-            echo -e ":rubygems_api_key: ${RUBYGEMS_API_KEY}" > ~/.gem/credentials
-            chmod 600 ~/.gem/credentials
-            gem push "$GEM"
-          else
-            echo "No RUBYGEMS_API_KEY; assuming OIDC trusted publisher is configured on rubygems.org"
-            gem exec rubygems-trusted-publishing --push "$GEM" || {
-              echo "::error::Neither RUBYGEMS_API_KEY nor a trusted-publisher config found. Set one of them."
-              exit 1
-            }
-          fi
+      # Trusted publishing via OIDC. rubygems/release-gem@v1:
+      #   1. Requests an OIDC token from GitHub's provider (needs id-token: write above).
+      #   2. Exchanges it with rubygems.org for a short-lived API key.
+      #   3. Runs gem build + gem push using that key.
+      # No long-lived RUBYGEMS_API_KEY secret required.
+      - name: Release gem (OIDC trusted publishing)
+        uses: rubygems/release-gem@v1
