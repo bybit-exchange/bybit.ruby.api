@@ -27,6 +27,12 @@ Gem::Specification.new do |s|
   # aren't slowed down by it, but declaring it as a runtime dep gives one
   # `bundle install` for the common case where callers want both.
   s.add_dependency 'websocket-client-simple', '~> 0.6'
+  # rake — needed by `bundle exec rake release` (invoked internally by the
+  # rubygems/release-gem@v1 action for OIDC trusted publishing) and by local
+  # devs running `bundle exec rake spec` / `rake rubocop`. Rakefile already
+  # requires 'bundler/gem_tasks', so once rake is installed the standard
+  # `build`/`release`/`install` tasks light up automatically.
+  s.add_development_dependency 'rake',      '~> 13.0'
   s.add_development_dependency 'rspec',     '~> 3.12'
   s.add_development_dependency 'rubocop',   '~> 1.60'
   s.add_development_dependency 'simplecov', '~> 0.22'
