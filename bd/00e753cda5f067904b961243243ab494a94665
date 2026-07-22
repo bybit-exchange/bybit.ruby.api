@@ -1,0 +1,23 @@
+.github/workflows/publish.yml
+  b6be4b9e3f28047f 11-15,54-60
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.2-bit.10+672fbf0",
+  "base_commit_sha": "bd00e753cda5f067904b961243243ab494a94665",
+  "prompts": {
+    "b6be4b9e3f28047f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "e5367e91-37eb-4ce2-99ec-81a07811189b",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "doris-xiao-bybit",
+      "messages": [],
+      "total_additions": 12,
+      "total_deletions": 29,
+      "accepted_lines": 12,
+      "overriden_lines": 0
+    }
+  }
+}
