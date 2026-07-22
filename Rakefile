@@ -26,9 +26,7 @@ task default: %i[rubocop spec]
 # rubygems.org via OIDC. Local `bundle exec rake release` behavior is
 # unchanged.
 if ENV['GITHUB_ACTIONS'] == 'true'
-  if Rake::Task.task_defined?('release:source_control_push')
-    Rake::Task['release:source_control_push'].clear
-  end
+  Rake::Task['release:source_control_push'].clear if Rake::Task.task_defined?('release:source_control_push')
   namespace :release do
     task :source_control_push do
       puts '[release:source_control_push] SKIP on GitHub Actions ' \
