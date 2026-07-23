@@ -1,5 +1,7 @@
 # bybit-connector-ruby
 
+[![Gem Version](https://img.shields.io/gem/v/bybit-connector-ruby)](https://rubygems.org/gems/bybit-connector-ruby) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/bybit-exchange/bybit.ruby.api/blob/main/LICENSE)
+
 Official lightweight Ruby connector for the [Bybit V5 REST API](https://bybit-exchange.github.io/docs/v5/intro).
 
 `bybit-connector-ruby` wraps the Bybit V5 HTTP endpoints as a set of typed Ruby methods with keyword-arg signatures. 
