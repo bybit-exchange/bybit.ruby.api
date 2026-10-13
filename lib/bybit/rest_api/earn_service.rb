@@ -1049,7 +1049,7 @@ module Bybit
       #
       # @option kwargs [Array] :coins Coin names to query, for example `coins=BTC&coins=ETH`. Omit for all supported coins.
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/earn/flexible-saving/auto-savings
+      # @see https://bybit-exchange.github.io/docs/v5/finance/earn/flexible-saving/auto-savings
       def list_auto_savings(**kwargs)
         coins = kwargs[:coins]
         if coins.is_a?(Array) && coins.length > 50
@@ -1068,7 +1068,7 @@ module Bybit
       # @option kwargs [String] :coin Coin to change; omit or pass an empty string to change the global setting
       # @option kwargs [Boolean] :purchase_immediately When enabling, asynchronously attempt to subscribe the available Funding Account balance; ignored when disabling
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/earn/flexible-saving/auto-savings
+      # @see https://bybit-exchange.github.io/docs/v5/finance/earn/flexible-saving/auto-savings
       def edit_earn_auto_savings(is_selected:, **kwargs)
         params = Bybit::Utils::WireKeys.camelize(kwargs.merge(isSelected: is_selected))
         @session.sign_request(method: :post, path: '/v5/earn/flexible-saving/auto-savings', body: params)

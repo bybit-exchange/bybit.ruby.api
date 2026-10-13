@@ -1,4 +1,11 @@
-## 0.1.2 — 2026-10-13
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [0.1.2] - 2026-10-13
 
 ### Added
 - `AccountService#demo_apply_money(...)`
@@ -35,14 +42,6 @@
 ### Sources
 - OpenAPI: `08130d57323d390dea58f15418758e2667c74ce6`
 - Docs: `59e3d457dea6b419a14987c19a3aabf4ffb38238`
-
-# Changelog
-
-All notable changes to this project will be documented in this file.
-
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
-
 
 ## [0.1.1] - 2026-07-22
 

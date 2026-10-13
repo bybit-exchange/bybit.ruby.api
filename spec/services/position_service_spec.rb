@@ -44,4 +44,16 @@ RSpec.describe Bybit::RestApi::PositionService do
       end
     end
   end
+
+
+  describe '#get_symbol_info wire query' do
+    it 'sends category and the optional symbol' do
+      expect(session).to receive(:sign_request).with(
+        method: :get,
+        path: '/v5/position/symbol-info',
+        params: { symbol: 'BTCUSDT', category: 'linear' }
+      )
+      svc.get_symbol_info(category: 'linear', symbol: 'BTCUSDT')
+    end
+  end
 end

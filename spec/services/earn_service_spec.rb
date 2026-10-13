@@ -133,4 +133,18 @@ RSpec.describe Bybit::RestApi::EarnService do
       expect(seen_request.request_headers['X-BAPI-SIGN']).to eq(expected_signature)
     end
   end
+
+
+  describe '#edit_earn_auto_savings wire body' do
+    it 'camelizes optional settings and keeps the boolean value' do
+      expect(session).to receive(:sign_request).with(
+        method: :post,
+        path: '/v5/earn/flexible-saving/auto-savings',
+        body: { coin: 'BTC', purchaseImmediately: true, isSelected: false }
+      )
+      svc.edit_earn_auto_savings(
+        is_selected: false, coin: 'BTC', purchase_immediately: true
+      )
+    end
+  end
 end

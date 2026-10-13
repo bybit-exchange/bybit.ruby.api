@@ -55,4 +55,15 @@ RSpec.describe Bybit::RestApi::MarketService do
       end
     end
   end
+
+
+  describe '#get_option_base_coins wire query' do
+    it 'camelizes the comma-separated underlying type filter' do
+      expect(session).to receive(:public_request).with(
+        path: '/v5/market/option-base-coins',
+        params: { underlyingType: '0,2' }
+      )
+      svc.get_option_base_coins(underlying_type: '0,2')
+    end
+  end
 end

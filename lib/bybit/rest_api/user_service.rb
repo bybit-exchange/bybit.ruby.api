@@ -255,7 +255,7 @@ module Bybit
       # GET /v5/user/invitation/code
       #
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/user/invitation/code
+      # @see https://bybit-exchange.github.io/docs/v5/user/referral-code
       def query_referral_code
         @session.sign_request(method: :get, path: '/v5/user/invitation/code')
       end

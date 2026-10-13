@@ -64,7 +64,7 @@ module Bybit
       #
       # @option kwargs [String] :currency Coin name, uppercase only. e.g. `BTC`. If not passed, returns all coin states.
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/spot-margin-trade/coinstate
+      # @see https://bybit-exchange.github.io/docs/v5/spot-margin-uta/coinstate
       def get_trade_coin_state(**kwargs)
         params = Bybit::Utils::WireKeys.camelize(kwargs)
         @session.sign_request(method: :get, path: '/v5/spot-margin-trade/coinstate', params: params)
@@ -78,7 +78,7 @@ module Bybit
       # @param term [String] Loan term in days. e.g. `7`, `14`, `30`, `90`, `180`. **Required.**
       # @param annual_rate [String] Annual interest rate. e.g. `0.02` means 2%. **Required.**
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/spot-margin-trade/fixed-available-inventory
+      # @see https://bybit-exchange.github.io/docs/v5/spot-margin-uta/fixed-available-inventory
       def query_fixed_available_inventory(currency:, term:, annual_rate:)
         params = Bybit::Utils::WireKeys.camelize({ currency: currency, term: term, annualRate: annual_rate })
         @session.sign_request(method: :get, path: '/v5/spot-margin-trade/fixed-available-inventory', params: params)
@@ -99,7 +99,7 @@ module Bybit
       #   - `PARTIAL`: Partial fill or cancel (immediate-or-cancel)
       #   - `FULL`: Fill or kill (all-or-nothing)
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/spot-margin-trade/fixedborrow
+      # @see https://bybit-exchange.github.io/docs/v5/spot-margin-uta/fixedborrow
       def account_fixed_borrow(order_currency:, order_amount:, annual_rate:, term:, **kwargs)
         params = Bybit::Utils::WireKeys.camelize(kwargs.merge(orderCurrency: order_currency, orderAmount: order_amount, annualRate: annual_rate, term: term))
         @session.sign_request(method: :post, path: '/v5/spot-margin-trade/fixedborrow', body: params)
@@ -115,7 +115,7 @@ module Bybit
       # @option kwargs [String] :limit Page size. Range: [1, 100]. Default: `10`.
       # @option kwargs [String] :cursor Cursor for pagination. Use `nextPageCursor` from previous response.
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/spot-margin-trade/fixedborrow-contract-info
+      # @see https://bybit-exchange.github.io/docs/v5/spot-margin-uta/fixedborrow-contract-info
       def query_fixed_borrow_contracts(**kwargs)
         params = Bybit::Utils::WireKeys.camelize(kwargs)
         @session.sign_request(method: :get, path: '/v5/spot-margin-trade/fixedborrow-contract-info', params: params)
@@ -136,7 +136,7 @@ module Bybit
       # @option kwargs [String] :limit Page size. Range: [1, 100]. Default: `10`.
       # @option kwargs [String] :cursor Cursor for pagination. Use `nextPageCursor` from previous response.
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/spot-margin-trade/fixedborrow-order-info
+      # @see https://bybit-exchange.github.io/docs/v5/spot-margin-uta/fixedborrow-order-info
       def query_fixed_borrow_orders(**kwargs)
         params = Bybit::Utils::WireKeys.camelize(kwargs)
         @session.sign_request(method: :get, path: '/v5/spot-margin-trade/fixedborrow-order-info', params: params)
@@ -157,7 +157,7 @@ module Bybit
       #   - `1`: Descending
       # @option kwargs [Integer] :limit Page size. Range: [1, 100]. Default: `10`.
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/spot-margin-trade/fixedborrow-order-quote
+      # @see https://bybit-exchange.github.io/docs/v5/spot-margin-uta/fixedborrow-order-quote
       def query_fixed_borrow_market(order_currency:, **kwargs)
         params = Bybit::Utils::WireKeys.camelize(kwargs.merge(order_currency: order_currency))
         @session.sign_request(method: :get, path: '/v5/spot-margin-trade/fixedborrow-order-quote', params: params)
@@ -172,7 +172,7 @@ module Bybit
       #   - If not provided, the full prepayment amount of the contract is used
       #   - Must be greater than 0
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/spot-margin-trade/fixedborrow-renew
+      # @see https://bybit-exchange.github.io/docs/v5/spot-margin-uta/fixedborrow-renew
       def renew_fixed_borrow(loan_id:, **kwargs)
         params = Bybit::Utils::WireKeys.camelize(kwargs.merge(loanId: loan_id))
         @session.sign_request(method: :post, path: '/v5/spot-margin-trade/fixedborrow-renew', body: params)
@@ -184,7 +184,7 @@ module Bybit
       #
       # @param currency [String] Coin name, uppercase only. e.g. `BTC`
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/spot-margin-trade/flexible-available-inventory
+      # @see https://bybit-exchange.github.io/docs/v5/spot-margin-uta/flexible-available-inventory
       def get_trade_flexible_available_inventory(currency:)
         params = Bybit::Utils::WireKeys.camelize({ currency: currency })
         @session.sign_request(method: :get, path: '/v5/spot-margin-trade/flexible-available-inventory', params: params)
@@ -196,7 +196,7 @@ module Bybit
       #
       # @option kwargs [String] :currency Coin name, uppercase only. e.g. `ETH`. When omitted, returns settings for all currencies.
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/spot-margin-trade/get-auto-repay-mode
+      # @see https://bybit-exchange.github.io/docs/v5/spot-margin-uta/get-auto-repay-mode
       def get_trade_auto_repay_mode(**kwargs)
         params = Bybit::Utils::WireKeys.camelize(kwargs)
         @session.sign_request(method: :get, path: '/v5/spot-margin-trade/get-auto-repay-mode', params: params)
@@ -208,7 +208,7 @@ module Bybit
       #
       # @param currency [String] Coin name, uppercase only. e.g. `USDT`, `BTC`. **Required.**
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/spot-margin-trade/liability
+      # @see https://bybit-exchange.github.io/docs/v5/spot-margin-uta/liability
       def query_borrow_liability(currency:)
         params = Bybit::Utils::WireKeys.camelize({ currency: currency })
         @session.sign_request(method: :get, path: '/v5/spot-margin-trade/liability', params: params)
@@ -220,7 +220,7 @@ module Bybit
       #
       # @param currency [String] Coin name, uppercase only. e.g. `BTC`
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/spot-margin-trade/max-borrowable
+      # @see https://bybit-exchange.github.io/docs/v5/spot-margin-uta/max-borrowable
       def get_trade_max_borrowable(currency:)
         params = Bybit::Utils::WireKeys.camelize({ currency: currency })
         @session.sign_request(method: :get, path: '/v5/spot-margin-trade/max-borrowable', params: params)
@@ -232,7 +232,7 @@ module Bybit
       #
       # @param currency [String] Coin name, uppercase only. e.g. `BTC`
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/spot-margin-trade/repayment-available-amount
+      # @see https://bybit-exchange.github.io/docs/v5/spot-margin-uta/repayment-available-amount
       def get_trade_repayment_available_amount(currency:)
         params = Bybit::Utils::WireKeys.camelize({ currency: currency })
         @session.sign_request(method: :get, path: '/v5/spot-margin-trade/repayment-available-amount', params: params)
@@ -248,7 +248,7 @@ module Bybit
       # @option kwargs [String] :currency Coin name, uppercase only (e.g. `USDT`, `ETH`).
       #   If omitted, auto-repay is enabled/disabled for **all** currencies.
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/spot-margin-trade/set-auto-repay-mode
+      # @see https://bybit-exchange.github.io/docs/v5/spot-margin-uta/set-auto-repay-mode
       def set_auto_repay_mode(auto_repay_mode:, **kwargs)
         params = Bybit::Utils::WireKeys.camelize(kwargs.merge(autoRepayMode: auto_repay_mode))
         @session.sign_request(method: :post, path: '/v5/spot-margin-trade/set-auto-repay-mode', body: params)
@@ -261,7 +261,7 @@ module Bybit
       # @param leverage [String] Leverage amount, valid range is 2 to 10
       # @option kwargs [String] :currency Coin name, uppercase only (optional)
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/spot-margin-trade/set-leverage
+      # @see https://bybit-exchange.github.io/docs/v5/spot-margin-uta/set-leverage
       def spot_margin_set_leverage(leverage:, **kwargs)
         params = Bybit::Utils::WireKeys.camelize(kwargs.merge(leverage: leverage))
         @session.sign_request(method: :post, path: '/v5/spot-margin-trade/set-leverage', body: params)
@@ -272,7 +272,7 @@ module Bybit
       # GET /v5/spot-margin-trade/state
       #
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/spot-margin-trade/state
+      # @see https://bybit-exchange.github.io/docs/v5/spot-margin-uta/status
       def get_trade_state
         @session.sign_request(method: :get, path: '/v5/spot-margin-trade/state')
       end
@@ -283,7 +283,7 @@ module Bybit
       #
       # @param spot_margin_mode [String] Spot margin mode: 1=on, 0=off
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/spot-margin-trade/switch-mode
+      # @see https://bybit-exchange.github.io/docs/v5/spot-margin-uta/switch-mode
       def spot_margin_switch_mode(spot_margin_mode:)
         params = Bybit::Utils::WireKeys.camelize({ spotMarginMode: spot_margin_mode })
         @session.sign_request(method: :post, path: '/v5/spot-margin-trade/switch-mode', body: params)

@@ -75,4 +75,22 @@ RSpec.describe Bybit::RestApi::AssetService do
       end
     end
   end
+
+
+  describe '#limit_order_callback wire body' do
+    it 'sends every callback field with its OpenAPI wire name' do
+      expect(session).to receive(:sign_request).with(
+        method: :post,
+        path: '/v5/asset/exchange/limit-order/callback',
+        body: {
+          exchangeTxId: 'tx-1', optionType: 3, timeStamp: 123,
+          sign: 'callback-signature', appId: 'TimeResearch', errorCode: 'failed'
+        }
+      )
+      svc.limit_order_callback(
+        exchange_tx_id: 'tx-1', option_type: 3, time_stamp: 123,
+        sign: 'callback-signature', app_id: 'TimeResearch', error_code: 'failed'
+      )
+    end
+  end
 end

@@ -207,7 +207,7 @@ module Bybit
       #   - `inverse`: Inverse perpetual, Inverse futures
       # @option kwargs [String] :symbol Symbol name, e.g. `BTCUSDT`, uppercase only
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/position/symbol-info
+      # @see https://bybit-exchange.github.io/docs/v5/position/batch-lvg
       def get_symbol_info(category:, **kwargs)
         params = Bybit::Utils::WireKeys.camelize(kwargs.merge(category: category))
         @session.sign_request(method: :get, path: '/v5/position/symbol-info', params: params)

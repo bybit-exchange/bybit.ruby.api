@@ -67,4 +67,36 @@ RSpec.describe Bybit::RestApi::AccountService do
         .to raise_error(ArgumentError, /missing keyword: :symbol/)
     end
   end
+
+  describe 'wire parameters for new endpoints' do
+    it 'camelizes demo fund configuration recursively' do
+      expect(session).to receive(:sign_request).with(
+        method: :post,
+        path: '/v5/account/demo-apply-money',
+        body: { adjustType: 1, utaDemoApplyMoney: [{ coin: 'USDT', amountStr: '10' }] }
+      )
+      svc.demo_apply_money(
+        adjust_type: 1,
+        uta_demo_apply_money: [{ coin: 'USDT', amount_str: '10' }]
+      )
+    end
+
+    it 'sends the pay-info coin as a query parameter' do
+      expect(session).to receive(:sign_request).with(
+        method: :get,
+        path: '/v5/account/pay-info',
+        params: { coin: 'USDT' }
+      )
+      svc.get_pay_info(coin: 'USDT')
+    end
+
+    it 'sends all trade-analysis query parameters with wire names' do
+      expect(session).to receive(:sign_request).with(
+        method: :get,
+        path: '/v5/account/trade-info-for-analysis',
+        params: { symbol: 'BTCUSDT', startTime: 1, endTime: 2 }
+      )
+      svc.get_trade_info_for_analysis(symbol: 'BTCUSDT', start_time: 1, end_time: 2)
+    end
+  end
 end

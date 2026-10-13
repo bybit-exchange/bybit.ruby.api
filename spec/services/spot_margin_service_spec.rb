@@ -64,4 +64,145 @@ RSpec.describe Bybit::RestApi::SpotMarginService do
       svc.query_fixed_borrow_market(order_currency: 'USDT')
     end
   end
+
+
+  describe 'wire parameters for new endpoints' do
+    it 'sends the optional coin-state currency' do
+      expect(session).to receive(:sign_request).with(
+        method: :get, path: '/v5/spot-margin-trade/coinstate',
+        params: { currency: 'BTC' }
+      )
+      svc.get_trade_coin_state(currency: 'BTC')
+    end
+
+    it 'sends fixed inventory parameters' do
+      expect(session).to receive(:sign_request).with(
+        method: :get, path: '/v5/spot-margin-trade/fixed-available-inventory',
+        params: { currency: 'USDT', term: '7', annualRate: '0.02' }
+      )
+      svc.query_fixed_available_inventory(currency: 'USDT', term: '7', annual_rate: '0.02')
+    end
+
+    it 'sends the complete fixed borrow body' do
+      expect(session).to receive(:sign_request).with(
+        method: :post, path: '/v5/spot-margin-trade/fixedborrow',
+        body: {
+          repayType: '1', strategyType: 'FULL', orderCurrency: 'USDT',
+          orderAmount: '100', annualRate: '0.02', term: '7'
+        }
+      )
+      svc.account_fixed_borrow(
+        order_currency: 'USDT', order_amount: '100', annual_rate: '0.02', term: '7',
+        repay_type: '1', strategy_type: 'FULL'
+      )
+    end
+
+    it 'camelizes fixed contract filters' do
+      expect(session).to receive(:sign_request).with(
+        method: :get, path: '/v5/spot-margin-trade/fixedborrow-contract-info',
+        params: {
+          orderId: 'order-1', orderCurrency: 'USDT', term: '7', limit: '10', cursor: 'next'
+        }
+      )
+      svc.query_fixed_borrow_contracts(
+        order_id: 'order-1', order_currency: 'USDT', term: '7', limit: '10', cursor: 'next'
+      )
+    end
+
+    it 'camelizes fixed order filters' do
+      expect(session).to receive(:sign_request).with(
+        method: :get, path: '/v5/spot-margin-trade/fixedborrow-order-info',
+        params: {
+          orderId: 'order-1', orderCurrency: 'USDT', state: '3',
+          term: '7', limit: '10', cursor: 'next'
+        }
+      )
+      svc.query_fixed_borrow_orders(
+        order_id: 'order-1', order_currency: 'USDT', state: '3',
+        term: '7', limit: '10', cursor: 'next'
+      )
+    end
+
+    it 'sends every fixed market query parameter' do
+      expect(session).to receive(:sign_request).with(
+        method: :get, path: '/v5/spot-margin-trade/fixedborrow-order-quote',
+        params: { term: '7', orderBy: 'apy', sort: 1, limit: 20, orderCurrency: 'USDT' }
+      )
+      svc.query_fixed_borrow_market(
+        order_currency: 'USDT', term: '7', order_by: 'apy', sort: 1, limit: 20
+      )
+    end
+
+    it 'sends the fixed renewal body' do
+      expect(session).to receive(:sign_request).with(
+        method: :post, path: '/v5/spot-margin-trade/fixedborrow-renew',
+        body: { qty: '10', loanId: 'loan-1' }
+      )
+      svc.renew_fixed_borrow(loan_id: 'loan-1', qty: '10')
+    end
+
+    it 'sends the flexible inventory currency' do
+      expect(session).to receive(:sign_request).with(
+        method: :get, path: '/v5/spot-margin-trade/flexible-available-inventory',
+        params: { currency: 'BTC' }
+      )
+      svc.get_trade_flexible_available_inventory(currency: 'BTC')
+    end
+
+    it 'sends the optional auto-repay currency query' do
+      expect(session).to receive(:sign_request).with(
+        method: :get, path: '/v5/spot-margin-trade/get-auto-repay-mode',
+        params: { currency: 'ETH' }
+      )
+      svc.get_trade_auto_repay_mode(currency: 'ETH')
+    end
+
+    it 'sends the liability currency' do
+      expect(session).to receive(:sign_request).with(
+        method: :get, path: '/v5/spot-margin-trade/liability',
+        params: { currency: 'USDT' }
+      )
+      svc.query_borrow_liability(currency: 'USDT')
+    end
+
+    it 'sends the max-borrowable currency' do
+      expect(session).to receive(:sign_request).with(
+        method: :get, path: '/v5/spot-margin-trade/max-borrowable',
+        params: { currency: 'BTC' }
+      )
+      svc.get_trade_max_borrowable(currency: 'BTC')
+    end
+
+    it 'sends the repayment-availability currency' do
+      expect(session).to receive(:sign_request).with(
+        method: :get, path: '/v5/spot-margin-trade/repayment-available-amount',
+        params: { currency: 'BTC' }
+      )
+      svc.get_trade_repayment_available_amount(currency: 'BTC')
+    end
+
+    it 'sends the auto-repay mode body' do
+      expect(session).to receive(:sign_request).with(
+        method: :post, path: '/v5/spot-margin-trade/set-auto-repay-mode',
+        body: { currency: 'ETH', autoRepayMode: '1' }
+      )
+      svc.set_auto_repay_mode(auto_repay_mode: '1', currency: 'ETH')
+    end
+
+    it 'sends the leverage body' do
+      expect(session).to receive(:sign_request).with(
+        method: :post, path: '/v5/spot-margin-trade/set-leverage',
+        body: { currency: 'BTC', leverage: '4' }
+      )
+      svc.spot_margin_set_leverage(leverage: '4', currency: 'BTC')
+    end
+
+    it 'sends the margin-mode body' do
+      expect(session).to receive(:sign_request).with(
+        method: :post, path: '/v5/spot-margin-trade/switch-mode',
+        body: { spotMarginMode: '1' }
+      )
+      svc.spot_margin_switch_mode(spot_margin_mode: '1')
+    end
+  end
 end

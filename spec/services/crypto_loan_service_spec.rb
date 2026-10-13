@@ -62,4 +62,51 @@ RSpec.describe Bybit::RestApi::CryptoLoanService do
       end
     end
   end
+
+
+  describe 'wire parameters for new endpoints' do
+    it 'sends fixed available inventory query parameters' do
+      expect(session).to receive(:sign_request).with(
+        method: :get,
+        path: '/v5/crypto-loan-fixed/available-inventory',
+        params: { currency: 'USDT', term: '7', annualRate: '0.02' }
+      )
+      svc.get_fixed_available_inventory(currency: 'USDT', term: '7', annual_rate: '0.02')
+    end
+
+    it 'camelizes fixed repayment history filters' do
+      expect(session).to receive(:sign_request).with(
+        method: :get,
+        path: '/v5/crypto-loan-fixed/repayment-history',
+        params: { repayId: 'repay-1', loanCurrency: 'USDT', limit: '10', cursor: 'next' }
+      )
+      svc.get_fixed_repayment_history(
+        repay_id: 'repay-1', loan_currency: 'USDT', limit: '10', cursor: 'next'
+      )
+    end
+
+    it 'sends the complete fixed supply body' do
+      expect(session).to receive(:sign_request).with(
+        method: :post,
+        path: '/v5/crypto-loan-fixed/supply',
+        body: {
+          orderCurrency: 'USDT', orderAmount: '100', annualRate: '0.02',
+          term: '7', availableSource: '1'
+        }
+      )
+      svc.supply_fixed(
+        order_currency: 'USDT', order_amount: '100', annual_rate: '0.02',
+        term: '7', available_source: '1'
+      )
+    end
+
+    it 'sends the flexible inventory currency' do
+      expect(session).to receive(:sign_request).with(
+        method: :get,
+        path: '/v5/crypto-loan-flexible/available-inventory',
+        params: { currency: 'BTC' }
+      )
+      svc.get_flexible_available_inventory(currency: 'BTC')
+    end
+  end
 end
