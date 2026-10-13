@@ -1,0 +1,19 @@
+.gitleaks.toml
+  s_7f00ec2945e57c::t_67266eb6d7df3d 1-14
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.2-bit.2+419f699",
+  "base_commit_sha": "6248e889b5b4905d25453baecbb0a98dda6beb17",
+  "prompts": {},
+  "sessions": {
+    "s_7f00ec2945e57c": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a132fd-d75a-71c3-9d54-ddaa88ae4207",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "doris-xiao-bybit <doris.xiao@bybit.com>"
+    }
+  }
+}
