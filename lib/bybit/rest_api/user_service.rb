@@ -249,6 +249,16 @@ module Bybit
         params[:permissions] = permissions unless permissions.nil?
         @session.sign_request(method: :post, path: '/v5/user/update-sub-api', body: params)
       end
+
+      # Query Referral Code
+      #
+      # GET /v5/user/invitation/code
+      #
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
+      # @see https://bybit-exchange.github.io/docs/v5/user/invitation/code
+      def query_referral_code
+        @session.sign_request(method: :get, path: '/v5/user/invitation/code')
+      end
     end
   end
 end

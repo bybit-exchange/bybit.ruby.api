@@ -327,6 +327,55 @@ module Bybit
         params = Bybit::Utils::WireKeys.camelize(params)
         @session.sign_request(method: :post, path: '/v5/account/upgrade-to-uta', body: params)
       end
+
+      # Apply demo funds
+      #
+      # POST /v5/account/demo-apply-money
+      #
+      # @option kwargs [Integer] :adjust_type Adjustment type, 0-add funds, 1-deduct funds
+      # @option kwargs [Array] :uta_demo_apply_money Fund application config list
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
+      # @see https://bybit-exchange.github.io/docs/v5/account/demo-apply-money
+      def demo_apply_money(**kwargs)
+        params = Bybit::Utils::WireKeys.camelize(kwargs)
+        @session.sign_request(method: :post, path: '/v5/account/demo-apply-money', body: params)
+      end
+
+      # Get Option Asset Info
+      #
+      # GET /v5/account/option-asset-info
+      #
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
+      # @see https://bybit-exchange.github.io/docs/v5/account/option-asset-info
+      def get_option_asset_info
+        @session.sign_request(method: :get, path: '/v5/account/option-asset-info')
+      end
+
+      # Get Pay Info
+      #
+      # GET /v5/account/pay-info
+      #
+      # @option kwargs [String] :coin Coin name, e.g. `USDT`, `BTC`. If not passed, returns all repayment info.
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
+      # @see https://bybit-exchange.github.io/docs/v5/account/pay-info
+      def get_pay_info(**kwargs)
+        params = Bybit::Utils::WireKeys.camelize(kwargs)
+        @session.sign_request(method: :get, path: '/v5/account/pay-info', params: params)
+      end
+
+      # Get Trade Info For Analysis
+      #
+      # GET /v5/account/trade-info-for-analysis
+      #
+      # @option kwargs [String] :symbol Trading pair, e.g. `BTCUSDT`, `ETHUSDT`.
+      # @option kwargs [Integer] :start_time Query start time in milliseconds timestamp.
+      # @option kwargs [Integer] :end_time Query end time in milliseconds timestamp.
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
+      # @see https://bybit-exchange.github.io/docs/v5/account/trade-info-for-analysis
+      def get_trade_info_for_analysis(**kwargs)
+        params = Bybit::Utils::WireKeys.camelize(kwargs)
+        @session.sign_request(method: :get, path: '/v5/account/trade-info-for-analysis', params: params)
+      end
     end
   end
 end

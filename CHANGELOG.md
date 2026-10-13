@@ -1,3 +1,41 @@
+## 0.1.2 — 2026-10-13
+
+### Added
+- `AccountService#demo_apply_money(...)`
+- `AccountService#get_option_asset_info(...)`
+- `AccountService#get_pay_info(...)`
+- `AccountService#get_trade_info_for_analysis(...)`
+- `AssetService#limit_order_callback(...)`
+- `CryptoLoanService#get_fixed_available_inventory(...)`
+- `CryptoLoanService#get_fixed_repayment_history(...)`
+- `CryptoLoanService#supply_fixed(...)`
+- `CryptoLoanService#get_flexible_available_inventory(...)`
+- `EarnService#list_auto_savings(...)`
+- `EarnService#edit_earn_auto_savings(...)`
+- `MarketService#get_option_base_coins(...)`
+- `PositionService#get_symbol_info(...)`
+- `SpotMarginService#get_trade_coin_state(...)`
+- `SpotMarginService#query_fixed_available_inventory(...)`
+- `SpotMarginService#account_fixed_borrow(...)`
+- `SpotMarginService#query_fixed_borrow_contracts(...)`
+- `SpotMarginService#query_fixed_borrow_orders(...)`
+- `SpotMarginService#query_fixed_borrow_market(...)`
+- `SpotMarginService#renew_fixed_borrow(...)`
+- `SpotMarginService#get_trade_flexible_available_inventory(...)`
+- `SpotMarginService#get_trade_auto_repay_mode(...)`
+- `SpotMarginService#query_borrow_liability(...)`
+- `SpotMarginService#get_trade_max_borrowable(...)`
+- `SpotMarginService#get_trade_repayment_available_amount(...)`
+- `SpotMarginService#set_auto_repay_mode(...)`
+- `SpotMarginService#spot_margin_set_leverage(...)`
+- `SpotMarginService#get_trade_state(...)`
+- `SpotMarginService#spot_margin_switch_mode(...)`
+- `UserService#query_referral_code(...)`
+
+### Sources
+- OpenAPI: `08130d57323d390dea58f15418758e2667c74ce6`
+- Docs: `59e3d457dea6b419a14987c19a3aabf4ffb38238`
+
 # Changelog
 
 All notable changes to this project will be documented in this file.
