@@ -1,0 +1,37 @@
+CHANGELOG.md
+  s_14731aa45014cc::t_32de9d1918ef83 1-38
+lib/bybit/rest_api/account_service.rb
+  s_14731aa45014cc::t_6e7fd9d37eb4b4 330-378
+lib/bybit/rest_api/asset_service.rb
+  s_14731aa45014cc::t_a311fa7a4c9d2c 636-652
+lib/bybit/rest_api/crypto_loan_service.rb
+  s_14731aa45014cc::t_15200edc17f3ce 373-432
+lib/bybit/rest_api/earn_service.rb
+  s_14731aa45014cc::t_4947af67b0e6f6 1045-1091
+lib/bybit/rest_api/market_service.rb
+  s_14731aa45014cc::t_66ac6040a90105 353-369
+lib/bybit/rest_api/position_service.rb
+  s_14731aa45014cc::t_0195fb52d6c611 200-214
+lib/bybit/rest_api/spot_margin_service.rb
+  s_14731aa45014cc::t_b2bc5c412613c1 60-290
+lib/bybit/rest_api/user_service.rb
+  s_14731aa45014cc::t_402ff0f3773041 252-261
+lib/bybit/version.rb
+  s_14731aa45014cc::t_54126f65ecf679 4
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.2-bit.2+419f699",
+  "base_commit_sha": "f8db23cddff4cc514506b285155b4f7eb1aaff02",
+  "prompts": {},
+  "sessions": {
+    "s_14731aa45014cc": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a11a25-078f-7d13-b8c5-a1f8f61777b2",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "doris-xiao-bybit <doris.xiao@bybit.com>"
+    }
+  }
+}
