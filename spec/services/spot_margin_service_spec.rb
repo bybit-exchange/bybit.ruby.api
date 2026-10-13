@@ -52,4 +52,16 @@ RSpec.describe Bybit::RestApi::SpotMarginService do
       end
     end
   end
+
+  describe '#query_fixed_borrow_market' do
+    it 'allows order_by to be omitted' do
+      expect(session).to receive(:sign_request).with(
+        method: :get,
+        path: '/v5/spot-margin-trade/fixedborrow-order-quote',
+        params: { orderCurrency: 'USDT' }
+      )
+
+      svc.query_fixed_borrow_market(order_currency: 'USDT')
+    end
+  end
 end

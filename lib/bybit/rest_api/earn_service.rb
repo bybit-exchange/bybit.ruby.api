@@ -1051,27 +1051,11 @@ module Bybit
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       # @see https://bybit-exchange.github.io/docs/v5/earn/flexible-saving/auto-savings
       def list_auto_savings(**kwargs)
-        requested_coins = kwargs.delete(:coins)
-        if requested_coins.is_a?(Array)
-          if requested_coins.length > 50
-            raise Bybit::ConfigurationError,
-                  'coins supports at most 50 values'
-          end
-          if requested_coins.length > 1
-            params = Bybit::Utils::WireKeys.camelize(kwargs)
-            response = @session.sign_request(method: :get, path: '/v5/earn/flexible-saving/auto-savings', params: params)
-            items = response.dig('result', 'coins')
-            if items.is_a?(Array)
-              by_value = items.each_with_object({}) do |item, index|
-                index[item['coin'].to_s] = item if item.is_a?(Hash)
-              end
-              response['result']['coins'] = requested_coins.map(&:to_s).uniq.map { |value| by_value[value] }.compact
-            end
-            return response
-          end
-          requested_coins = requested_coins.first
+        coins = kwargs[:coins]
+        if coins.is_a?(Array) && coins.length > 50
+          raise Bybit::ConfigurationError,
+                'coins supports at most 50 values'
         end
-        kwargs[:coins] = requested_coins unless requested_coins.nil?
         params = Bybit::Utils::WireKeys.camelize(kwargs)
         @session.sign_request(method: :get, path: '/v5/earn/flexible-saving/auto-savings', params: params)
       end

@@ -21,11 +21,14 @@ RSpec.describe Bybit::RestApi::CryptoLoanService do
     { name: :get_fixed_borrow_contract_info, path: '/v5/crypto-loan-fixed/borrow-contract-info', method: :get, signed: true },
     { name: :get_fixed_borrow_order_info, path: '/v5/crypto-loan-fixed/borrow-order-info', method: :get, signed: true },
     { name: :get_fixed_borrow_order_quote, path: '/v5/crypto-loan-fixed/borrow-order-quote', method: :get, signed: false },
+    { name: :get_fixed_available_inventory, path: '/v5/crypto-loan-fixed/available-inventory', method: :get, signed: true },
+    { name: :get_fixed_repayment_history, path: '/v5/crypto-loan-fixed/repayment-history', method: :get, signed: true },
     { name: :get_fixed_renew_info, path: '/v5/crypto-loan-fixed/renew-info', method: :get, signed: true },
     { name: :get_fixed_supply_contract_info, path: '/v5/crypto-loan-fixed/supply-contract-info', method: :get, signed: true },
     { name: :get_fixed_supply_order_info, path: '/v5/crypto-loan-fixed/supply-order-info', method: :get, signed: true },
     { name: :get_fixed_supply_order_quote, path: '/v5/crypto-loan-fixed/supply-order-quote', method: :get, signed: false },
     { name: :get_flexible_borrow_history, path: '/v5/crypto-loan-flexible/borrow-history', method: :get, signed: true },
+    { name: :get_flexible_available_inventory, path: '/v5/crypto-loan-flexible/available-inventory', method: :get, signed: true },
     { name: :get_flexible_ongoing_coin, path: '/v5/crypto-loan-flexible/ongoing-coin', method: :get, signed: true },
     { name: :get_flexible_repayment_history, path: '/v5/crypto-loan-flexible/repayment-history', method: :get, signed: true },
     { name: :get_loanable_data, path: '/v5/crypto-loan-common/loanable-data', method: :get, signed: true },
@@ -37,6 +40,7 @@ RSpec.describe Bybit::RestApi::CryptoLoanService do
     { name: :repay_fixed_with_collateral, path: '/v5/crypto-loan-fixed/repay-collateral', method: :post, signed: true },
     { name: :repay_flexible, path: '/v5/crypto-loan-flexible/repay', method: :post, signed: true },
     { name: :repay_flexible_with_collateral, path: '/v5/crypto-loan-flexible/repay-collateral', method: :post, signed: true },
+    { name: :supply_fixed, path: '/v5/crypto-loan-fixed/supply', method: :post, signed: true },
   ].freeze
 
   method_table.each do |row|

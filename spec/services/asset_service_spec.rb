@@ -43,6 +43,7 @@ RSpec.describe Bybit::RestApi::AssetService do
     { name: :list_sub_member_deposit_records, path: '/v5/asset/deposit/query-sub-member-record', method: :get, signed: true },
     { name: :list_withdraw_addresses, path: '/v5/asset/withdraw/query-address', method: :get, signed: true },
     { name: :list_withdraw_records, path: '/v5/asset/withdraw/query-record', method: :get, signed: true },
+    { name: :limit_order_callback, path: '/v5/asset/exchange/limit-order/callback', method: :post, signed: true },
     { name: :quote_apply, path: '/v5/asset/exchange/quote-apply', method: :post, signed: true },
     { name: :send_withdraw, path: '/v5/asset/withdraw/create', method: :post, signed: true },
     { name: :set_default_deposit_to_account, path: '/v5/asset/deposit/deposit-to-account', method: :post, signed: true },

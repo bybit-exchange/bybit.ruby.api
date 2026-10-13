@@ -391,8 +391,8 @@ module Bybit
       #
       # @option kwargs [String] :repay_id Repayment ID
       # @option kwargs [String] :loan_currency Loan currency filter
-      # @option kwargs [Integer] :limit Page size
-      # @option kwargs [Integer] :cursor Page cursor
+      # @option kwargs [String] :limit Page size
+      # @option kwargs [String] :cursor Page cursor
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       # @see https://bybit-exchange.github.io/docs/v5/crypto-loan-fixed/repayment-history
       def get_fixed_repayment_history(**kwargs)
@@ -407,8 +407,8 @@ module Bybit
       # @param order_currency [String] Currency to lend
       # @param order_amount [String] Amount to lend
       # @param annual_rate [String] Annual interest rate
-      # @param term [String] Term in days (7, 14, 30, 60, 90, 180)
-      # @option kwargs [Integer] :available_source Fund source for supply order:
+      # @param term [String] Term in days (7, 14, 30, 90, 180)
+      # @option kwargs [String] :available_source Fund source for supply order:
       #   - `0`: Funding account (default)
       #   - `1`: Flexible savings
       #   - `2`: Mixed (funding account + flexible savings)

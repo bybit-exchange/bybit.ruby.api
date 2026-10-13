@@ -21,7 +21,8 @@ module Bybit
 
     def initialize(config)
       @config = config
-      @conn = config.faraday_connection || build_connection
+      @conn = config.faraday_connection ? config.faraday_connection.dup : build_connection
+      @conn.options.params_encoder = Faraday::FlatParamsEncoder
     end
 
     # Public unsigned endpoint — no X-BAPI-* headers attached.
@@ -52,9 +53,9 @@ module Bybit
       headers = build_headers(signed: signed, method: method, query_str: query_str, body_str: body_str)
 
       # Build URL manually with our own query_str so the wire bytes match
-      # what we signed. `req.params =` would re-serialize through
-      # Faraday::NestedParamsEncoder which key-orders and array-brackets
-      # differently, breaking the signature.
+      # what we signed. Faraday still parses URLs passed to `req.url`, so use
+      # its flat encoder to preserve repeated keys instead of collapsing them
+      # or adding array brackets.
       full_url = if !query_str.empty? && PAYLOAD_QUERY_METHODS.include?(method)
                    "#{path}?#{query_str}"
                  else

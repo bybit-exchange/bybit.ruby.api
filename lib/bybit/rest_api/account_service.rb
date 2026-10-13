@@ -334,8 +334,9 @@ module Bybit
       #
       # @option kwargs [Integer] :adjust_type Adjustment type, 0-add funds, 1-deduct funds
       # @option kwargs [Array] :uta_demo_apply_money Fund application config list
+      # @note This endpoint requires `base_url: 'https://api-demo.bybit.com'`.
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/account/demo-apply-money
+      # @see https://bybit-exchange.github.io/docs/v5/demo
       def demo_apply_money(**kwargs)
         params = Bybit::Utils::WireKeys.camelize(kwargs)
         @session.sign_request(method: :post, path: '/v5/account/demo-apply-money', body: params)
@@ -367,13 +368,13 @@ module Bybit
       #
       # GET /v5/account/trade-info-for-analysis
       #
-      # @option kwargs [String] :symbol Trading pair, e.g. `BTCUSDT`, `ETHUSDT`.
+      # @param symbol [String] Trading pair, e.g. `BTCUSDT`, `ETHUSDT`.
       # @option kwargs [Integer] :start_time Query start time in milliseconds timestamp.
       # @option kwargs [Integer] :end_time Query end time in milliseconds timestamp.
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       # @see https://bybit-exchange.github.io/docs/v5/account/trade-info-for-analysis
-      def get_trade_info_for_analysis(**kwargs)
-        params = Bybit::Utils::WireKeys.camelize(kwargs)
+      def get_trade_info_for_analysis(symbol:, **kwargs)
+        params = Bybit::Utils::WireKeys.camelize(kwargs.merge(symbol: symbol))
         @session.sign_request(method: :get, path: '/v5/account/trade-info-for-analysis', params: params)
       end
     end

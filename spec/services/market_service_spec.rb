@@ -27,6 +27,7 @@ RSpec.describe Bybit::RestApi::MarketService do
     { name: :get_open_interest, path: '/v5/market/open-interest', method: :get, signed: false },
     { name: :get_order_price_limit, path: '/v5/market/price-limit', method: :get, signed: false },
     { name: :get_orderbook, path: '/v5/market/orderbook', method: :get, signed: false },
+    { name: :get_option_base_coins, path: '/v5/market/option-base-coins', method: :get, signed: false },
     { name: :get_premium_index_price_kline, path: '/v5/market/premium-index-price-kline', method: :get, signed: false },
     { name: :get_recent_public_trades, path: '/v5/market/recent-trade', method: :get, signed: false },
     { name: :get_risk_limit, path: '/v5/market/risk-limit', method: :get, signed: false },

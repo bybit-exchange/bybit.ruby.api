@@ -355,7 +355,7 @@ module Bybit
       #
       # GET /v5/market/option-base-coins
       #
-      # @option kwargs [Integer] :underlying_type Underlying asset type.
+      # @option kwargs [String] :underlying_type Underlying asset type. Supports comma-separated values, e.g. `0,2`.
       #   - `0`: Crypto
       #   - `1`: Commodity
       #   - `2`: Stock

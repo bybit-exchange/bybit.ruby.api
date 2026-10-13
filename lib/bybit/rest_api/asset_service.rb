@@ -644,8 +644,8 @@ module Bybit
       # @param sign [String] Callback signature data
       # @param app_id [String] appId of callback business, currently only supports: TimeResearch
       # @option kwargs [String] :error_code Error code on failure
+      # @note This endpoint is generated from the Bybit OpenAPI specification and is not in the public documentation.
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/asset/exchange/limit-order/callback
       def limit_order_callback(exchange_tx_id:, option_type:, time_stamp:, sign:, app_id:, **kwargs)
         params = Bybit::Utils::WireKeys.camelize(kwargs.merge(exchangeTxId: exchange_tx_id, optionType: option_type, timeStamp: time_stamp, sign: sign, appId: app_id))
         @session.sign_request(method: :post, path: '/v5/asset/exchange/limit-order/callback', body: params)

@@ -147,7 +147,7 @@ module Bybit
       # GET /v5/spot-margin-trade/fixedborrow-order-quote
       #
       # @param order_currency [String] Borrow coin name, uppercase only. e.g. `USDT`, `BTC`. **Required.**
-      # @param order_by [String] Sort field. **Required.**
+      # @option kwargs [String] :order_by Sort field.
       #   - `apy`: Sort by annual interest rate
       #   - `term`: Sort by loan term
       #   - `quantity`: Sort by available quantity
@@ -158,8 +158,8 @@ module Bybit
       # @option kwargs [Integer] :limit Page size. Range: [1, 100]. Default: `10`.
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       # @see https://bybit-exchange.github.io/docs/v5/spot-margin-trade/fixedborrow-order-quote
-      def query_fixed_borrow_market(order_currency:, order_by:, **kwargs)
-        params = Bybit::Utils::WireKeys.camelize(kwargs.merge(orderCurrency: order_currency, orderBy: order_by))
+      def query_fixed_borrow_market(order_currency:, **kwargs)
+        params = Bybit::Utils::WireKeys.camelize(kwargs.merge(order_currency: order_currency))
         @session.sign_request(method: :get, path: '/v5/spot-margin-trade/fixedborrow-order-quote', params: params)
       end
 
