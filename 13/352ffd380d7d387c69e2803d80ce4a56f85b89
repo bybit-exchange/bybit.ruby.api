@@ -1,0 +1,55 @@
+spec/services/market_service_spec.rb
+  s_b669d1bbf0a266::t_305367b58bcabf 30
+spec/session_spec.rb
+  s_b669d1bbf0a266::t_439af480b6a09e 16-27
+spec/services/account_service_spec.rb
+  s_b669d1bbf0a266::t_439af480b6a09e 63-69
+  s_b669d1bbf0a266::t_305367b58bcabf 15,24-25,28
+spec/services/user_service_spec.rb
+  s_b669d1bbf0a266::t_305367b58bcabf 28
+spec/services/asset_service_spec.rb
+  s_b669d1bbf0a266::t_305367b58bcabf 46
+lib/bybit/rest_api/earn_service.rb
+  s_b669d1bbf0a266::t_88ad9328d07004 1054-1057
+lib/bybit/rest_api/spot_margin_service.rb
+  s_b669d1bbf0a266::t_0ab81ce424155b 150,161-162
+lib/bybit/session.rb
+  s_b669d1bbf0a266::t_fcfd735df5549c 25
+  s_b669d1bbf0a266::t_f2c04caff75895 56-58
+  s_b669d1bbf0a266::t_0ab81ce424155b 24
+lib/bybit/rest_api/asset_service.rb
+  s_b669d1bbf0a266::t_a5f5e669b9af20 647
+lib/bybit/rest_api/account_service.rb
+  s_b669d1bbf0a266::t_a5f5e669b9af20 337,339
+  s_b669d1bbf0a266::t_0ab81ce424155b 371,376-377
+spec/services/crypto_loan_service_spec.rb
+  s_b669d1bbf0a266::t_305367b58bcabf 24-25,31,43
+spec/services/position_service_spec.rb
+  s_b669d1bbf0a266::t_305367b58bcabf 20
+lib/bybit/rest_api/market_service.rb
+  s_b669d1bbf0a266::t_a5f5e669b9af20 358
+spec/services/spot_margin_service_spec.rb
+  s_b669d1bbf0a266::t_439af480b6a09e 55-66
+spec/services/earn_service_spec.rb
+  s_b669d1bbf0a266::t_305367b58bcabf 17
+  s_b669d1bbf0a266::t_15b87193326ba5 112-122,127-133
+  s_b669d1bbf0a266::t_e0095d7301c27e 105-111,123-126,134-135
+lib/bybit/rest_api/crypto_loan_service.rb
+  s_b669d1bbf0a266::t_a5f5e669b9af20 394-395,410-411
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.2-bit.2+419f699",
+  "base_commit_sha": "13352ffd380d7d387c69e2803d80ce4a56f85b89",
+  "prompts": {},
+  "sessions": {
+    "s_b669d1bbf0a266": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1351f-f8a3-79f0-880e-71316b65b03c",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "doris-xiao-bybit <doris.xiao@bybit.com>"
+    }
+  }
+}
