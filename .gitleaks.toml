@@ -1,0 +1,14 @@
+title = "bybit-connector-ruby gitleaks configuration"
+
+[extend]
+useDefault = true
+
+[[rules]]
+id = "generic-api-key"
+
+[[rules.allowlists]]
+description = "Allow documented source commit SHAs in the changelog"
+condition = "AND"
+regexTarget = "line"
+regexes = ['''^\s*-\s+(OpenAPI|Docs):\s+`[0-9a-f]{40}`\s*$''']
+paths = ['''(^|/)CHANGELOG\.md$''']

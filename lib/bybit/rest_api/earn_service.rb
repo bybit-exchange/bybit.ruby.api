@@ -1042,6 +1042,37 @@ module Bybit
         params = Bybit::Utils::WireKeys.camelize(params)
         @session.sign_request(method: :post, path: '/v5/earn/fixed-term/position/auto-invest', body: params)
       end
+
+      # Get Auto Savings Settings
+      #
+      # GET /v5/earn/flexible-saving/auto-savings
+      #
+      # @option kwargs [Array] :coins Coin names to query, for example `coins=BTC&coins=ETH`. Omit for all supported coins.
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
+      # @see https://bybit-exchange.github.io/docs/v5/finance/earn/flexible-saving/auto-savings
+      def list_auto_savings(**kwargs)
+        coins = kwargs[:coins]
+        if coins.is_a?(Array) && coins.length > 50
+          raise Bybit::ConfigurationError,
+                'coins supports at most 50 values'
+        end
+        params = Bybit::Utils::WireKeys.camelize(kwargs)
+        @session.sign_request(method: :get, path: '/v5/earn/flexible-saving/auto-savings', params: params)
+      end
+
+      # Edit Auto Savings Settings
+      #
+      # POST /v5/earn/flexible-saving/auto-savings
+      #
+      # @param is_selected [Boolean] Whether to enable auto savings
+      # @option kwargs [String] :coin Coin to change; omit or pass an empty string to change the global setting
+      # @option kwargs [Boolean] :purchase_immediately When enabling, asynchronously attempt to subscribe the available Funding Account balance; ignored when disabling
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
+      # @see https://bybit-exchange.github.io/docs/v5/finance/earn/flexible-saving/auto-savings
+      def edit_earn_auto_savings(is_selected:, **kwargs)
+        params = Bybit::Utils::WireKeys.camelize(kwargs.merge(isSelected: is_selected))
+        @session.sign_request(method: :post, path: '/v5/earn/flexible-saving/auto-savings', body: params)
+      end
     end
   end
 end

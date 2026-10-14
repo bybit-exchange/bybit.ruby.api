@@ -27,6 +27,7 @@ RSpec.describe Bybit::RestApi::MarketService do
     { name: :get_open_interest, path: '/v5/market/open-interest', method: :get, signed: false },
     { name: :get_order_price_limit, path: '/v5/market/price-limit', method: :get, signed: false },
     { name: :get_orderbook, path: '/v5/market/orderbook', method: :get, signed: false },
+    { name: :get_option_base_coins, path: '/v5/market/option-base-coins', method: :get, signed: false },
     { name: :get_premium_index_price_kline, path: '/v5/market/premium-index-price-kline', method: :get, signed: false },
     { name: :get_recent_public_trades, path: '/v5/market/recent-trade', method: :get, signed: false },
     { name: :get_risk_limit, path: '/v5/market/risk-limit', method: :get, signed: false },
@@ -52,6 +53,17 @@ RSpec.describe Bybit::RestApi::MarketService do
         required_kw = method.parameters.select { |t, _| t == :keyreq }.map { |_, n| [n, ""] }.to_h
         svc.public_send(row[:name], **required_kw)
       end
+    end
+  end
+
+
+  describe '#get_option_base_coins wire query' do
+    it 'camelizes the comma-separated underlying type filter' do
+      expect(session).to receive(:public_request).with(
+        path: '/v5/market/option-base-coins',
+        params: { underlyingType: '0,2' }
+      )
+      svc.get_option_base_coins(underlying_type: '0,2')
     end
   end
 end

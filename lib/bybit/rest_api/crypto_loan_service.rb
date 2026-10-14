@@ -370,6 +370,66 @@ module Bybit
         params = Bybit::Utils::WireKeys.camelize(params)
         @session.sign_request(method: :post, path: '/v5/crypto-loan-flexible/repay-collateral', body: params)
       end
+
+      # Get Available Inventory
+      #
+      # GET /v5/crypto-loan-fixed/available-inventory
+      #
+      # @param currency [String] Coin name, uppercase only
+      # @param term [String] Fixed term 7: 7 days; 14: 14 days; 30: 30 days; 90: 90 days; 180: 180 days
+      # @param annual_rate [String] Customizable annual interest rate, e.g., 0.02 means 2%
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
+      # @see https://bybit-exchange.github.io/docs/v5/new-crypto-loan/fixed/available-inventory
+      def get_fixed_available_inventory(currency:, term:, annual_rate:)
+        params = Bybit::Utils::WireKeys.camelize({ currency: currency, term: term, annualRate: annual_rate })
+        @session.sign_request(method: :get, path: '/v5/crypto-loan-fixed/available-inventory', params: params)
+      end
+
+      # Get Repayment History
+      #
+      # GET /v5/crypto-loan-fixed/repayment-history
+      #
+      # @option kwargs [String] :repay_id Repayment ID
+      # @option kwargs [String] :loan_currency Loan currency filter
+      # @option kwargs [String] :limit Page size
+      # @option kwargs [String] :cursor Page cursor
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
+      # @see https://bybit-exchange.github.io/docs/v5/new-crypto-loan/fixed/repay-history
+      def get_fixed_repayment_history(**kwargs)
+        params = Bybit::Utils::WireKeys.camelize(kwargs)
+        @session.sign_request(method: :get, path: '/v5/crypto-loan-fixed/repayment-history', params: params)
+      end
+
+      # Create Supply Order
+      #
+      # POST /v5/crypto-loan-fixed/supply
+      #
+      # @param order_currency [String] Currency to lend
+      # @param order_amount [String] Amount to lend
+      # @param annual_rate [String] Annual interest rate
+      # @param term [String] Term in days (7, 14, 30, 90, 180)
+      # @option kwargs [String] :available_source Fund source for supply order:
+      #   - `0`: Funding account (default)
+      #   - `1`: Flexible savings
+      #   - `2`: Mixed (funding account + flexible savings)
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
+      # @see https://bybit-exchange.github.io/docs/v5/new-crypto-loan/fixed/supply
+      def supply_fixed(order_currency:, order_amount:, annual_rate:, term:, **kwargs)
+        params = Bybit::Utils::WireKeys.camelize(kwargs.merge(orderCurrency: order_currency, orderAmount: order_amount, annualRate: annual_rate, term: term))
+        @session.sign_request(method: :post, path: '/v5/crypto-loan-fixed/supply', body: params)
+      end
+
+      # Get Available Inventory
+      #
+      # GET /v5/crypto-loan-flexible/available-inventory
+      #
+      # @param currency [String] Coin name, uppercase only
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
+      # @see https://bybit-exchange.github.io/docs/v5/new-crypto-loan/flexible/available-inventory
+      def get_flexible_available_inventory(currency:)
+        params = Bybit::Utils::WireKeys.camelize({ currency: currency })
+        @session.sign_request(method: :get, path: '/v5/crypto-loan-flexible/available-inventory', params: params)
+      end
     end
   end
 end

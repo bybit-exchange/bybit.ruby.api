@@ -350,6 +350,23 @@ module Bybit
         params = Bybit::Utils::WireKeys.camelize(params)
         @session.public_request(path: '/v5/market/tickers', params: params)
       end
+
+      # Get Option Base Coins
+      #
+      # GET /v5/market/option-base-coins
+      #
+      # @option kwargs [String] :underlying_type Underlying asset type. Supports comma-separated values, e.g. `0,2`.
+      #   - `0`: Crypto
+      #   - `1`: Commodity
+      #   - `2`: Stock
+      #   - `3`: Forex
+      #   - `4`: Oil
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
+      # @see https://bybit-exchange.github.io/docs/v5/market/option-base-coins
+      def get_option_base_coins(**kwargs)
+        params = Bybit::Utils::WireKeys.camelize(kwargs)
+        @session.public_request(path: '/v5/market/option-base-coins', params: params)
+      end
     end
   end
 end

@@ -12,6 +12,7 @@ RSpec.describe Bybit::RestApi::AccountService do
   # Filled in by the loop below — one row per method the scanner picked up.
   method_table = [
     { name: :batch_set_collateral, path: '/v5/account/set-collateral-switch-batch', method: :post, signed: true },
+    { name: :demo_apply_money, path: '/v5/account/demo-apply-money', method: :post, signed: true },
     { name: :get_borrow_history, path: '/v5/account/borrow-history', method: :get, signed: true },
     { name: :get_collateral_info, path: '/v5/account/collateral-info', method: :get, signed: true },
     { name: :get_dcp_info, path: '/v5/account/query-dcp-info', method: :get, signed: true },
@@ -20,8 +21,11 @@ RSpec.describe Bybit::RestApi::AccountService do
     { name: :get_wallet_balance, path: '/v5/account/wallet-balance', method: :get, signed: true },
     { name: :get_instruments, path: '/v5/account/instruments-info', method: :get, signed: true },
     { name: :get_mmp_state, path: '/v5/account/mmp-state', method: :get, signed: true },
+    { name: :get_option_asset_info, path: '/v5/account/option-asset-info', method: :get, signed: true },
+    { name: :get_pay_info, path: '/v5/account/pay-info', method: :get, signed: true },
     { name: :get_smp_group, path: '/v5/account/smp-group', method: :get, signed: true },
     { name: :get_transaction_log, path: '/v5/account/transaction-log', method: :get, signed: true },
+    { name: :get_trade_info_for_analysis, path: '/v5/account/trade-info-for-analysis', method: :get, signed: true },
     { name: :get_transferable_amount, path: '/v5/account/withdrawal', method: :get, signed: true },
     { name: :get_user_settings, path: '/v5/account/user-setting-config', method: :get, signed: true },
     { name: :manual_borrow, path: '/v5/account/borrow', method: :post, signed: true },
@@ -54,6 +58,45 @@ RSpec.describe Bybit::RestApi::AccountService do
         required_kw = method.parameters.select { |t, _| t == :keyreq }.map { |_, n| [n, ""] }.to_h
         svc.public_send(row[:name], **required_kw)
       end
+    end
+  end
+
+  describe '#get_trade_info_for_analysis' do
+    it 'requires symbol' do
+      expect { svc.get_trade_info_for_analysis }
+        .to raise_error(ArgumentError, /missing keyword: :symbol/)
+    end
+  end
+
+  describe 'wire parameters for new endpoints' do
+    it 'camelizes demo fund configuration recursively' do
+      expect(session).to receive(:sign_request).with(
+        method: :post,
+        path: '/v5/account/demo-apply-money',
+        body: { adjustType: 1, utaDemoApplyMoney: [{ coin: 'USDT', amountStr: '10' }] }
+      )
+      svc.demo_apply_money(
+        adjust_type: 1,
+        uta_demo_apply_money: [{ coin: 'USDT', amount_str: '10' }]
+      )
+    end
+
+    it 'sends the pay-info coin as a query parameter' do
+      expect(session).to receive(:sign_request).with(
+        method: :get,
+        path: '/v5/account/pay-info',
+        params: { coin: 'USDT' }
+      )
+      svc.get_pay_info(coin: 'USDT')
+    end
+
+    it 'sends all trade-analysis query parameters with wire names' do
+      expect(session).to receive(:sign_request).with(
+        method: :get,
+        path: '/v5/account/trade-info-for-analysis',
+        params: { symbol: 'BTCUSDT', startTime: 1, endTime: 2 }
+      )
+      svc.get_trade_info_for_analysis(symbol: 'BTCUSDT', start_time: 1, end_time: 2)
     end
   end
 end

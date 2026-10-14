@@ -17,6 +17,7 @@ RSpec.describe Bybit::RestApi::PositionService do
     { name: :get_closed_positions, path: '/v5/position/get-closed-positions', method: :get, signed: true },
     { name: :get_move_position_history, path: '/v5/position/move-history', method: :get, signed: true },
     { name: :get_positions, path: '/v5/position/list', method: :get, signed: true },
+    { name: :get_symbol_info, path: '/v5/position/symbol-info', method: :get, signed: true },
     { name: :move_position, path: '/v5/position/move-positions', method: :post, signed: true },
     { name: :set_auto_add_margin, path: '/v5/position/set-auto-add-margin', method: :post, signed: true },
     { name: :set_leverage, path: '/v5/position/set-leverage', method: :post, signed: true },
@@ -41,6 +42,18 @@ RSpec.describe Bybit::RestApi::PositionService do
         required_kw = method.parameters.select { |t, _| t == :keyreq }.map { |_, n| [n, ""] }.to_h
         svc.public_send(row[:name], **required_kw)
       end
+    end
+  end
+
+
+  describe '#get_symbol_info wire query' do
+    it 'sends category and the optional symbol' do
+      expect(session).to receive(:sign_request).with(
+        method: :get,
+        path: '/v5/position/symbol-info',
+        params: { symbol: 'BTCUSDT', category: 'linear' }
+      )
+      svc.get_symbol_info(category: 'linear', symbol: 'BTCUSDT')
     end
   end
 end

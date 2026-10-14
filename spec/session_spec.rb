@@ -13,6 +13,18 @@ RSpec.describe Bybit::Session do
   end
   let(:session) { described_class.new(config) }
 
+  describe 'custom Faraday connection' do
+    it 'does not mutate the injected connection params encoder' do
+      connection = Faraday.new(url: config.base_url) do |faraday|
+        faraday.adapter :test, Faraday::Adapter::Test::Stubs.new
+      end
+      config.faraday_connection = connection
+
+      expect { described_class.new(config) }
+        .not_to change { connection.options.params_encoder }
+    end
+  end
+
   describe 'signed dispatch' do
     it 'signs GET query-string exactly as it appears on the wire' do
       url = %r{https://api-testnet\.bybit\.com/v5/account/wallet-balance}

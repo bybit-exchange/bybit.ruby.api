@@ -43,6 +43,7 @@ RSpec.describe Bybit::RestApi::AssetService do
     { name: :list_sub_member_deposit_records, path: '/v5/asset/deposit/query-sub-member-record', method: :get, signed: true },
     { name: :list_withdraw_addresses, path: '/v5/asset/withdraw/query-address', method: :get, signed: true },
     { name: :list_withdraw_records, path: '/v5/asset/withdraw/query-record', method: :get, signed: true },
+    { name: :limit_order_callback, path: '/v5/asset/exchange/limit-order/callback', method: :post, signed: true },
     { name: :quote_apply, path: '/v5/asset/exchange/quote-apply', method: :post, signed: true },
     { name: :send_withdraw, path: '/v5/asset/withdraw/create', method: :post, signed: true },
     { name: :set_default_deposit_to_account, path: '/v5/asset/deposit/deposit-to-account', method: :post, signed: true },
@@ -72,6 +73,24 @@ RSpec.describe Bybit::RestApi::AssetService do
         required_kw = method.parameters.select { |t, _| t == :keyreq }.map { |_, n| [n, ""] }.to_h
         svc.public_send(row[:name], **required_kw)
       end
+    end
+  end
+
+
+  describe '#limit_order_callback wire body' do
+    it 'sends every callback field with its OpenAPI wire name' do
+      expect(session).to receive(:sign_request).with(
+        method: :post,
+        path: '/v5/asset/exchange/limit-order/callback',
+        body: {
+          exchangeTxId: 'tx-1', optionType: 3, timeStamp: 123,
+          sign: 'callback-signature', appId: 'TimeResearch', errorCode: 'failed'
+        }
+      )
+      svc.limit_order_callback(
+        exchange_tx_id: 'tx-1', option_type: 3, time_stamp: 123,
+        sign: 'callback-signature', app_id: 'TimeResearch', error_code: 'failed'
+      )
     end
   end
 end

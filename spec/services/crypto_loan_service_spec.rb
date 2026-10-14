@@ -21,11 +21,14 @@ RSpec.describe Bybit::RestApi::CryptoLoanService do
     { name: :get_fixed_borrow_contract_info, path: '/v5/crypto-loan-fixed/borrow-contract-info', method: :get, signed: true },
     { name: :get_fixed_borrow_order_info, path: '/v5/crypto-loan-fixed/borrow-order-info', method: :get, signed: true },
     { name: :get_fixed_borrow_order_quote, path: '/v5/crypto-loan-fixed/borrow-order-quote', method: :get, signed: false },
+    { name: :get_fixed_available_inventory, path: '/v5/crypto-loan-fixed/available-inventory', method: :get, signed: true },
+    { name: :get_fixed_repayment_history, path: '/v5/crypto-loan-fixed/repayment-history', method: :get, signed: true },
     { name: :get_fixed_renew_info, path: '/v5/crypto-loan-fixed/renew-info', method: :get, signed: true },
     { name: :get_fixed_supply_contract_info, path: '/v5/crypto-loan-fixed/supply-contract-info', method: :get, signed: true },
     { name: :get_fixed_supply_order_info, path: '/v5/crypto-loan-fixed/supply-order-info', method: :get, signed: true },
     { name: :get_fixed_supply_order_quote, path: '/v5/crypto-loan-fixed/supply-order-quote', method: :get, signed: false },
     { name: :get_flexible_borrow_history, path: '/v5/crypto-loan-flexible/borrow-history', method: :get, signed: true },
+    { name: :get_flexible_available_inventory, path: '/v5/crypto-loan-flexible/available-inventory', method: :get, signed: true },
     { name: :get_flexible_ongoing_coin, path: '/v5/crypto-loan-flexible/ongoing-coin', method: :get, signed: true },
     { name: :get_flexible_repayment_history, path: '/v5/crypto-loan-flexible/repayment-history', method: :get, signed: true },
     { name: :get_loanable_data, path: '/v5/crypto-loan-common/loanable-data', method: :get, signed: true },
@@ -37,6 +40,7 @@ RSpec.describe Bybit::RestApi::CryptoLoanService do
     { name: :repay_fixed_with_collateral, path: '/v5/crypto-loan-fixed/repay-collateral', method: :post, signed: true },
     { name: :repay_flexible, path: '/v5/crypto-loan-flexible/repay', method: :post, signed: true },
     { name: :repay_flexible_with_collateral, path: '/v5/crypto-loan-flexible/repay-collateral', method: :post, signed: true },
+    { name: :supply_fixed, path: '/v5/crypto-loan-fixed/supply', method: :post, signed: true },
   ].freeze
 
   method_table.each do |row|
@@ -56,6 +60,53 @@ RSpec.describe Bybit::RestApi::CryptoLoanService do
         required_kw = method.parameters.select { |t, _| t == :keyreq }.map { |_, n| [n, ""] }.to_h
         svc.public_send(row[:name], **required_kw)
       end
+    end
+  end
+
+
+  describe 'wire parameters for new endpoints' do
+    it 'sends fixed available inventory query parameters' do
+      expect(session).to receive(:sign_request).with(
+        method: :get,
+        path: '/v5/crypto-loan-fixed/available-inventory',
+        params: { currency: 'USDT', term: '7', annualRate: '0.02' }
+      )
+      svc.get_fixed_available_inventory(currency: 'USDT', term: '7', annual_rate: '0.02')
+    end
+
+    it 'camelizes fixed repayment history filters' do
+      expect(session).to receive(:sign_request).with(
+        method: :get,
+        path: '/v5/crypto-loan-fixed/repayment-history',
+        params: { repayId: 'repay-1', loanCurrency: 'USDT', limit: '10', cursor: 'next' }
+      )
+      svc.get_fixed_repayment_history(
+        repay_id: 'repay-1', loan_currency: 'USDT', limit: '10', cursor: 'next'
+      )
+    end
+
+    it 'sends the complete fixed supply body' do
+      expect(session).to receive(:sign_request).with(
+        method: :post,
+        path: '/v5/crypto-loan-fixed/supply',
+        body: {
+          orderCurrency: 'USDT', orderAmount: '100', annualRate: '0.02',
+          term: '7', availableSource: '1'
+        }
+      )
+      svc.supply_fixed(
+        order_currency: 'USDT', order_amount: '100', annual_rate: '0.02',
+        term: '7', available_source: '1'
+      )
+    end
+
+    it 'sends the flexible inventory currency' do
+      expect(session).to receive(:sign_request).with(
+        method: :get,
+        path: '/v5/crypto-loan-flexible/available-inventory',
+        params: { currency: 'BTC' }
+      )
+      svc.get_flexible_available_inventory(currency: 'BTC')
     end
   end
 end

@@ -14,6 +14,7 @@ RSpec.describe Bybit::RestApi::EarnService do
     { name: :add_liquidity, path: '/v5/earn/liquidity-mining/add-liquidity', method: :post, signed: true },
     { name: :add_margin, path: '/v5/earn/liquidity-mining/add-margin', method: :post, signed: true },
     { name: :claim_liquidity_interest, path: '/v5/earn/liquidity-mining/claim-interest', method: :post, signed: true },
+    { name: :edit_earn_auto_savings, path: '/v5/earn/flexible-saving/auto-savings', method: :post, signed: true },
     { name: :get_advance_earn_order, path: '/v5/earn/advance/order', method: :get, signed: true },
     { name: :get_advance_earn_position, path: '/v5/earn/advance/position', method: :get, signed: true },
     { name: :get_advance_earn_product, path: '/v5/earn/advance/product', method: :get, signed: false },
@@ -99,6 +100,51 @@ RSpec.describe Bybit::RestApi::EarnService do
         required_kw = method.parameters.select { |t, _| t == :keyreq }.map { |_, n| [n, ""] }.to_h
         svc.public_send(row[:name], **required_kw)
       end
+    end
+  end
+
+  describe '#list_auto_savings' do
+    it 'sends multiple coins as repeated query parameters and signs the exact query string' do
+      config = Bybit::Configuration.new
+      config.api_key = 'test-key'
+      config.api_secret = 'test-secret'
+      config.base_url = 'https://api-testnet.bybit.com'
+      seen_request = nil
+      stubs = Faraday::Adapter::Test::Stubs.new do |stub|
+        stub.get(%r{/v5/earn/flexible-saving/auto-savings}) do |request|
+          seen_request = request
+          [200, { 'Content-Type' => 'application/json' },
+           '{"retCode":0,"retMsg":"OK","result":{"coins":[]},"retExtInfo":{},"time":0}']
+        end
+      end
+      config.faraday_connection = Faraday.new(url: config.base_url) do |connection|
+        connection.adapter :test, stubs
+      end
+      service = described_class.new(Bybit::Session.new(config))
+
+      service.list_auto_savings(coins: %w[BTC ETH])
+
+      query = 'coins=BTC&coins=ETH'
+      timestamp = seen_request.request_headers['X-BAPI-TIMESTAMP']
+      expected_signature = Bybit::Authentication.sign_v5(
+        config.api_secret, timestamp, config.api_key, config.recv_window.to_s, query
+      )
+      expect(seen_request.url.query).to eq(query)
+      expect(seen_request.request_headers['X-BAPI-SIGN']).to eq(expected_signature)
+    end
+  end
+
+
+  describe '#edit_earn_auto_savings wire body' do
+    it 'camelizes optional settings and keeps the boolean value' do
+      expect(session).to receive(:sign_request).with(
+        method: :post,
+        path: '/v5/earn/flexible-saving/auto-savings',
+        body: { coin: 'BTC', purchaseImmediately: true, isSelected: false }
+      )
+      svc.edit_earn_auto_savings(
+        is_selected: false, coin: 'BTC', purchase_immediately: true
+      )
     end
   end
 end

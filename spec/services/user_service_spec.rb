@@ -25,6 +25,7 @@ RSpec.describe Bybit::RestApi::UserService do
     { name: :list_sub_api_keys, path: '/v5/user/sub-apikeys', method: :get, signed: true },
     { name: :list_sub_member_uids, path: '/v5/user/query-sub-members', method: :get, signed: true },
     { name: :list_sub_members, path: '/v5/user/submembers', method: :get, signed: true },
+    { name: :query_referral_code, path: '/v5/user/invitation/code', method: :get, signed: true },
     { name: :sign_agreement, path: '/v5/user/agreement', method: :post, signed: true },
     { name: :update_api_key, path: '/v5/user/update-api', method: :post, signed: true },
     { name: :update_sub_api_key, path: '/v5/user/update-sub-api', method: :post, signed: true },
