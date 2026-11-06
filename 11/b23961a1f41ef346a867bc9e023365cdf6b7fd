@@ -1,0 +1,25 @@
+spec/generated/rest_api_generated_spec.rb
+  s_f323b02ad70227::t_983806fdb4f8fd 933,935
+CHANGELOG.md
+  s_f323b02ad70227::t_983806fdb4f8fd 92-94
+spec/services/alpha_service_spec.rb
+  s_f323b02ad70227::t_273cc413c0d147 7-30
+lib/bybit/rest_api/alpha_service.rb
+  s_f323b02ad70227::t_983806fdb4f8fd 300-304,307-308
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.2-bit.2+419f699",
+  "base_commit_sha": "11b23961a1f41ef346a867bc9e023365cdf6b7fd",
+  "prompts": {},
+  "sessions": {
+    "s_f323b02ad70227": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1afab-2900-7431-b09a-0b2896dc1452",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "johnny.wang <johnny.wang@bybit.com>"
+    }
+  }
+}
