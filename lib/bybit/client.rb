@@ -18,6 +18,14 @@ require 'bybit/rest_api/rfq_service'
 require 'bybit/rest_api/spot_margin_service'
 require 'bybit/rest_api/trade_service'
 require 'bybit/rest_api/user_service'
+require 'bybit/rest_api/alpha_service'
+require 'bybit/rest_api/event_service'
+require 'bybit/rest_api/fiat_service'
+require 'bybit/rest_api/referral_service'
+require 'bybit/rest_api/spot_x_service'
+require 'bybit/rest_api/spread_trade_service'
+require 'bybit/rest_api/strategy_service'
+require 'bybit/rest_api/tax_service'
 # gen-sdk-ruby:service-requires:end
 
 module Bybit
@@ -36,9 +44,10 @@ module Bybit
 
   class Client
     # gen-sdk-ruby:client-readers:start
-    attr_reader :account, :affiliate, :asset, :bot, :broker, :crypto_loan, :earn,
-                :institutional_loan, :market, :misc, :p2p, :position, :pre_upgrade,
-                :rfq, :spot_margin, :trade, :user
+    attr_reader :account, :affiliate, :alpha, :asset, :bot, :broker, :crypto_loan, :earn,
+                :event, :fiat, :institutional_loan, :market, :misc, :p2p, :position,
+                :pre_upgrade, :referral, :rfq, :spot_margin, :spot_x, :spread_trade,
+                :strategy, :tax, :trade, :user
 
     # gen-sdk-ruby:client-readers:end
 
@@ -49,23 +58,35 @@ module Bybit
       @config = cfg
 
       # gen-sdk-ruby:client-inits:start
-      @account = RestApi::AccountService.new(session)
-      @affiliate = RestApi::AffiliateService.new(session)
-      @asset = RestApi::AssetService.new(session)
-      @bot = RestApi::BotService.new(session)
-      @broker = RestApi::BrokerService.new(session)
-      @crypto_loan = RestApi::CryptoLoanService.new(session)
-      @earn = RestApi::EarnService.new(session)
-      @institutional_loan = RestApi::InstitutionalLoanService.new(session)
-      @market = RestApi::MarketService.new(session)
-      @misc = RestApi::MiscService.new(session)
-      @p2p = RestApi::P2pService.new(session)
-      @position = RestApi::PositionService.new(session)
-      @pre_upgrade = RestApi::PreUpgradeService.new(session)
-      @rfq = RestApi::RfqService.new(session)
-      @spot_margin = RestApi::SpotMarginService.new(session)
-      @trade = RestApi::TradeService.new(session)
-      @user = RestApi::UserService.new(session)
+      {
+        account: RestApi::AccountService,
+        affiliate: RestApi::AffiliateService,
+        alpha: RestApi::AlphaService,
+        asset: RestApi::AssetService,
+        bot: RestApi::BotService,
+        broker: RestApi::BrokerService,
+        crypto_loan: RestApi::CryptoLoanService,
+        earn: RestApi::EarnService,
+        event: RestApi::EventService,
+        fiat: RestApi::FiatService,
+        institutional_loan: RestApi::InstitutionalLoanService,
+        market: RestApi::MarketService,
+        misc: RestApi::MiscService,
+        p2p: RestApi::P2pService,
+        position: RestApi::PositionService,
+        pre_upgrade: RestApi::PreUpgradeService,
+        referral: RestApi::ReferralService,
+        rfq: RestApi::RfqService,
+        spot_margin: RestApi::SpotMarginService,
+        spot_x: RestApi::SpotXService,
+        spread_trade: RestApi::SpreadTradeService,
+        strategy: RestApi::StrategyService,
+        tax: RestApi::TaxService,
+        trade: RestApi::TradeService,
+        user: RestApi::UserService
+      }.each do |name, service_class|
+        instance_variable_set("@#{name}", service_class.new(session))
+      end
       # gen-sdk-ruby:client-inits:end
     end
 

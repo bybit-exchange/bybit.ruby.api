@@ -95,11 +95,33 @@ module Bybit
       # @param order_id [String] Loan order ID to repay
       # @param amount [String] Repayment amount
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/otc/repay-loan
+      # @see https://bybit-exchange.github.io/docs/v5/otc/repay
       def repay_loan(order_id:, amount:, **kwargs)
         params = kwargs.merge(order_id: order_id, amount: amount)
         params = Bybit::Utils::WireKeys.camelize(params)
         @session.sign_request(method: :post, path: '/v5/ins-loan/repay-loan', body: params)
+      end
+
+      # Get Coin Delta Amount
+      #
+      # GET /v5/ins-loan/coin-delta-amount
+      #
+      # @option kwargs [String] :coin Coin name to filter, uppercase only. e.g. `BTC`. If not passed, returns all coins.
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
+      # @see https://bybit-exchange.github.io/docs/v5/otc/coin-delta-amount
+      def ins_loan_coin_delta_amount(**kwargs)
+        params = Bybit::Utils::WireKeys.camelize(kwargs)
+        @session.sign_request(method: :get, path: '/v5/ins-loan/coin-delta-amount', params: params)
+      end
+
+      # Get Delay Liquidation Status
+      #
+      # GET /v5/ins-loan/delay-liq-status
+      #
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
+      # @see https://bybit-exchange.github.io/docs/v5/otc/delay-liq-status
+      def ins_loan_delay_liq_status
+        @session.sign_request(method: :get, path: '/v5/ins-loan/delay-liq-status')
       end
     end
   end
