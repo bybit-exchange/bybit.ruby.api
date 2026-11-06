@@ -23,12 +23,13 @@ jobs:
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
-          # Match .ruby-version. Ruby 3.2 ships bundler 2.4.19 + stdlib uri
+          # Ruby 3.2 ships bundler 2.4.19 + stdlib uri
           # 0.12.5, which conflicts with the uri >= 1.x that `bundle install`
           # resolves for our faraday dep — bundler activates the stdlib uri
-          # first and then errors on the Gemfile requirement. 3.3.5 ships
-          # bundler 2.5.x which handles the default-gem overlap correctly.
-          ruby-version: '3.3.5'
+          # first and then errors on the Gemfile requirement. Use the latest
+          # 3.3.x patch available on the runner to avoid unavailable old patch
+          # releases while retaining Bundler 2.5.x behavior.
+          ruby-version: '3.3'
           bundler-cache: true
 
       - name: Validate tag is on main branch
