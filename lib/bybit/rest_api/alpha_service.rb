@@ -297,11 +297,15 @@ module Bybit
       #
       # POST /v5/alpha/prediction/side-market-list
       #
-      # @param event_type [String]
+      # @param event_id [String] Event ID to query markets for.
+      # @option kwargs [String] :sort_by Sort by volume, liquidity, or endDate.
+      # @option kwargs [Integer] :market_type Filter by market type.
+      # @option kwargs [Integer] :limit Number of records per page.
+      # @option kwargs [Integer] :page_index Page number starting from 1.
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       # @see https://bybit-exchange.github.io/docs/v5/alpha/prediction/side-market-list
-      def get_prediction_side_market_list(event_type:)
-        params = Bybit::Utils::WireKeys.camelize({ eventType: event_type })
+      def get_prediction_side_market_list(event_id:, **kwargs)
+        params = Bybit::Utils::WireKeys.camelize(kwargs.merge(eventId: event_id))
         @session.sign_request(method: :post, path: '/v5/alpha/prediction/side-market-list', body: params)
       end
 

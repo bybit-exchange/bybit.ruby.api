@@ -930,9 +930,9 @@ RSpec.describe 'generated REST API contracts' do
     expect(session).to receive(:sign_request).with(
       method: :post,
       path: '/v5/alpha/prediction/side-market-list',
-      body: { eventType: 'event_type-value' }
+      body: { eventId: 'event_id-value' }
     )
-    service.get_prediction_side_market_list(event_type: 'event_type-value')
+    service.get_prediction_side_market_list(event_id: 'event_id-value')
   end
 
   # endpoint: POST /v5/alpha/prediction/sports/group-stage-detail

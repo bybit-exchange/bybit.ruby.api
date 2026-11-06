@@ -89,6 +89,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `StrategyService#query_order_list(...)`
 - `StrategyService#stop_strategy(...)`
 
+### Fixed
+- `AlphaService#get_prediction_side_market_list(...)` now requires `event_id` and accepts the documented filters and pagination options.
+
 ### Sources
 - OpenAPI: `705f49bf6dba27ecc5b9b402f46ab2423cfb5dd9`
 - Docs: `9cde0843c270dd1e6009fb4593272f43f60cccf0`

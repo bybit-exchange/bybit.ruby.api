@@ -4,6 +4,30 @@ RSpec.describe Bybit::RestApi::AlphaService do
   let(:session) { instance_double(Bybit::Session) }
   let(:service) { described_class.new(session) }
 
+  describe '#get_prediction_side_market_list' do
+    it 'sends the event ID and camelizes optional filters' do
+      expect(session).to receive(:sign_request).with(
+        method: :post,
+        path: '/v5/alpha/prediction/side-market-list',
+        body: { eventId: 'event-id', sortBy: 'volume', marketType: 1, limit: 20, pageIndex: 1 }
+      )
+
+      service.get_prediction_side_market_list(
+        event_id: 'event-id',
+        sort_by: 'volume',
+        market_type: 1,
+        limit: 20,
+        page_index: 1
+      )
+    end
+
+    it 'rejects a request without an event ID before dispatch' do
+      expect(session).not_to receive(:sign_request)
+
+      expect { service.get_prediction_side_market_list }.to raise_error(ArgumentError)
+    end
+  end
+
   describe '#get_prediction_portfolio_summary' do
     it 'camelizes optional filters in the request body' do
       expect(session).to receive(:sign_request).with(
