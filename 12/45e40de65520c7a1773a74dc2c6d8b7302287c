@@ -1,0 +1,19 @@
+docs/superpowers/specs/2026-11-06-sdk-review-fixes-design.md
+  s_1ac47a3ae1658c::t_e54c53394afde5 1-44
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.2-bit.2+419f699",
+  "base_commit_sha": "1245e40de65520c7a1773a74dc2c6d8b7302287c",
+  "prompts": {},
+  "sessions": {
+    "s_1ac47a3ae1658c": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1aebf-a28b-7d01-be80-225e54aeef89",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "doris-xiao-bybit <doris.xiao@bybit.com>"
+    }
+  }
+}
