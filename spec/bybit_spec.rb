@@ -10,4 +10,10 @@ RSpec.describe Bybit do
     client = Bybit::Client.new
     expect(client).to be_a(Bybit::Client)
   end
+
+  it 'does not expose the deferred Stocks API' do
+    client = Bybit::Client.new
+
+    expect(client).not_to respond_to(:stocks)
+  end
 end

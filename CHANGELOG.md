@@ -1,4 +1,11 @@
-## 0.1.3 — 2026-11-06
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [0.1.3] - 2026-11-06
 
 ### Added
 - `AlphaService#get_lp_order_list(...)`
@@ -56,15 +63,6 @@
 - `ReferralService#get_commission_records(...)`
 - `ReferralService#get_user_identity_profile(...)`
 - `ReferralService#get_user_invitations(...)`
-- `StocksService#get_convert_detail(...)`
-- `StocksService#get_convert_list(...)`
-- `StocksService#submit_convert(...)`
-- `StocksService#get_multiplier_list(...)`
-- `StocksService#get_market_session(...)`
-- `StocksService#place_order(...)`
-- `StocksService#cancel_order(...)`
-- `StocksService#get_order_detail(...)`
-- `StocksService#get_positions(...)`
 - `SpotMarginService#query_fixed_borrow_penalty_interest(...)`
 - `SpotMarginService#cancel_fixed_borrow_order(...)`
 - `SpotXService#get_launchpool_project_list(...)`
@@ -94,13 +92,6 @@
 ### Sources
 - OpenAPI: `705f49bf6dba27ecc5b9b402f46ab2423cfb5dd9`
 - Docs: `9cde0843c270dd1e6009fb4593272f43f60cccf0`
-
-# Changelog
-
-All notable changes to this project will be documented in this file.
-
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [0.1.2] - 2026-10-13
 

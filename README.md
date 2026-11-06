@@ -128,18 +128,26 @@ Each API group is a property on `Bybit::Client`:
 - `client.trade` — orders (create / amend / cancel / batch / history)
 - `client.position` — positions, leverage, TP/SL, move-position
 - `client.account` — wallet, margin, collateral, fee-rate, transaction log
+- `client.alpha` — Alpha liquidity pools, prediction markets, and on-chain token trading
 - `client.asset` — coin balance, coin greeks, funding history
 - `client.user` — sub-accounts, API-key management
 - `client.affiliate` — sub-affiliate lists
 - `client.broker` — broker earnings, distributions
 - `client.crypto_loan` — flexible / fixed crypto loans
+- `client.event` — event contracts, positions, settlements, and executions
+- `client.fiat` — fiat convert balances, quotes, trades, and history
 - `client.institutional_loan` — /v5/ins-loan/* (OTC institutional loans)
 - `client.rfq` — request-for-quote (block trades)
 - `client.spot_margin` — UTA spot margin
+- `client.spot_x` — Launchpool, Puzzle Hunt, and Token Splash
+- `client.spread_trade` — spread instruments, orders, orderbook, and executions
+- `client.strategy` — strategy creation, queries, and lifecycle operations
+- `client.tax` — private tax report generation and status queries
 - `client.earn` — earn, liquidity mining, RWA, PWM, hold-to-earn
 - `client.p2p` — P2P advertise / order / chat
 - `client.bot` — DCA / grid / futures-combo / futures-grid / martingale
 - `client.pre_upgrade` — /v5/pre-upgrade/* historical queries for Classic → UTA upgrades
+- `client.referral` — campaign rewards, commissions, profiles, and invitations
 - `client.misc` — /v5/announcements/index, /v5/system/status
 
 ## Error Handling

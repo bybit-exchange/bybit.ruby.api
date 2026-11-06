@@ -9,7 +9,7 @@ module Bybit
       #
       # @param params [Hash] Request payload. strategy_type: chaseOrder | iceberg | pov | twap.
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/strategy/create
+      # @see https://bybit-exchange.github.io/docs/v5/strategy/create-strategy
       def create_strategy(**params)
         body = Bybit::Utils::WireKeys.camelize(params)
         @session.sign_request(method: :post, path: '/v5/strategy/create', body: body)
@@ -48,7 +48,7 @@ module Bybit
       #   Use nextCursor value from previous query to get next page.
       #   Empty for first page.
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/strategy/list
+      # @see https://bybit-exchange.github.io/docs/v5/strategy/strategy-list
       def query_list(**kwargs)
         params = Bybit::Utils::WireKeys.camelize(kwargs)
         @session.sign_request(method: :get, path: '/v5/strategy/list', params: params)
@@ -95,7 +95,7 @@ module Bybit
       #   Obtained from strategy creation response or strategy list query.
       #   Only Running or Untriggered strategies can be stopped.
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/strategy/stop
+      # @see https://bybit-exchange.github.io/docs/v5/strategy/stop-strategy
       def stop_strategy(strategy_id:)
         params = Bybit::Utils::WireKeys.camelize({ strategyId: strategy_id })
         @session.sign_request(method: :post, path: '/v5/strategy/stop', body: params)

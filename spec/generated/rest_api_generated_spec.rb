@@ -269,78 +269,6 @@ RSpec.describe 'generated REST API contracts' do
     service.ins_loan_delay_liq_status
   end
 
-  # endpoint: GET /v5/rwa/stocks/convert/detail
-  it 'dispatches this generated endpoint' do
-    session = instance_double(Bybit::Session)
-    service = Bybit::RestApi::StocksService.new(session)
-    expect(session).to receive(:sign_request).with(
-      method: :get,
-      path: '/v5/rwa/stocks/convert/detail',
-      params: { orderNo: 'order_no-value', requestId: 'request_id-value' }
-    )
-    service.get_convert_detail(order_no: 'order_no-value', request_id: 'request_id-value')
-  end
-
-  # endpoint: GET /v5/rwa/stocks/convert/list
-  it 'dispatches this generated endpoint' do
-    session = instance_double(Bybit::Session)
-    service = Bybit::RestApi::StocksService.new(session)
-    expect(session).to receive(:sign_request).with(
-      method: :get,
-      path: '/v5/rwa/stocks/convert/list',
-      params: { symbol: 'symbol-value' }
-    )
-    service.get_convert_list(symbol: 'symbol-value')
-  end
-
-  # endpoint: GET /v5/rwa/stocks/market/getMultiplierList
-  it 'dispatches this generated endpoint' do
-    session = instance_double(Bybit::Session)
-    service = Bybit::RestApi::StocksService.new(session)
-    expect(session).to receive(:sign_request).with(
-      method: :get,
-      path: '/v5/rwa/stocks/market/getMultiplierList',
-      params: { symbol: 'symbol-value', current: 1, pageSize: 1 }
-    )
-    service.get_multiplier_list(symbol: 'symbol-value', current: 1, page_size: 1)
-  end
-
-  # endpoint: GET /v5/rwa/stocks/market/session
-  it 'dispatches this generated endpoint' do
-    session = instance_double(Bybit::Session)
-    service = Bybit::RestApi::StocksService.new(session)
-    expect(session).to receive(:sign_request).with(
-      method: :get,
-      path: '/v5/rwa/stocks/market/session',
-      params: { symbol: 'symbol-value' }
-    )
-    service.get_market_session(symbol: 'symbol-value')
-  end
-
-  # endpoint: GET /v5/rwa/stocks/order/detail
-  it 'dispatches this generated endpoint' do
-    session = instance_double(Bybit::Session)
-    service = Bybit::RestApi::StocksService.new(session)
-    expect(session).to receive(:sign_request).with(
-      method: :get,
-      path: '/v5/rwa/stocks/order/detail',
-      params: { orderNo: 'order_no-value', requestId: 'request_id-value' }
-    )
-    service.get_order_detail(order_no: 'order_no-value', request_id: 'request_id-value')
-  end
-
-  # endpoint: GET /v5/rwa/stocks/positions
-  it 'dispatches this generated endpoint' do
-    session = instance_double(Bybit::Session)
-    service = Bybit::RestApi::StocksService.new(session)
-    expect(session).to receive(:sign_request).with(
-      method: :get,
-      path: '/v5/rwa/stocks/positions',
-      params: { symbol: 'symbol-value', showZero: true }
-    )
-    service.get_positions(symbol: 'symbol-value', show_zero: true)
-  end
-
   # endpoint: GET /v5/spot-margin-trade/fixedborrow-interest-accrued
   it 'dispatches this generated endpoint' do
     session = instance_double(Bybit::Session)
@@ -921,9 +849,10 @@ RSpec.describe 'generated REST API contracts' do
     service = Bybit::RestApi::AlphaService.new(session)
     expect(session).to receive(:sign_request).with(
       method: :post,
-      path: '/v5/alpha/prediction/portfolio-summary'
+      path: '/v5/alpha/prediction/portfolio-summary',
+      body: { eventType: 'event_type-value' }
     )
-    service.get_prediction_portfolio_summary
+    service.get_prediction_portfolio_summary(event_type: 'event_type-value')
   end
 
   # endpoint: POST /v5/alpha/prediction/position-history
@@ -958,17 +887,13 @@ RSpec.describe 'generated REST API contracts' do
       method: :post,
       path: '/v5/alpha/prediction/price-history',
       body: {
-        tokenIds: ['token_ids-value'],
-        eventId: 'event_id-value',
-        interval: 'interval-value',
-        fidelity: 1
+        tokenId: 'token_id-value',
+        interval: 'interval-value'
       }
     )
     service.get_prediction_price_history(
-      token_ids: ['token_ids-value'],
-      event_id: 'event_id-value',
-      interval: 'interval-value',
-      fidelity: 1
+      token_id: 'token_id-value',
+      interval: 'interval-value'
     )
   end
 
@@ -1017,11 +942,11 @@ RSpec.describe 'generated REST API contracts' do
     expect(session).to receive(:sign_request).with(
       method: :post,
       path: '/v5/alpha/prediction/sports/group-stage-detail',
-      body: { eventType: 'event_type-value', stageCode: 'stage_code-value' }
+      body: { eventType: 'event_type-value', groupName: 'group_name-value' }
     )
     service.get_prediction_group_stage_detail(
       event_type: 'event_type-value',
-      stage_code: 'stage_code-value'
+      group_name: 'group_name-value'
     )
   end
 
@@ -1032,9 +957,25 @@ RSpec.describe 'generated REST API contracts' do
     expect(session).to receive(:sign_request).with(
       method: :post,
       path: '/v5/alpha/prediction/sports/match-list',
-      body: { eventType: 'event_type-value' }
+      body: {
+        eventType: 'event_type-value',
+        status: 1,
+        startTime: 1,
+        endTime: 1,
+        stageCode: 'stage_code-value',
+        limit: 1,
+        pageIndex: 1
+      }
     )
-    service.get_prediction_match_list(event_type: 'event_type-value')
+    service.get_prediction_match_list(
+      event_type: 'event_type-value',
+      status: 1,
+      start_time: 1,
+      end_time: 1,
+      stage_code: 'stage_code-value',
+      limit: 1,
+      page_index: 1
+    )
   end
 
   # endpoint: POST /v5/alpha/prediction/token-price
@@ -1383,90 +1324,6 @@ RSpec.describe 'generated REST API contracts' do
       page_size: 1,
       friend_status: 0
     )
-  end
-
-  # endpoint: POST /v5/rwa/stocks/convert/submit
-  it 'dispatches this generated endpoint' do
-    session = instance_double(Bybit::Session)
-    service = Bybit::RestApi::StocksService.new(session)
-    expect(session).to receive(:sign_request).with(
-      method: :post,
-      path: '/v5/rwa/stocks/convert/submit',
-      body: {
-        convertType: 'MINT',
-        symbol: 'symbol-value',
-        inputAmount: 'input_amount-value',
-        frontMultiplier: 'front_multiplier-value',
-        accountType: 'all',
-        requestId: 'request_id-value',
-        contractAddr: 'contract_addr-value',
-        flow: 'CEX',
-        burnScene: 'DEP'
-      }
-    )
-    service.submit_convert(
-      convert_type: 'MINT',
-      symbol: 'symbol-value',
-      input_amount: 'input_amount-value',
-      front_multiplier: 'front_multiplier-value',
-      account_type: 'all',
-      request_id: 'request_id-value',
-      contract_addr: 'contract_addr-value',
-      flow: 'CEX',
-      burn_scene: 'DEP'
-    )
-  end
-
-  # endpoint: POST /v5/rwa/stocks/order
-  it 'dispatches this generated endpoint' do
-    session = instance_double(Bybit::Session)
-    service = Bybit::RestApi::StocksService.new(session)
-    expect(session).to receive(:sign_request).with(
-      method: :post,
-      path: '/v5/rwa/stocks/order',
-      body: {
-        symbol: 'symbol-value',
-        quoteToken: 'USDC',
-        side: 'BUY',
-        type: 'MARKET',
-        qty: 'qty-value',
-        notional: 'notional-value',
-        limitPrice: 'limit_price-value',
-        stopPrice: 'stop_price-value',
-        timeInForce: 'DAY',
-        tradingSession: 'RTH',
-        tokenize: true,
-        orderTime: 1,
-        requestId: 'request_id-value'
-      }
-    )
-    service.place_order(
-      symbol: 'symbol-value',
-      quote_token: 'USDC',
-      side: 'BUY',
-      type: 'MARKET',
-      qty: 'qty-value',
-      notional: 'notional-value',
-      limit_price: 'limit_price-value',
-      stop_price: 'stop_price-value',
-      time_in_force: 'DAY',
-      trading_session: 'RTH',
-      tokenize: true,
-      order_time: 1,
-      request_id: 'request_id-value'
-    )
-  end
-
-  # endpoint: POST /v5/rwa/stocks/order/cancel
-  it 'dispatches this generated endpoint' do
-    session = instance_double(Bybit::Session)
-    service = Bybit::RestApi::StocksService.new(session)
-    expect(session).to receive(:sign_request).with(
-      method: :post,
-      path: '/v5/rwa/stocks/order/cancel',
-      body: { orderNo: 'order_no-value' }
-    )
-    service.cancel_order(order_no: 'order_no-value')
   end
 
   # endpoint: POST /v5/spot-margin-trade/fixedborrow-order-cancel

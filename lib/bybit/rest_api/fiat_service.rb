@@ -13,7 +13,7 @@ module Bybit
       #   - Crypto: e.g., USDT, BTC, ETH
       #   - Omit to query all balances
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/fiat/balance-query
+      # @see https://bybit-exchange.github.io/docs/v5/asset/fiat-convert/balance-query
       def query_balance(**kwargs)
         params = Bybit::Utils::WireKeys.camelize(kwargs)
         @session.sign_request(method: :get, path: '/v5/fiat/balance-query', params: params)
@@ -27,7 +27,7 @@ module Bybit
       #   - `0`: buy - Buy crypto, sell fiat
       #   - `1`: sell - Sell crypto, buy fiat
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/fiat/query-coin-list
+      # @see https://bybit-exchange.github.io/docs/v5/asset/fiat-convert/query-coin-list
       def query_coin_list(**kwargs)
         params = Bybit::Utils::WireKeys.camelize(kwargs)
         @session.sign_request(method: :get, path: '/v5/fiat/query-coin-list', params: params)
@@ -42,7 +42,7 @@ module Bybit
       # @option kwargs [String] :start_time Query start time (millisecond timestamp)
       # @option kwargs [String] :end_time Query end time (millisecond timestamp)
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/fiat/query-trade-history
+      # @see https://bybit-exchange.github.io/docs/v5/asset/fiat-convert/query-trade-history
       def query_trade_history(**kwargs)
         params = Bybit::Utils::WireKeys.camelize(kwargs)
         @session.sign_request(method: :get, path: '/v5/fiat/query-trade-history', params: params)
@@ -59,7 +59,7 @@ module Bybit
       # @param request_amount [String] Request coin amount (the amount you want to sell)
       # @option kwargs [String] :request_coin_type Coin type you want to sell, defaults to fiat
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/fiat/quote-apply
+      # @see https://bybit-exchange.github.io/docs/v5/asset/fiat-convert/quote-apply
       def apply_quote(from_coin:, from_coin_type:, to_coin:, to_coin_type:, request_amount:, **kwargs)
         params = Bybit::Utils::WireKeys.camelize(kwargs.merge(fromCoin: from_coin, fromCoinType: from_coin_type, toCoin: to_coin, toCoinType: to_coin_type, requestAmount: request_amount))
         @session.sign_request(method: :post, path: '/v5/fiat/quote-apply', body: params)
@@ -72,7 +72,7 @@ module Bybit
       # @param symbol [String] Coin pair, format: "FIAT-CRYPTO", e.g., "EUR-USDT"
       # @option kwargs [String] :payment_method Payment method (reserved field)
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/fiat/reference-price
+      # @see https://bybit-exchange.github.io/docs/v5/asset/fiat-convert/reference-price
       def get_reference_price(symbol:, **kwargs)
         params = Bybit::Utils::WireKeys.camelize(kwargs.merge(symbol: symbol))
         @session.sign_request(method: :get, path: '/v5/fiat/reference-price', params: params)
@@ -87,7 +87,7 @@ module Bybit
       # @option kwargs [String] :webhook_url Optional webhook URL to receive trade status notifications (max 256 characters)
       # @option kwargs [String] :merchant_request_id Customised request ID (max 36 characters). Generally it is useless, but convenient for internal tracking
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/fiat/trade-execute
+      # @see https://bybit-exchange.github.io/docs/v5/asset/fiat-convert/confirm-quote
       def confirm_quote(quote_tx_id:, sub_user_id:, **kwargs)
         params = Bybit::Utils::WireKeys.camelize(kwargs.merge(quoteTxId: quote_tx_id, subUserId: sub_user_id))
         @session.sign_request(method: :post, path: '/v5/fiat/trade-execute', body: params)
@@ -100,7 +100,7 @@ module Bybit
       # @option kwargs [String] :trade_no Trade order number (either tradeNo or merchantRequestId must be provided)
       # @option kwargs [String] :merchant_request_id Merchant request ID (either tradeNo or merchantRequestId must be provided)
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/fiat/trade-query
+      # @see https://bybit-exchange.github.io/docs/v5/asset/fiat-convert/query-trade
       def query_trade(**kwargs)
         params = Bybit::Utils::WireKeys.camelize(kwargs)
         @session.sign_request(method: :get, path: '/v5/fiat/trade-query', params: params)

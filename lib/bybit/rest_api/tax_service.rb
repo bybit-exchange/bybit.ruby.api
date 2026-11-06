@@ -15,7 +15,7 @@ module Bybit
       #   - `csv` — CSV text format
       #   - `orc` — ORC columnar format (default)
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/fht/compliance/tax/private/batch_create
+      # @note Generated from the Bybit OpenAPI specification; no public documentation page is currently available.
       def batch_create_tax_reports(start_time:, end_time:, items:, **kwargs)
         params = Bybit::Utils::WireKeys.camelize(kwargs.merge(startTime: start_time, endTime: end_time, items: items))
         @session.sign_request(method: :post, path: '/v5/fht/compliance/tax/private/batch_create', body: params)
@@ -27,7 +27,7 @@ module Bybit
       #
       # @param batch_id [String] Batch ID returned by `batch_create`
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/fht/compliance/tax/private/batch_query
+      # @note Generated from the Bybit OpenAPI specification; no public documentation page is currently available.
       def batch_query_tax_reports(batch_id:)
         params = Bybit::Utils::WireKeys.camelize({ batchId: batch_id })
         @session.sign_request(method: :get, path: '/v5/fht/compliance/tax/private/batch_query', params: params)

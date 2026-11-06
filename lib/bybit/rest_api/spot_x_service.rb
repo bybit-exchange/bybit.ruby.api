@@ -16,7 +16,7 @@ module Bybit
       # @option kwargs [String] :cursor Pagination cursor returned as `nextPageCursor` in the previous response. Omit for the first page.
       # @option kwargs [Integer] :limit Number of items per page. Defaults to `10`. Maximum `10`.
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/spot-x/launchpool/project/list
+      # @see https://bybit-exchange.github.io/docs/v5/finance/spot-x/launchpool/launchpool-project-list
       def get_launchpool_project_list(status:, **kwargs)
         params = Bybit::Utils::WireKeys.camelize(kwargs.merge(status: status))
         @session.public_request(path: '/v5/spot-x/launchpool/project/list', params: params)
@@ -50,7 +50,7 @@ module Bybit
       # @option kwargs [Integer] :page_size Number of records per page. Defaults to `10`. Maximum `10`.
       # @option kwargs [Integer] :current Page number (1-based). Defaults to `1`. Maximum `100`.
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/spot-x/launchpool/user/activity-log
+      # @see https://bybit-exchange.github.io/docs/v5/finance/spot-x/launchpool/launchpool-activity-log
       def get_launchpool_user_activity_log(**kwargs)
         params = Bybit::Utils::WireKeys.camelize(kwargs)
         @session.sign_request(method: :post, path: '/v5/spot-x/launchpool/user/activity-log', body: params)
@@ -61,7 +61,7 @@ module Bybit
       # GET /v5/spot-x/launchpool/user/current-staking
       #
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/spot-x/launchpool/user/current-staking
+      # @see https://bybit-exchange.github.io/docs/v5/finance/spot-x/launchpool/launchpool-current-staking
       def get_launchpool_user_current_staking
         @session.sign_request(method: :get, path: '/v5/spot-x/launchpool/user/current-staking')
       end
@@ -81,7 +81,7 @@ module Bybit
       # @option kwargs [Integer] :page_size Number of records per page. Defaults to `10`. Maximum `10`.
       # @option kwargs [Integer] :current Page number (1-based). Defaults to `1`. Maximum `100`.
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/spot-x/launchpool/user/history
+      # @see https://bybit-exchange.github.io/docs/v5/finance/spot-x/launchpool/launchpool-user-history
       def get_launchpool_user_history(**kwargs)
         params = Bybit::Utils::WireKeys.camelize(kwargs)
         @session.sign_request(method: :post, path: '/v5/spot-x/launchpool/user/history', body: params)
@@ -100,7 +100,7 @@ module Bybit
       # @option kwargs [String] :cursor Pagination cursor returned as `nextPageCursor` in the previous response. Omit for the first page.
       # @option kwargs [Integer] :limit Number of items per page. Defaults to `10`. Maximum `10`.
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/spot-x/puzzle/project/list
+      # @see https://bybit-exchange.github.io/docs/v5/finance/spot-x/puzzle/puzzle-project-list
       def get_puzzle_project_list(status:, **kwargs)
         params = Bybit::Utils::WireKeys.camelize(kwargs.merge(status: status))
         @session.public_request(path: '/v5/spot-x/puzzle/project/list', params: params)
@@ -119,7 +119,7 @@ module Bybit
       # @option kwargs [String] :cursor Pagination cursor returned as `nextPageCursor` in the previous response. Omit for the first page.
       # @option kwargs [Integer] :limit Number of items per page. Defaults to `10`. Maximum `10`.
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/spot-x/token-splash/project/list
+      # @see https://bybit-exchange.github.io/docs/v5/finance/spot-x/token-splash/token-splash-project-list
       def get_token_splash_project_list(status:, **kwargs)
         params = Bybit::Utils::WireKeys.camelize(kwargs.merge(status: status))
         @session.public_request(path: '/v5/spot-x/token-splash/project/list', params: params)
@@ -132,7 +132,7 @@ module Bybit
       # @option kwargs [String] :project_id Filter by exact activity code. Returns data for a single project when provided.
       # @option kwargs [String] :activity_coin Filter by activity coin symbol (case-insensitive), e.g. `BTC`, `ETH`.
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/spot-x/token-splash/user/activity-params
+      # @see https://bybit-exchange.github.io/docs/v5/finance/spot-x/token-splash/token-splash-user-activity-params
       def get_token_splash_user_activity_params(**kwargs)
         params = Bybit::Utils::WireKeys.camelize(kwargs)
         @session.sign_request(method: :get, path: '/v5/spot-x/token-splash/user/activity-params', params: params)

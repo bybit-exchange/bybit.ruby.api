@@ -15,7 +15,7 @@ module Bybit
       # @option kwargs [Integer] :limit Number of results per page. Range `[1, 50]`. Default `20`.
       # @option kwargs [String] :cursor Pagination cursor token from `nextPageCursor` in a previous response.
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/spread/execution/list
+      # @see https://bybit-exchange.github.io/docs/v5/spread/trade/trade-history
       def get_history(**kwargs)
         params = Bybit::Utils::WireKeys.camelize(kwargs)
         @session.sign_request(method: :get, path: '/v5/spread/execution/list', params: params)
@@ -30,7 +30,7 @@ module Bybit
       # @option kwargs [Integer] :limit Number of records per page, range `[1, 500]`. Default is `200`
       # @option kwargs [String] :cursor Pagination cursor; use `nextPageCursor` from the previous response
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/spread/instrument
+      # @see https://bybit-exchange.github.io/docs/v5/spread/market/instrument
       def get_spread_instruments_info(**kwargs)
         params = Bybit::Utils::WireKeys.camelize(kwargs)
         @session.public_request(path: '/v5/spread/instrument', params: params)
@@ -46,7 +46,7 @@ module Bybit
       #   - `2`: Sell
       # @param order_price [String] Order price.
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/spread/max-qty
+      # @see https://bybit-exchange.github.io/docs/v5/spread/trade/max-qty
       def get_spread_max_qty(symbol:, side:, order_price:)
         params = Bybit::Utils::WireKeys.camelize({ symbol: symbol, side: side, orderPrice: order_price })
         @session.sign_request(method: :get, path: '/v5/spread/max-qty', params: params)
@@ -66,7 +66,7 @@ module Bybit
       #   - `""` (empty string): keeps the existing price unchanged.
       #   - `"0"`: updates the price to zero.
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/spread/order/amend
+      # @see https://bybit-exchange.github.io/docs/v5/spread/trade/amend-order
       def amend_spread_order(symbol:, **kwargs)
         params = Bybit::Utils::WireKeys.camelize(kwargs.merge(symbol: symbol))
         @session.sign_request(method: :post, path: '/v5/spread/order/amend', body: params)
@@ -79,7 +79,7 @@ module Bybit
       # @option kwargs [String] :order_id Spread combination order ID. Either `orderId` or `orderLinkId` is required.
       # @option kwargs [String] :order_link_id User-defined custom order ID. Either `orderId` or `orderLinkId` is required.
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/spread/order/cancel
+      # @see https://bybit-exchange.github.io/docs/v5/spread/trade/cancel-order
       def cancel_spread_order(**kwargs)
         params = Bybit::Utils::WireKeys.camelize(kwargs)
         @session.sign_request(method: :post, path: '/v5/spread/order/cancel', body: params)
@@ -94,7 +94,7 @@ module Bybit
       # @option kwargs [Boolean] :cancel_all Set to `true` to cancel all open orders across all symbols.
       #   Ignored when `symbol` is provided.
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/spread/order/cancel-all
+      # @see https://bybit-exchange.github.io/docs/v5/spread/trade/cancel-all
       def cancel_all_spread_orders(**kwargs)
         params = Bybit::Utils::WireKeys.camelize(kwargs)
         @session.sign_request(method: :post, path: '/v5/spread/order/cancel-all', body: params)
@@ -118,7 +118,7 @@ module Bybit
       #   - `FOK`: Fill or Kill.
       #   - `PostOnly`: Maker-only; rejected if it would take liquidity.
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/spread/order/create
+      # @see https://bybit-exchange.github.io/docs/v5/spread/trade/create-order
       def create_spread_order(symbol:, side:, order_type:, qty:, **kwargs)
         params = Bybit::Utils::WireKeys.camelize(kwargs.merge(symbol: symbol, side: side, orderType: order_type, qty: qty))
         @session.sign_request(method: :post, path: '/v5/spread/order/create', body: params)
@@ -137,7 +137,7 @@ module Bybit
       # @option kwargs [Integer] :limit Number of results per page. Range `[1, 50]`. Default `20`.
       # @option kwargs [String] :cursor Pagination cursor token from `nextPageCursor` in a previous response.
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/spread/order/history
+      # @see https://bybit-exchange.github.io/docs/v5/spread/trade/order-history
       def get_spread_order_history(**kwargs)
         params = Bybit::Utils::WireKeys.camelize(kwargs)
         @session.sign_request(method: :get, path: '/v5/spread/order/history', params: params)
@@ -154,7 +154,7 @@ module Bybit
       # @option kwargs [Integer] :limit Number of results per page. Range `[1, 50]`. Default `20`.
       # @option kwargs [String] :cursor Pagination cursor token from `nextPageCursor` in a previous response.
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/spread/order/realtime
+      # @see https://bybit-exchange.github.io/docs/v5/spread/trade/open-order
       def get_spread_open_orders(**kwargs)
         params = Bybit::Utils::WireKeys.camelize(kwargs)
         @session.sign_request(method: :get, path: '/v5/spread/order/realtime', params: params)
@@ -167,7 +167,7 @@ module Bybit
       # @param symbol [String] Spread combination symbol name, e.g. `SOLUSDT_SOL/USDT`
       # @option kwargs [Integer] :limit Number of bid/ask levels per side, range `[1, 25]`. Default is `1`
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/spread/orderbook
+      # @see https://bybit-exchange.github.io/docs/v5/spread/market/orderbook
       def get_spread_orderbook(symbol:, **kwargs)
         params = Bybit::Utils::WireKeys.camelize(kwargs.merge(symbol: symbol))
         @session.public_request(path: '/v5/spread/orderbook', params: params)
@@ -180,7 +180,7 @@ module Bybit
       # @param symbol [String] Spread combination symbol name, e.g. `SOLUSDT_SOL/USDT`
       # @option kwargs [Integer] :limit Number of records per page, range `[1, 1000]`. Default is `500`
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/spread/recent-trade
+      # @see https://bybit-exchange.github.io/docs/v5/spread/market/recent-trade
       def get_spread_recent_trades(symbol:, **kwargs)
         params = Bybit::Utils::WireKeys.camelize(kwargs.merge(symbol: symbol))
         @session.public_request(path: '/v5/spread/recent-trade', params: params)
@@ -192,7 +192,7 @@ module Bybit
       #
       # @param symbol [String] Spread combination symbol name, e.g. `SOLUSDT_SOL/USDT`
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/spread/tickers
+      # @see https://bybit-exchange.github.io/docs/v5/spread/market/tickers
       def get_spread_tickers(symbol:)
         params = Bybit::Utils::WireKeys.camelize({ symbol: symbol })
         @session.public_request(path: '/v5/spread/tickers', params: params)

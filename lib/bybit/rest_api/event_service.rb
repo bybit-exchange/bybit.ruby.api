@@ -15,7 +15,7 @@ module Bybit
       # @option kwargs [Integer] :limit Number of items per page. Default: `50`, Range: [`1`, `100`]
       # @option kwargs [String] :cursor Pagination cursor
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/event/order-list
+      # @see https://bybit-exchange.github.io/docs/v5/event/trade/order-list
       def get_ec_order_history(**kwargs)
         params = Bybit::Utils::WireKeys.camelize(kwargs)
         @session.sign_request(method: :get, path: '/v5/event/order-list', params: params)
@@ -31,7 +31,7 @@ module Bybit
       # @option kwargs [Integer] :limit Number of items per page. Default: `20`, Range: [`1`, `50`]
       # @option kwargs [String] :cursor Pagination cursor. Use `nextPageCursor` from the response to retrieve the next page
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/event/order-realtime
+      # @see https://bybit-exchange.github.io/docs/v5/event/trade/open-order
       def get_ec_active_orders(**kwargs)
         params = Bybit::Utils::WireKeys.camelize(kwargs)
         @session.sign_request(method: :get, path: '/v5/event/order-realtime', params: params)
@@ -47,7 +47,7 @@ module Bybit
       # @option kwargs [Integer] :limit Number of items per page. Default: `20`, Range: [`1`, `50`]
       # @option kwargs [String] :cursor Pagination cursor. Use `nextPageCursor` from the response to retrieve the next page
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/event/positions
+      # @see https://bybit-exchange.github.io/docs/v5/event/trade/position
       def get_ec_position_info(**kwargs)
         params = Bybit::Utils::WireKeys.camelize(kwargs)
         @session.sign_request(method: :get, path: '/v5/event/positions', params: params)
@@ -64,7 +64,7 @@ module Bybit
       # @option kwargs [Integer] :limit Number of items per page. Default: `50`, Range: [`1`, `100`]
       # @option kwargs [String] :cursor Pagination cursor
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/event/settlements
+      # @see https://bybit-exchange.github.io/docs/v5/event/trade/settlement
       def get_ec_settlements(symbol:, **kwargs)
         params = Bybit::Utils::WireKeys.camelize(kwargs.merge(symbol: symbol))
         @session.sign_request(method: :get, path: '/v5/event/settlements', params: params)
@@ -82,7 +82,7 @@ module Bybit
       # @option kwargs [Integer] :limit Number of items per page. Default: `50`, Range: [`1`, `100`]
       # @option kwargs [String] :cursor Pagination cursor
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/event/trades
+      # @see https://bybit-exchange.github.io/docs/v5/event/trade/execution
       def get_ec_trade_history(symbol:, **kwargs)
         params = Bybit::Utils::WireKeys.camelize(kwargs.merge(symbol: symbol))
         @session.sign_request(method: :get, path: '/v5/event/trades', params: params)

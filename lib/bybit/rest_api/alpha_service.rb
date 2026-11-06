@@ -227,10 +227,12 @@ module Bybit
       #
       # POST /v5/alpha/prediction/portfolio-summary
       #
+      # @option kwargs [Integer] :event_type Optional sports event type filter.
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       # @see https://bybit-exchange.github.io/docs/v5/alpha/prediction/portfolio-summary
-      def get_prediction_portfolio_summary
-        @session.sign_request(method: :post, path: '/v5/alpha/prediction/portfolio-summary')
+      def get_prediction_portfolio_summary(**kwargs)
+        params = Bybit::Utils::WireKeys.camelize(kwargs)
+        @session.sign_request(method: :post, path: '/v5/alpha/prediction/portfolio-summary', body: params)
       end
 
       # Get user's historical closed prediction market positions
@@ -265,14 +267,12 @@ module Bybit
       #
       # POST /v5/alpha/prediction/price-history
       #
-      # @param interval [String]
-      # @option kwargs [Array] :token_ids Option 1 — List of outcome token IDs. Maximum 20. Mutually exclusive with eventId.
-      # @option kwargs [String] :event_id Option 2 — Event ID to get price history for all tokens in the event.
-      # @option kwargs [Integer] :fidelity Minutes between data points. 0 means auto (system default).
+      # @param token_id [String] Outcome token ID.
+      # @param interval [String] Price history interval.
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
       # @see https://bybit-exchange.github.io/docs/v5/alpha/prediction/price-history
-      def get_prediction_price_history(interval:, **kwargs)
-        params = Bybit::Utils::WireKeys.camelize(kwargs.merge(interval: interval))
+      def get_prediction_price_history(token_id:, interval:)
+        params = Bybit::Utils::WireKeys.camelize(tokenId: token_id, interval: interval)
         @session.sign_request(method: :post, path: '/v5/alpha/prediction/price-history', body: params)
       end
 
@@ -309,12 +309,12 @@ module Bybit
       #
       # POST /v5/alpha/prediction/sports/group-stage-detail
       #
-      # @param event_type [String]
-      # @param stage_code [String]
+      # @param event_type [Integer] Sports event type. `1` = FIFA_2026.
+      # @option kwargs [String] :group_name Optional group name filter.
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/alpha/prediction/sports/group-stage-detail
-      def get_prediction_group_stage_detail(event_type:, stage_code:)
-        params = Bybit::Utils::WireKeys.camelize({ eventType: event_type, stageCode: stage_code })
+      # @see https://bybit-exchange.github.io/docs/v5/alpha/prediction/sports-group-stage-detail
+      def get_prediction_group_stage_detail(event_type:, **kwargs)
+        params = Bybit::Utils::WireKeys.camelize(kwargs.merge(eventType: event_type))
         @session.sign_request(method: :post, path: '/v5/alpha/prediction/sports/group-stage-detail', body: params)
       end
 
@@ -322,11 +322,17 @@ module Bybit
       #
       # POST /v5/alpha/prediction/sports/match-list
       #
-      # @param event_type [String]
+      # @param event_type [Integer] Sports event type. `1` = FIFA_2026.
+      # @option kwargs [Integer] :status Optional match status filter.
+      # @option kwargs [Integer] :start_time Optional start timestamp in milliseconds.
+      # @option kwargs [Integer] :end_time Optional end timestamp in milliseconds.
+      # @option kwargs [String] :stage_code Optional tournament stage code.
+      # @option kwargs [Integer] :limit Number of records per page.
+      # @option kwargs [Integer] :page_index Page number starting from 1.
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/alpha/prediction/sports/match-list
-      def get_prediction_match_list(event_type:)
-        params = Bybit::Utils::WireKeys.camelize({ eventType: event_type })
+      # @see https://bybit-exchange.github.io/docs/v5/alpha/prediction/sports-match-list
+      def get_prediction_match_list(event_type:, **kwargs)
+        params = Bybit::Utils::WireKeys.camelize(kwargs.merge(eventType: event_type))
         @session.sign_request(method: :post, path: '/v5/alpha/prediction/sports/match-list', body: params)
       end
 
@@ -334,11 +340,11 @@ module Bybit
       #
       # GET /v5/alpha/prediction/sports/timeline-stages
       #
-      # @option kwargs [String] :event_type Sports event type. `1` = FIFA_2026.
+      # @param event_type [Integer] Sports event type. `1` = FIFA_2026.
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/alpha/prediction/sports/timeline-stages
-      def get_prediction_timeline_stages(**kwargs)
-        params = Bybit::Utils::WireKeys.camelize(kwargs)
+      # @see https://bybit-exchange.github.io/docs/v5/alpha/prediction/sports-timeline-stages
+      def get_prediction_timeline_stages(event_type:)
+        params = Bybit::Utils::WireKeys.camelize(eventType: event_type)
         @session.sign_request(method: :get, path: '/v5/alpha/prediction/sports/timeline-stages', params: params)
       end
 
@@ -474,7 +480,7 @@ module Bybit
       # @param correcting_code [String] MD5 checksum for data integrity. **Must pass as-is from `/quote` response.**
       # @option kwargs [String] :tenant Optional tenant identifier.
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/alpha/trade/purchase
+      # @see https://bybit-exchange.github.io/docs/v5/alpha/trade/trade-purchase
       def execute_purchase(from_token_code:, from_token_amount:, to_token_code:, slippage:, quote_data:, gas:, quote_mode:, correcting_code:, **kwargs)
         params = Bybit::Utils::WireKeys.camelize(kwargs.merge(fromTokenCode: from_token_code, fromTokenAmount: from_token_amount, toTokenCode: to_token_code, slippage: slippage, quoteData: quote_data, gas: gas, quoteMode: quote_mode, correctingCode: correcting_code))
         @session.sign_request(method: :post, path: '/v5/alpha/trade/purchase', body: params)
@@ -499,7 +505,7 @@ module Bybit
       #   - `1`: Price Priority - best price, may have higher failure rate
       #   - `2`: Success Rate Priority - guaranteed execution, price may be slightly worse
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/alpha/trade/quote
+      # @see https://bybit-exchange.github.io/docs/v5/alpha/trade/trade-quote
       def get_trade_quote(trade_type:, from_token_code:, from_token_amount:, to_token_code:, **kwargs)
         params = Bybit::Utils::WireKeys.camelize(kwargs.merge(tradeType: trade_type, fromTokenCode: from_token_code, fromTokenAmount: from_token_amount, toTokenCode: to_token_code))
         @session.sign_request(method: :post, path: '/v5/alpha/trade/quote', body: params)
@@ -525,7 +531,7 @@ module Bybit
       # @param correcting_code [String] MD5 checksum for data integrity. **Must pass as-is from `/quote` response.**
       # @option kwargs [String] :tenant Optional tenant identifier.
       # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
-      # @see https://bybit-exchange.github.io/docs/v5/alpha/trade/redeem
+      # @see https://bybit-exchange.github.io/docs/v5/alpha/trade/trade-redeem
       def execute_redeem(from_token_code:, from_token_amount:, to_token_code:, slippage:, quote_data:, gas:, quote_mode:, correcting_code:, **kwargs)
         params = Bybit::Utils::WireKeys.camelize(kwargs.merge(fromTokenCode: from_token_code, fromTokenAmount: from_token_amount, toTokenCode: to_token_code, slippage: slippage, quoteData: quote_data, gas: gas, quoteMode: quote_mode, correctingCode: correcting_code))
         @session.sign_request(method: :post, path: '/v5/alpha/trade/redeem', body: params)

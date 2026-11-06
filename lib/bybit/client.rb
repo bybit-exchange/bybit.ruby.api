@@ -24,7 +24,6 @@ require 'bybit/rest_api/fiat_service'
 require 'bybit/rest_api/referral_service'
 require 'bybit/rest_api/spot_x_service'
 require 'bybit/rest_api/spread_trade_service'
-require 'bybit/rest_api/stocks_service'
 require 'bybit/rest_api/strategy_service'
 require 'bybit/rest_api/tax_service'
 # gen-sdk-ruby:service-requires:end
@@ -48,7 +47,7 @@ module Bybit
     attr_reader :account, :affiliate, :alpha, :asset, :bot, :broker, :crypto_loan, :earn,
                 :event, :fiat, :institutional_loan, :market, :misc, :p2p, :position,
                 :pre_upgrade, :referral, :rfq, :spot_margin, :spot_x, :spread_trade,
-                :stocks, :strategy, :tax, :trade, :user
+                :strategy, :tax, :trade, :user
 
     # gen-sdk-ruby:client-readers:end
 
@@ -81,7 +80,6 @@ module Bybit
         spot_margin: RestApi::SpotMarginService,
         spot_x: RestApi::SpotXService,
         spread_trade: RestApi::SpreadTradeService,
-        stocks: RestApi::StocksService,
         strategy: RestApi::StrategyService,
         tax: RestApi::TaxService,
         trade: RestApi::TradeService,
