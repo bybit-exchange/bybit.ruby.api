@@ -1,0 +1,57 @@
+CHANGELOG.md
+  s_1ac47a3ae1658c::t_3213e917e9a9af 8
+  s_1ac47a3ae1658c::t_171a223fa64778 5-7
+  s_1ac47a3ae1658c::t_af0b250d5076cb 1-4
+docs/superpowers/plans/2026-11-06-sdk-review-fixes.md
+  s_1ac47a3ae1658c::t_e77cf885f630ea 1-196
+lib/bybit/rest_api/alpha_service.rb
+  s_1ac47a3ae1658c::t_98ea7bfd7ee33b 230
+  s_1ac47a3ae1658c::t_9f6cafea1daafb 233-235,270-271,274-275,312-313,315-317,325-331,333-335,343,345-347,483,508,534
+docs/superpowers/plans/2026-11-06-remove-stocks-api.md
+  s_1ac47a3ae1658c::t_7750a9d69ac94e 1-17,19-29,31-50,52-65,67-70,72-87,89-98,100-115,117-126,128-138,140-150
+  s_1ac47a3ae1658c::t_d9777e54dc215b 18,30,51,66,71,88,99,116,127,139
+README.md
+  s_1ac47a3ae1658c::t_3213e917e9a9af 131,137-138,142-145,150
+spec/bybit_spec.rb
+  s_1ac47a3ae1658c::t_c7531f15e7382c 13-18
+lib/bybit/rest_api/institutional_loan_service.rb
+  s_1ac47a3ae1658c::t_60c08db544c353 98,111,122
+spec/services/alpha_service_spec.rb
+  s_1ac47a3ae1658c::t_5b113c81c41c0f 1-94
+lib/bybit/client.rb
+  s_1ac47a3ae1658c::t_ba20cd34498c31 50
+lib/bybit/rest_api/event_service.rb
+  s_1ac47a3ae1658c::t_96213ea27fb12c 18,34,50,67,85
+lib/bybit/rest_api/fiat_service.rb
+  s_1ac47a3ae1658c::t_c897e3458bf9d9 16,30,45,62,75,90,103
+lib/bybit/rest_api/referral_service.rb
+  s_1ac47a3ae1658c::t_189292ff0ec909 11,27,38,54
+lib/bybit/rest_api/spot_margin_service.rb
+  s_1ac47a3ae1658c::t_fe49999ac44215 301,313
+lib/bybit/rest_api/spot_x_service.rb
+  s_1ac47a3ae1658c::t_bcd92a4665263a 19,53,64,84,103,122,135
+lib/bybit/rest_api/spread_trade_service.rb
+  s_1ac47a3ae1658c::t_c6e8fca580b849 18,33,49,69,82,97,121,140,157,170,183,195
+lib/bybit/rest_api/strategy_service.rb
+  s_1ac47a3ae1658c::t_fb977c31090991 12,51,98
+lib/bybit/rest_api/tax_service.rb
+  s_1ac47a3ae1658c::t_613929ac94eee2 18,30
+spec/generated/rest_api_generated_spec.rb
+  s_1ac47a3ae1658c::t_fc73fef980c713 852-853,855,890-891,895-896,945,949,960-977
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.2-bit.2+419f699",
+  "base_commit_sha": "4797a66ef2e33e984515531fb8b4c7cd4c8046a6",
+  "prompts": {},
+  "sessions": {
+    "s_1ac47a3ae1658c": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1aebf-a28b-7d01-be80-225e54aeef89",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "doris-xiao-bybit <doris.xiao@bybit.com>"
+    }
+  }
+}
