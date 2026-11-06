@@ -1,0 +1,57 @@
+lib/bybit/rest_api/strategy_service.rb
+  s_1ac47a3ae1658c::t_30232c5f7055c0 1-105
+lib/bybit/rest_api/fiat_service.rb
+  s_1ac47a3ae1658c::t_60c08db544c353 1-110
+lib/bybit/rest_api/spread_trade_service.rb
+  s_1ac47a3ae1658c::t_30232c5f7055c0 1-202
+lib/bybit/rest_api/tax_service.rb
+  s_1ac47a3ae1658c::t_30232c5f7055c0 1-37
+lib/bybit/client.rb
+  s_1ac47a3ae1658c::t_afdef8b513b25a 21-29,48-51,62-89
+  s_1ac47a3ae1658c::t_ae32da199466ec 90-91
+lib/bybit/rest_api/referral_service.rb
+  s_1ac47a3ae1658c::t_60c08db544c353 1-61
+lib/bybit/rest_api/spot_x_service.rb
+  s_1ac47a3ae1658c::t_30232c5f7055c0 1-142
+lib/bybit/rest_api/alpha_service.rb
+  s_1ac47a3ae1658c::t_60c08db544c353 314,332,344,482,507,533
+  s_1ac47a3ae1658c::t_98ea7bfd7ee33b 1-313,315-331,333-343,345-481,483-506,508-532,534-535
+lib/bybit/rest_api/event_service.rb
+  s_1ac47a3ae1658c::t_60c08db544c353 1-92
+spec/generated/rest_api_generated_spec.rb
+  s_1ac47a3ae1658c::t_98ea7bfd7ee33b 1-1498
+  s_1ac47a3ae1658c::t_d82296fc3cc010 1499-1501
+  s_1ac47a3ae1658c::t_616c3520a4342a 1502-1641
+lib/bybit/rest_api/spot_margin_service.rb
+  s_1ac47a3ae1658c::t_60c08db544c353 291-317
+lib/bybit/version.rb
+  s_6af3615319c4cd::t_f6ca8428bf8c3c 4
+CHANGELOG.md
+  s_1ac47a3ae1658c::t_5e7184bfed5f96 1-97
+lib/bybit/rest_api/institutional_loan_service.rb
+  s_1ac47a3ae1658c::t_a4072c7db20cee 104-125
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.2-bit.2+419f699",
+  "base_commit_sha": "c993c0ebd3bf9c9fb3938c99ee3f74e4a8b2f750",
+  "prompts": {},
+  "sessions": {
+    "s_1ac47a3ae1658c": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1aebf-a28b-7d01-be80-225e54aeef89",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "doris-xiao-bybit <doris.xiao@bybit.com>"
+    },
+    "s_6af3615319c4cd": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a17b58-1fcd-78f2-af28-625b66470487",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "doris-xiao-bybit <doris.xiao@bybit.com>"
+    }
+  }
+}
