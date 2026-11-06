@@ -288,6 +288,33 @@ module Bybit
         params = Bybit::Utils::WireKeys.camelize({ spotMarginMode: spot_margin_mode })
         @session.sign_request(method: :post, path: '/v5/spot-margin-trade/switch-mode', body: params)
       end
+
+      # Query Fixed-Rate Borrow Penalty Interest
+      #
+      # GET /v5/spot-margin-trade/fixedborrow-interest-accrued
+      #
+      # @option kwargs [String] :order_id Filter by fixed-rate borrow order ID.
+      # @option kwargs [String] :order_currency Filter by a single borrow coin, such as `USDT`.
+      # @option kwargs [String] :limit Page size as a string, from 1 to 100; defaults to 10.
+      # @option kwargs [String] :cursor Opaque `nextPageCursor` returned by the previous page.
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
+      # @see https://bybit-exchange.github.io/docs/v5/spot-margin-trade/fixedborrow-interest-accrued
+      def query_fixed_borrow_penalty_interest(**kwargs)
+        params = Bybit::Utils::WireKeys.camelize(kwargs)
+        @session.sign_request(method: :get, path: '/v5/spot-margin-trade/fixedborrow-interest-accrued', params: params)
+      end
+
+      # Cancel Fixed-Rate Borrow Order
+      #
+      # POST /v5/spot-margin-trade/fixedborrow-order-cancel
+      #
+      # @param order_id [String] Fixed-rate borrow order ID, not the contract match ID.
+      # @return [Hash] Bybit V5 ApiResponse envelope (retCode / retMsg / result / retExtInfo / time).
+      # @see https://bybit-exchange.github.io/docs/v5/spot-margin-trade/fixedborrow-order-cancel
+      def cancel_fixed_borrow_order(order_id:)
+        params = Bybit::Utils::WireKeys.camelize({ orderId: order_id })
+        @session.sign_request(method: :post, path: '/v5/spot-margin-trade/fixedborrow-order-cancel', body: params)
+      end
     end
   end
 end
